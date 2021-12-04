@@ -1,11 +1,12 @@
 {
   "name": "amaurycoudr-checkers",
-  "version": "1.0.0",
-  "description": "checkers game",
+  "version": "1.0.1",
+  "description": "My webpack project",
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
-    "test": "tsc && jest"
+    "test": "tsc && jest",
+    "build": "webpack"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
@@ -13,9 +14,16 @@
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-typescript": "^7.16.0",
     "@types/jest": "^27.0.3",
+    "@webpack-cli/generators": "^2.4.1",
     "babel-jest": "^27.4.2",
+    "declaration-bundler-webpack-plugin": "^1.0.3",
     "jest": "^27.4.3",
+    "prettier": "^2.5.1",
+    "ts-loader": "^9.2.6",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
   }
 }
