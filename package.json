@@ -6,6 +6,11 @@
   "main": "lib/index.js",
   "types": "type/index.d.ts",
   "license": "MIT",
+  "homepage": "https://github.com/amaurycoudr/checkers#readme",
+  "repository": {
+    "url": "https://github.com/amaurycoudr/checkers",
+    "type": "git"
+  },
   "scripts": {
     "test": "tsc --noEmit && jest --coverage",
     "make-badges": "node_modules/.bin/jest-badges-readme",
