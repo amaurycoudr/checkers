@@ -1,3 +1,3 @@
 import Position from "./Position";
-
-export { Position };
+import Player from "./Player";
+export { Position, Player };
