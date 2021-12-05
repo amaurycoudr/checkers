@@ -12,8 +12,7 @@
     "type": "git"
   },
   "scripts": {
-    "test": "tsc --noEmit && jest --coverage",
-    "make-badges": "node_modules/.bin/jest-badges-readme",
+    "test": "tsc --noEmit && jest --coverage &&  node_modules/.bin/jest-badges-readme",
     "build": "shx rm -r ./lib/* && shx rm -r ./type/* && rollup -c"
   },
   "devDependencies": {
