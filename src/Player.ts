@@ -1,11 +1,11 @@
-import { Color, Position, TOP } from "./utils/type";
+import { Color, Side, TOP } from "./utils/type";
 
 class Player {
   private color: Color;
-  private position: Position;
+  private position: Side;
   private name: string;
 
-  constructor(color: Color, position: Position, name: string) {
+  constructor(color: Color, position: Side, name: string) {
     this.name = name;
     this.position = position;
     this.color = color;
