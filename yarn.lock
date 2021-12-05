@@ -1138,6 +1138,11 @@
   resolved "https://registry.npmjs.org/@nicolo-ribaudo/chokidar-2/-/chokidar-2-2.1.8-no-fsevents.3.tgz"
   integrity sha512-s88O1aVtXftvp5bCPB7WnmXc5IwOZZ7YPuwNPt+GtOOXpPvad1LfbmjYv+qII7zP6RU2QGnqve27dnLycEnyEQ==
 
+"@olavoparno/jest-badges-readme@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@olavoparno/jest-badges-readme/-/jest-badges-readme-1.5.1.tgz#0ea187a1557ae597c55072716638c3d1dfba710b"
+  integrity sha512-7srGdj+rECGrWD5kfmS5suIUi+Ruh5X5zPdI1NWa39bKiq/0TNYG7yoWKty/IMk7WxI+G+tluhhmvgAR831eZQ==
+
 "@rollup/plugin-commonjs@^21.0.1":
   version "21.0.1"
   resolved "https://registry.npmjs.org/@rollup/plugin-commonjs/-/plugin-commonjs-21.0.1.tgz"

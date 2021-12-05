@@ -11,5 +11,6 @@ const config: Config.InitialOptions = {
       lines: 80,
     },
   },
+  coverageReporters: ["json-summary", "lcov"],
 };
 export default config;

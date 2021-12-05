@@ -1,13 +1,14 @@
 {
   "name": "amaurycoudr-checkers",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "checkers game",
   "source": "scr/index.ts",
   "main": "lib/index.js",
   "types": "type/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "test": "tsc --noEmit && jest",
+    "test": "tsc --noEmit && jest --coverage",
+    "make-badges": "node_modules/.bin/jest-badges-readme",
     "build": "shx rm -r ./lib/* && shx rm -r ./type/* && rollup -c"
   },
   "devDependencies": {
@@ -15,6 +16,7 @@
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-typescript": "^7.16.0",
+    "@olavoparno/jest-badges-readme": "^1.5.1",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "@types/jest": "^27.0.3",
