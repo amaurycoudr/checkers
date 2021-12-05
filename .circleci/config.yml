@@ -53,7 +53,8 @@ workflows:
             - test
           filters:
             tags:
-              only: /^v.*/
+              only: 
+                - /^v.*/
             branches:
               only:
                 - master
