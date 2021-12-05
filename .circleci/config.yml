@@ -51,7 +51,7 @@ jobs:
 
 workflows:
   version: 2
-  build_deploy:
+  test_build_deploy:
     jobs:
       - test
       - build:
@@ -65,5 +65,5 @@ workflows:
           requires:
             - build
           filters:
-            tags:
-              only: /^v.*/
+             tags:
+               only: /^v.*/
