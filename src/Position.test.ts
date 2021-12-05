@@ -32,7 +32,7 @@ describe("test toStr()", () => {
   });
 });
 
-describe("test equals(Position p) ", () => {
+describe("test equals(Position p)", () => {
   it("return true if x1,y1===x2,y2", () => {
     expect(position.equals(position)).toBe(true);
     expect(position.equals(positionYInfMin)).toBe(false);
