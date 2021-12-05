@@ -1,3 +1,3 @@
-export type color = "white" | "black";
+export type Color = "white" | "black";
 
-export type position = "top" | "bottom";
+export type Position = "top" | "bottom";
