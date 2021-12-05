@@ -7,8 +7,8 @@
   "types": "type/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "test": "tsc && jest",
-    "build": "rollup -c"
+    "test": "tsc --noEmit && jest",
+    "build": "shx rm -r ./lib/* && shx rm -r ./type/* && rollup -c"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
@@ -24,7 +24,7 @@
     "rollup": "^2.60.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-typescript2": "^0.31.1",
-    "ts-loader": "^9.2.6",
+    "shx": "^0.3.3",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
   }

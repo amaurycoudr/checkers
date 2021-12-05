@@ -1,0 +1,10 @@
+/node_modules
+/coverage
+/src
+/.circleci
+*.config.*
+tsconfig.json
+rollup.config.js
+README.md
+jest.config.ts
+babel.config.js

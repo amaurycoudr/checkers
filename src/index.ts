@@ -1,1 +1,3 @@
-export default {};
+import Position from "./Position";
+
+export { Position };
