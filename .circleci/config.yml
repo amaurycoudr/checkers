@@ -27,7 +27,7 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths: 
-            - /repo/src
+            - .
   test:
     <<: *defaults
     steps:
