@@ -1,5 +1,5 @@
-import { Player } from ".";
 import Piece from "./Piece";
+import Player from "./Player";
 import { BLACK, TOP } from "./utils/type";
 class FakePiece extends Piece {
   getEatenMoves(): [] {

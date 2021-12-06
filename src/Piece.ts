@@ -1,9 +1,11 @@
-import { Player } from ".";
+import Box from "./Box";
+import Player from "./Player";
 
-abstract class Piece {
+abstract class Piece extends Box {
   player: Player;
 
   constructor(player: Player) {
+    super();
     this.player = player;
   }
   /**@todo add real return type */

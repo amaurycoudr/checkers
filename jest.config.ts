@@ -11,6 +11,6 @@ const config: Config.InitialOptions = {
       lines: 80,
     },
   },
-  coverageReporters: ["json-summary"],
+  coverageReporters: ["json-summary", "text"],
 };
 export default config;
