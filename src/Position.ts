@@ -26,6 +26,13 @@ class Position {
     return new Position(this.x + move.x, this.y + move.y);
   }
 
+  public getX(): number {
+    return this.x;
+  }
+  public getY(): number {
+    return this.y;
+  }
+
   static LEFT_TOP = new Position(-1, -1);
   static LEFT_BOTTOM = new Position(-1, 1);
   static RIGHT_TOP = new Position(1, -1);

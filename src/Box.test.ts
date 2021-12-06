@@ -4,7 +4,6 @@ import Box from "./Box";
 import { BLACK, TOP } from "./utils/type";
 import { BOX_NOT_PIECE } from "./utils/error";
 
-class FakeEmptyBox extends Box {}
 class FakePieceBox extends Piece {
   getEatenMoves(): [] {
     return [];
@@ -13,7 +12,7 @@ class FakePieceBox extends Piece {
     return [];
   }
 }
-const emptyBox = new FakeEmptyBox();
+const emptyBox = new Box();
 const pieceBox = new FakePieceBox(new Player(BLACK, TOP, "test"));
 describe("test isNotEmpty()", () => {
   it("should be false if it is not a Piece", () => {
@@ -26,13 +25,13 @@ describe("test isNotEmpty()", () => {
 });
 
 describe("test getPiece()", () => {
-  it(`should throw ${BOX_NOT_PIECE} if it is not a Piece`, () => {
+  it(`should throw "${BOX_NOT_PIECE}"`, () => {
     expect(() => {
       emptyBox.getPiece();
     }).toThrow(new Error(BOX_NOT_PIECE));
   });
 
-  it(`should return the Object if it class extends Piece`, () => {
+  it(`should return the Piece`, () => {
     expect(pieceBox.getPiece() instanceof Piece).toBe(true);
   });
 });
