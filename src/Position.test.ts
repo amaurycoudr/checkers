@@ -1,5 +1,7 @@
 import Position from "./Position";
 import { INDEX_MAX, INDEX_MIN } from "./utils/board";
+import { forBoard } from "./utils/fn";
+import { Coordinates, coordinatesX, coordinatesY } from "./utils/type";
 const X = 1;
 const Y = 2;
 const infMin = INDEX_MIN - 3;
@@ -48,4 +50,30 @@ describe("test getArrivalPosition(Position move)", () => {
   testMove(new Position(X, Y), new Position(1, 1), new Position(X + 1, Y + 1));
   testMove(new Position(X, Y), new Position(1, 0), new Position(X + 1, Y));
   testMove(new Position(X, Y), new Position(0, 0), new Position(X, Y));
+});
+
+const testCoordinatesToPosition = (
+  position: Position,
+  x: number,
+  y: number
+) => {
+  const coordinates: Coordinates = `${coordinatesX[x]}${coordinatesY[y]}`;
+  it(`getPositionFromCoordinate(${coordinates}) should return ${position.toStr()}`, () => {
+    expect(
+      Position.getPositionFromCoordinate(coordinates).equals(position)
+    ).toBe(true);
+  });
+};
+describe("test getPositionFromCoordinate(coordinates: Coordinates) ", () => {
+  forBoard(testCoordinatesToPosition);
+});
+
+const testPosition = (position: Position, x: number, y: number) => {
+  const coordinates: Coordinates = `${coordinatesX[x]}${coordinatesY[y]}`;
+  it(`getCoordinate() should return ${coordinates}`, () => {
+    expect(position.getCoordinate()).toBe(coordinates);
+  });
+};
+describe("test getCoordinate() ", () => {
+  forBoard(testPosition);
 });

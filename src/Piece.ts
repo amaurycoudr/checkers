@@ -11,9 +11,11 @@ export default abstract class Piece extends Box {
   isNotEmpty(): boolean {
     return true;
   }
-  getPiece(): Piece {
-    return this;
+
+  isOpponent(otherPlayer: Player) {
+    return !otherPlayer.equals(this.player);
   }
+
   /**@todo add real return type */
   abstract getEatenMoves(): [];
   /**@todo add real return type */

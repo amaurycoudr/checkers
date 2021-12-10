@@ -1,8 +1,7 @@
+import Box from "./Box";
 import Piece from "./Piece";
 import Player from "./Player";
-import Box from "./Box";
 import { BLACK, TOP } from "./utils/type";
-import { BOX_NOT_PIECE } from "./utils/error";
 
 class FakePieceBox extends Piece {
   getEatenMoves(): [] {
@@ -21,17 +20,5 @@ describe("test isNotEmpty()", () => {
 
   it("should be true if it is not a Piece", () => {
     expect(pieceBox.isNotEmpty()).toBe(true);
-  });
-});
-
-describe("test getPiece()", () => {
-  it(`should throw "${BOX_NOT_PIECE}"`, () => {
-    expect(() => {
-      emptyBox.getPiece();
-    }).toThrow(new Error(BOX_NOT_PIECE));
-  });
-
-  it(`should return the Piece`, () => {
-    expect(pieceBox.getPiece() instanceof Piece).toBe(true);
   });
 });

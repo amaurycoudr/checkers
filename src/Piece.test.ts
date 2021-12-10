@@ -1,6 +1,6 @@
 import Piece from "./Piece";
 import Player from "./Player";
-import { BLACK, TOP } from "./utils/type";
+import { BLACK, BOTTOM, TOP, WHITE } from "./utils/type";
 class FakePiece extends Piece {
   getEatenMoves(): [] {
     return [];
@@ -9,8 +9,22 @@ class FakePiece extends Piece {
     return [];
   }
 }
+const blackTopPlayer = new Player(BLACK, TOP, "test");
+const whiteBottomPlayer = new Player(WHITE, BOTTOM, "test");
+
+const blackTopPiece = new FakePiece(blackTopPlayer);
+const whiteBottomPiece = new FakePiece(whiteBottomPlayer);
 describe("test constructor", () => {
-  it("don't throw error", () => {
-    new FakePiece(new Player(BLACK, TOP, "test"));
+  it("don't throw error", () => {});
+});
+
+describe("test isOpponent(otherPlayer:Player)", () => {
+  it("return false if piece Player has the same color", () => {
+    expect(blackTopPiece.isOpponent(blackTopPlayer)).toBe(false);
+    expect(whiteBottomPiece.isOpponent(whiteBottomPlayer)).toBe(false);
+  });
+  it("return true if piece Player has a different color", () => {
+    expect(blackTopPiece.isOpponent(whiteBottomPlayer)).toBe(true);
+    expect(whiteBottomPiece.isOpponent(blackTopPlayer)).toBe(true);
   });
 });
