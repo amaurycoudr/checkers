@@ -1,6 +1,6 @@
 import Position from "./Position";
 
-class Move {
+class Play {
   private from: Position;
   private to: Position;
 
@@ -13,4 +13,4 @@ class Move {
     return `{from: ${this.from.toStr()}, to: ${this.to.toStr()}}`;
   }
 }
-export default Move;
+export default Play;

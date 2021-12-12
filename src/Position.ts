@@ -1,10 +1,16 @@
 import { INDEX_MAX, INDEX_MIN } from "./utils/board";
+import { ERROR_COORDINATE_OUT, ERROR_MOVE_OUT } from "./utils/error";
 import {
   Coordinates,
   coordinatesX,
   coordinatesY,
   CoordinateX,
   CoordinateY,
+  MoveCoordinate,
+  moveCoordinate,
+  MoveDirection,
+  MoveNumber,
+  MoveStr,
 } from "./utils/type";
 class Position {
   private x: number;
@@ -32,10 +38,10 @@ class Position {
     return new Position(this.x + move.x, this.y + move.y);
   }
 
-  public getX(): number {
+  getX(): number {
     return this.x;
   }
-  public getY(): number {
+  getY(): number {
     return this.y;
   }
 
@@ -50,7 +56,25 @@ class Position {
   getCoordinate(): Coordinates {
     const x = coordinatesX[this.x];
     const y = coordinatesY[this.y];
+    if (!x || !y) {
+      throw new Error(ERROR_COORDINATE_OUT);
+    }
     return `${x}${y}`;
+  }
+
+  private static getXorYFromMoveCoordinate(moveCoordinate: MoveCoordinate) {
+    const value = parseInt(moveCoordinate[1], 10);
+    return moveCoordinate[0] === "+" ? value : -value;
+  }
+  static getPositionFromMove(moveDescription: MoveStr): Position {
+    const x = this.getXorYFromMoveCoordinate(
+      moveDescription.slice(0, 2) as MoveCoordinate
+    );
+    const y = this.getXorYFromMoveCoordinate(
+      moveDescription.slice(3, 5) as MoveCoordinate
+    );
+
+    return new Position(x, y);
   }
 
   static LEFT_TOP = new Position(-1, -1);

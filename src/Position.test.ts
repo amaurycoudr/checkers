@@ -1,7 +1,15 @@
 import Position from "./Position";
 import { INDEX_MAX, INDEX_MIN } from "./utils/board";
-import { forBoard } from "./utils/fn";
-import { Coordinates, coordinatesX, coordinatesY } from "./utils/type";
+import { ERROR_COORDINATE_OUT } from "./utils/error";
+import { forBoard, forMove } from "./utils/fn";
+import {
+  Coordinates,
+  coordinatesX,
+  coordinatesY,
+  MoveNumber,
+  MoveStr,
+} from "./utils/type";
+
 const X = 1;
 const Y = 2;
 const infMin = INDEX_MIN - 3;
@@ -68,12 +76,48 @@ describe("test getPositionFromCoordinate(coordinates: Coordinates) ", () => {
   forBoard(testCoordinatesToPosition);
 });
 
-const testPosition = (position: Position, x: number, y: number) => {
+const testPositionForGetCoordinate = (
+  position: Position,
+  x: number,
+  y: number
+) => {
   const coordinates: Coordinates = `${coordinatesX[x]}${coordinatesY[y]}`;
-  it(`getCoordinate() should return ${coordinates}`, () => {
+  it(`getCoordinate() of ${position.toStr()} should return ${coordinates}`, () => {
     expect(position.getCoordinate()).toBe(coordinates);
   });
 };
-describe("test getCoordinate() ", () => {
-  forBoard(testPosition);
+describe("test getCoordinate() normal return", () => {
+  forBoard(testPositionForGetCoordinate);
+});
+
+describe("test getCoordinate() error", () => {
+  it(`should throw en error if the position is out of bond`, () => {
+    expect(() => positionYInfMin.getCoordinate()).toThrow(ERROR_COORDINATE_OUT);
+  });
+});
+const testForMove =
+  (test: (position: Position, move: MoveStr) => void) =>
+  (position: Position, x: MoveNumber, y: MoveNumber) => {
+    const move1: MoveStr = `+${x}.+${y}`;
+
+    const move2: MoveStr = `-${x}.+${y}`;
+    const position2 = new Position(-x, y);
+
+    const move3: MoveStr = `-${x}.-${y}`;
+    const position3 = new Position(-x, -y);
+
+    const move4: MoveStr = `+${x}.-${y}`;
+    const position4 = new Position(x, -y);
+    test(position, move1);
+    test(position2, move2);
+    test(position3, move3);
+    test(position4, move4);
+  };
+const unitTestForGetPositionFromMove = (position: Position, move: MoveStr) =>
+  it(`getPositionFromMove(${move}) should return ${position.toStr()}`, () => {
+    expect(Position.getPositionFromMove(move).equals(position)).toBe(true);
+  });
+
+describe("test getPositionFromMove() normal return", () => {
+  forMove(testForMove(unitTestForGetPositionFromMove));
 });
