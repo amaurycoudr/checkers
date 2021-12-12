@@ -2,10 +2,10 @@ import Piece from "./Piece";
 import Player from "./Player";
 import { BLACK, BOTTOM, TOP, WHITE } from "./utils/type";
 class FakePiece extends Piece {
-  getEatenMoves(): [] {
+  getEatenPlay(): [] {
     return [];
   }
-  getTravelMoves(): [] {
+  getTravelPlay(): [] {
     return [];
   }
 }

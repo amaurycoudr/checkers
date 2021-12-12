@@ -12,15 +12,15 @@ export const coordinatesY = [1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
 export type CoordinateY = typeof coordinatesY[number];
 
 export const coordinatesX = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
 ] as const;
 export type CoordinateX = typeof coordinatesX[number];
 
@@ -35,3 +35,5 @@ export type MoveDirection = "-" | "+";
 export type MoveCoordinate = `${MoveDirection}${MoveNumber}`;
 
 export type MoveStr = `${MoveCoordinate}.${MoveCoordinate}`;
+
+

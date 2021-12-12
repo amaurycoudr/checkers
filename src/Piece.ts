@@ -17,7 +17,7 @@ export default abstract class Piece extends Box {
   }
 
   /**@todo add real return type */
-  abstract getEatenMoves(): [];
+  abstract getEatenPlay(): [];
   /**@todo add real return type */
-  abstract getTravelMoves(): [];
+  abstract getTravelPlay(): [];
 }
