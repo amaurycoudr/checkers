@@ -1,5 +1,5 @@
 import { INDEX_MAX, INDEX_MIN } from "./utils/board";
-import { ERROR_COORDINATE_OUT, ERROR_MOVE_OUT } from "./utils/error";
+import { ERROR_COORDINATE_OUT } from "./utils/error";
 import {
   Coordinates,
   coordinatesX,
@@ -7,9 +7,6 @@ import {
   CoordinateX,
   CoordinateY,
   MoveCoordinate,
-  moveCoordinate,
-  MoveDirection,
-  MoveNumber,
   MoveStr,
 } from "./utils/type";
 class Position {
@@ -62,10 +59,6 @@ class Position {
     return `${x}${y}`;
   }
 
-  private static getXorYFromMoveCoordinate(moveCoordinate: MoveCoordinate) {
-    const value = parseInt(moveCoordinate[1], 10);
-    return moveCoordinate[0] === "+" ? value : -value;
-  }
   static getPositionFromMove(moveDescription: MoveStr): Position {
     const x = this.getXorYFromMoveCoordinate(
       moveDescription.slice(0, 2) as MoveCoordinate
@@ -76,15 +69,9 @@ class Position {
 
     return new Position(x, y);
   }
-
-  static LEFT_TOP = new Position(-1, -1);
-  static LEFT_BOTTOM = new Position(-1, 1);
-  static RIGHT_TOP = new Position(1, -1);
-  static RIGHT_BOTTOM = new Position(1, 1);
-
-  static LEFT_TOP_2 = new Position(-2, -2);
-  static LEFT_BOTTOM_2 = new Position(-2, 2);
-  static RIGHT_TOP_2 = new Position(2, -2);
-  static RIGHT_BOTTOM_2 = new Position(2, 2);
+  private static getXorYFromMoveCoordinate(moveCoordinate: MoveCoordinate) {
+    const value = parseInt(moveCoordinate[1], 10);
+    return moveCoordinate[0] === "+" ? value : -value;
+  }
 }
 export default Position;

@@ -1,12 +1,18 @@
 import Piece from "./Piece";
 import Player from "./Player";
-import { BLACK, BOTTOM, TOP, WHITE } from "./utils/type";
+import { BLACK, BOTTOM, PieceJSON, TOP, WHITE } from "./utils/type";
 class FakePiece extends Piece {
-  getEatenPlay(): [] {
+  eatenMoves = [];
+  travelMoves = [];
+
+  getEatenPlays(): [] {
     return [];
   }
-  getTravelPlay(): [] {
+  getTravelPlays(): [] {
     return [];
+  }
+  getJSON(): PieceJSON {
+    return { player: this.player.getColor(), type: "fakePiece" };
   }
 }
 const blackTopPlayer = new Player(BLACK, TOP, "test");

@@ -22,5 +22,9 @@ class Player {
   public isTop() {
     return this.position === TOP;
   }
+
+  public getColor() {
+    return this.color;
+  }
 }
 export default Player;

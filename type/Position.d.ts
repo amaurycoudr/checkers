@@ -1,3 +1,4 @@
+import { Coordinates, MoveStr } from "./utils/type";
 declare class Position {
     private x;
     private y;
@@ -7,6 +8,12 @@ declare class Position {
     toStr(): string;
     equals(position: Position): boolean;
     getArrivalPosition(move: Position): Position;
+    getX(): number;
+    getY(): number;
+    static getPositionFromCoordinate(coordinates: Coordinates): Position;
+    getCoordinate(): Coordinates;
+    static getPositionFromMove(moveDescription: MoveStr): Position;
+    private static getXorYFromMoveCoordinate;
     static LEFT_TOP: Position;
     static LEFT_BOTTOM: Position;
     static RIGHT_TOP: Position;

@@ -1,8 +1,8 @@
 import Position from "./Position";
 
-class Play {
-  private from: Position;
-  private to: Position;
+class TravelPlay {
+  protected from: Position;
+  protected to: Position;
 
   constructor(from: Position, to: Position) {
     this.from = from;
@@ -13,4 +13,4 @@ class Play {
     return `{from: ${this.from.toStr()}, to: ${this.to.toStr()}}`;
   }
 }
-export default Play;
+export default TravelPlay;
