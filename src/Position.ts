@@ -22,7 +22,7 @@ class Position {
     return this.isCoordinateInBoard(this.x) && this.isCoordinateInBoard(this.y);
   }
   private isCoordinateInBoard(n: number) {
-    return n <= INDEX_MAX && n > INDEX_MIN;
+    return n <= INDEX_MAX && n >= INDEX_MIN;
   }
 
   toStr() {

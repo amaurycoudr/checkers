@@ -12,7 +12,7 @@
     "type": "git"
   },
   "scripts": {
-    "test": "test:ts && test:jest && test:makeBadge",
+    "test": "yarn test:ts && yarn  test:jest && yarn test:makeBadge",
     "test:ts": "tsc --noEmit",
     "test:jest": "jest --coverage",
     "test:makeBadge": "node_modules/.bin/jest-badges-readme",

@@ -16,6 +16,8 @@ const infMin = INDEX_MIN - 3;
 const supMax = INDEX_MAX + 2;
 
 const position = new Position(X, Y);
+const positionLimitMin = new Position(INDEX_MIN, INDEX_MIN);
+const positionLimitMinMax = new Position(INDEX_MAX, INDEX_MAX);
 
 const positionYInfMin = new Position(X, infMin);
 const positionYISupMin = new Position(X, supMax);
@@ -28,6 +30,8 @@ describe("test isInBoard()", () => {
       expect(position.isInBoard()).toBe(toBe);
 
     expectInBoardToBe(position, true);
+    expectInBoardToBe(positionLimitMin, true);
+    expectInBoardToBe(positionLimitMinMax, true);
 
     expectInBoardToBe(positionYInfMin, false);
     expectInBoardToBe(positionYISupMin, false);

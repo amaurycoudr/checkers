@@ -94,5 +94,8 @@ describe("test getAroundSituation()", () => {
     "+1.+1": CLASSIC_BOARD[2][2],
     "-1.+1": CLASSIC_BOARD[0][2],
   });
-  //testUnitGetAroundSituation(A3, ["-1.+1"], {});
+
+  const A2 = new Position(1, 0);
+
+  testUnitGetAroundSituation(A2, ["-1.-1"], {});
 });
