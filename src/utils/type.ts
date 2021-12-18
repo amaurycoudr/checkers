@@ -34,4 +34,5 @@ export type PieceJSON = {
 };
 export type PieceMove = MoveStr[];
 export type PieceSituation = { [key in PieceMove[number]]?: Box };
+
 export type BoardJSON = { [key in Coordinates]?: PieceJSON };

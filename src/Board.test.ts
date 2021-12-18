@@ -1,11 +1,11 @@
 import Board from "./Board";
 import {
+  a1PawnBoard,
   CLASSIC_BOARD,
   EAT_BOARD,
   EMPTY_BOARD,
-  ONE_PAWN_BOARD,
+  ONE_WHITE_PAWN_BOARD,
 } from "./BoardState";
-import Box from "./Box";
 import EatenPlay from "./EatenPlay";
 import Pawn from "./Pawn";
 import Piece from "./Piece";
@@ -22,7 +22,7 @@ import {
 } from "./utils/type";
 
 const emptyBoard = new Board(EMPTY_BOARD);
-const onePawn = new Board(ONE_PAWN_BOARD);
+const onePawnBoard = new Board(ONE_WHITE_PAWN_BOARD);
 const startBoard = new Board(CLASSIC_BOARD);
 const eatBoard = new Board(EAT_BOARD);
 
@@ -65,11 +65,11 @@ describe("test getJSON()", () => {
   it("getJSON() should return {} for EMPTY_BOARD", () => {
     expect(emptyBoard.getJSON()).toStrictEqual({});
   });
-  const whitePawn = new Pawn(new Player(WHITE, TOP, "whire"));
+  const whitePawn = new Pawn(new Player(WHITE, TOP, "white"));
   it(`getJSON() should return { A1: ${JSON.stringify(
     whitePawn.getJSON()
   )} } for ONE_PAWN_BOARD`, () => {
-    expect(onePawn.getJSON()).toStrictEqual({ A1: whitePawn.getJSON() });
+    expect(onePawnBoard.getJSON()).toStrictEqual({ A1: whitePawn.getJSON() });
   });
 
   it("getJSON() should return START_BOARD_JSON for CLASSIC_BOARD", () => {
@@ -198,4 +198,23 @@ describe("test getEatenPlay()", () => {
       ));
   };
   testGetEatenPlay.map(unitTestEatenPlay);
+});
+
+describe("test getPlayerPieces()", () => {
+  const whitePlayer = new Player(WHITE, TOP, "test");
+  const blackPlayer = new Player(BLACK, BOTTOM, "test");
+  const a1WhitePawnBoard = new Board(a1PawnBoard(whitePlayer));
+  it("should return {} for emptyBoard", () => {
+    expect(emptyBoard.getPlayerPieces(whitePlayer)).toStrictEqual({});
+  });
+
+  it(`should return {a1:Pawn} for whitePlayer a1WhitePawnBoard`, () => {
+    expect(a1WhitePawnBoard.getPlayerPieces(whitePlayer)).toStrictEqual({
+      A1: new Pawn(whitePlayer),
+    });
+  });
+
+  it(`should return {} for blackPlayer a1WhitePawnBoard`, () => {
+    expect(a1WhitePawnBoard.getPlayerPieces(blackPlayer)).toStrictEqual({});
+  });
 });

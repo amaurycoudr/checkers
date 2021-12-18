@@ -1,11 +1,18 @@
 import { BoardState } from "./BoardState";
-import Box from "./Box";
 import Piece from "./Piece";
+import Player from "./Player";
 import Position from "./Position";
 import { INDEX_MAX, INDEX_MIN } from "./utils/board";
 import { ERROR_NOT_PIECE, ERROR_OUT_OF_BOUND } from "./utils/error";
-import { BoardJSON, PieceJSON, PieceMove, PieceSituation } from "./utils/type";
-
+import { forBoard } from "./utils/fn";
+import {
+  BoardJSON,
+  Coordinates,
+  PieceJSON,
+  PieceMove,
+  PieceSituation,
+} from "./utils/type";
+export type PlayerPieces = { [key in Coordinates]?: Piece };
 class Board {
   private board: BoardState;
 
@@ -21,7 +28,7 @@ class Board {
   }
 
   getJSON(): BoardJSON {
-    let JSON: BoardJSON = {};
+    const JSON: BoardJSON = {};
     for (let y = INDEX_MIN; y <= INDEX_MAX; y++) {
       for (let x = INDEX_MIN; x <= INDEX_MAX; x++) {
         const position = new Position(x, y);
@@ -35,20 +42,23 @@ class Board {
 
     return JSON;
   }
+
   private getPositionJson(position: Position): PieceJSON | undefined {
     try {
-      return this.getPiece(this.getBox(position)).getJSON();
+      return this.getPiece(position).getJSON();
     } catch (error) {
       return undefined;
     }
   }
-  private getPiece(box: Box): Piece {
+
+  private getPiece(position: Position): Piece {
+    const box = this.getBox(position);
     if (box instanceof Piece) {
       return box;
-    } else {
-      throw new Error(ERROR_NOT_PIECE);
     }
+    throw new Error(ERROR_NOT_PIECE);
   }
+
   getAroundSituation(position: Position, move: PieceMove): PieceSituation {
     return move.reduce((prev, curr): PieceSituation => {
       const arrivalPosition = position.getArrivalPosition(
@@ -59,9 +69,8 @@ class Board {
 
       if (box) {
         return { ...prev, [curr]: box };
-      } else {
-        return prev;
       }
+      return prev;
     }, {});
   }
 
@@ -70,6 +79,18 @@ class Board {
       this.getAroundSituation(position, piece.eatenMoves),
       position
     );
+  }
+  getPlayerPieces(player: Player): PlayerPieces {
+    const result: PlayerPieces = {};
+    forBoard((position) => {
+      try {
+        const piece = this.getPiece(position);
+        if (!piece.isOpponent(player)) {
+          result[position.getCoordinate()] = piece;
+        }
+      } catch {}
+    });
+    return result;
   }
 }
 export default Board;

@@ -1,13 +1,12 @@
 import Box from "./Box";
+import EatenPlay from "./EatenPlay";
 import Piece from "./Piece";
-import TravelPlay from "./TravelPlay";
 import Player from "./Player";
 import Position from "./Position";
 import { MoveStr, PieceJSON, PieceSituation } from "./utils/type";
-import EatenPlay from "./EatenPlay";
 
 class Pawn extends Piece {
-  static type: string = "Pawn";
+  static type = "Pawn";
   travelMoves: MoveStr[];
   eatenMoves: MoveStr[] = [
     "-1.+1",
@@ -36,7 +35,7 @@ class Pawn extends Piece {
       ["-1.+1", "-2.+2"],
       ["-1.-1", "-2.-2"],
     ];
-    console.log(situation, "_______");
+
     possibleMoves.forEach((moves) => {
       if (this.canBeEatenPlay(situation[moves[0]], situation[moves[1]])) {
         result.push(
@@ -48,7 +47,6 @@ class Pawn extends Piece {
         );
       }
     });
-    console.log(result, position);
 
     return result;
   }

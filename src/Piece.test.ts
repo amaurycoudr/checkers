@@ -1,28 +1,12 @@
-import Piece from "./Piece";
+import Pawn from "./Pawn";
 import Player from "./Player";
-import { BLACK, BOTTOM, PieceJSON, TOP, WHITE } from "./utils/type";
-class FakePiece extends Piece {
-  eatenMoves = [];
-  travelMoves = [];
+import { BLACK, BOTTOM, TOP, WHITE } from "./utils/type";
 
-  getEatenPlays(): [] {
-    return [];
-  }
-  getTravelPlays(): [] {
-    return [];
-  }
-  getJSON(): PieceJSON {
-    return { player: this.player.getColor(), type: "fakePiece" };
-  }
-}
 const blackTopPlayer = new Player(BLACK, TOP, "test");
 const whiteBottomPlayer = new Player(WHITE, BOTTOM, "test");
 
-const blackTopPiece = new FakePiece(blackTopPlayer);
-const whiteBottomPiece = new FakePiece(whiteBottomPlayer);
-describe("test constructor", () => {
-  it("don't throw error", () => {});
-});
+const blackTopPiece = new Pawn(blackTopPlayer);
+const whiteBottomPiece = new Pawn(whiteBottomPlayer);
 
 describe("test isOpponent(otherPlayer:Player)", () => {
   it("return false if piece Player has the same color", () => {

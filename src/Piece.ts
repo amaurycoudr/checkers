@@ -6,13 +6,15 @@ import { MoveStr, PieceJSON, PieceSituation } from "./utils/type";
 import EatenPlay from "./EatenPlay";
 
 export default abstract class Piece extends Box {
-  player: Player;
+  protected player: Player;
   abstract travelMoves: MoveStr[];
   abstract eatenMoves: MoveStr[];
+  hasBeenEaten: boolean;
 
   constructor(player: Player) {
     super();
     this.player = player;
+    this.hasBeenEaten = false;
   }
   isNotEmpty(): boolean {
     return true;
