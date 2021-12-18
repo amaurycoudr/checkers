@@ -11,6 +11,8 @@ import Pawn from "./Pawn";
 import Piece from "./Piece";
 import Player from "./Player";
 import Position from "./Position";
+import TravelPlay from "./TravelPlay";
+import { ERROR_OUT_OF_BOUND } from "./utils/error";
 import { forBoard } from "./utils/fn";
 import {
   BLACK,
@@ -58,6 +60,11 @@ describe("test getBox()", () => {
     forBoard((position, x, y) => {
       expect(emptyBoard.getBox(position)).toBe(EMPTY_BOARD[y][x]);
     });
+  });
+  it("getBox(new Position(x, y)) throw an error if out of bound", () => {
+    expect(() => emptyBoard.getBox(new Position(-1, -1))).toThrowError(
+      ERROR_OUT_OF_BOUND
+    );
   });
 });
 
@@ -117,11 +124,12 @@ describe("test getAroundSituation()", () => {
 describe("test getEatenPlay()", () => {
   const pawnWhite = new Pawn(new Player(WHITE, BOTTOM, "white"));
   const pawnBlack = new Pawn(new Player(BLACK, TOP, "white"));
-  const testGetEatenPlay: {
+  type testEatenPlay = {
     position: Position;
     piece: Piece;
     eatenPlaysExpected: EatenPlay[];
-  }[] = [
+  };
+  const testGetEatenPlay: testEatenPlay[] = [
     {
       position: new Position(0, 0),
       piece: pawnWhite,
@@ -217,4 +225,52 @@ describe("test getPlayerPieces()", () => {
   it(`should return {} for blackPlayer a1WhitePawnBoard`, () => {
     expect(a1WhitePawnBoard.getPlayerPieces(blackPlayer)).toStrictEqual({});
   });
+});
+
+describe("test getPieceTravelPlays()", () => {
+  const pawnWhite = new Pawn(new Player(WHITE, BOTTOM, "white"));
+  const pawnBlack = new Pawn(new Player(BLACK, TOP, "white"));
+  type testTravelPlay = {
+    position: Position;
+    piece: Piece;
+    travelPlaysExpected: TravelPlay[];
+  };
+  const testGetEatenPlay: testTravelPlay[] = [
+    {
+      position: new Position(0, 0),
+      piece: pawnWhite,
+      travelPlaysExpected: [],
+    },
+    {
+      position: new Position(2, 0),
+      piece: pawnWhite,
+      travelPlaysExpected: [],
+    },
+    {
+      position: new Position(1, 1),
+      piece: pawnBlack,
+      travelPlaysExpected: [],
+    },
+    {
+      position: new Position(5, 1),
+      piece: pawnWhite,
+      travelPlaysExpected: [
+        new TravelPlay(new Position(5, 1), new Position(6, 2)),
+        new TravelPlay(new Position(5, 1), new Position(4, 2)),
+      ],
+    },
+  ];
+  const unitTestEatenPlay = ({
+    position,
+    piece,
+    travelPlaysExpected,
+  }: testTravelPlay) => {
+    it(`should return [${travelPlaysExpected.map((travelPlay) =>
+      travelPlay.toStr()
+    )}] for ${JSON.stringify(piece.getJSON())} in ${position.toStr()}`, () =>
+      expect(
+        eatBoard.getPieceTravelPlays(piece, position)
+      ).toIncludeSameMembers(travelPlaysExpected));
+  };
+  testGetEatenPlay.map(unitTestEatenPlay);
 });

@@ -61,9 +61,7 @@ class Board {
 
   getAroundSituation(position: Position, move: PieceMove): PieceSituation {
     return move.reduce((prev, curr): PieceSituation => {
-      const arrivalPosition = position.getArrivalPosition(
-        Position.getPositionFromMove(curr)
-      );
+      const arrivalPosition = position.getArrivalPosition(curr);
 
       const box = arrivalPosition.isInBoard() && this.getBox(arrivalPosition);
 
@@ -77,6 +75,12 @@ class Board {
   getPieceEatenPlays(piece: Piece, position: Position) {
     return piece.getEatenPlays(
       this.getAroundSituation(position, piece.eatenMoves),
+      position
+    );
+  }
+  getPieceTravelPlays(piece: Piece, position: Position) {
+    return piece.getTravelPlays(
+      this.getAroundSituation(position, piece.travelMoves),
       position
     );
   }

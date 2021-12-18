@@ -53,15 +53,14 @@ describe("test equals(Position p)", () => {
   });
 });
 
-const testMove = (start: Position, move: Position, arrived: Position) =>
-  it(`return ${arrived.toStr()} if move was ${move.toStr()} and start ${start.toStr()}`, () => {
+const testMove = (start: Position, move: MoveStr, arrived: Position) =>
+  it(`return ${arrived.toStr()} if move was ${move} and start ${start.toStr()}`, () => {
     expect(start.getArrivalPosition(move).equals(arrived)).toBe(true);
   });
 describe("test getArrivalPosition(Position move)", () => {
-  testMove(new Position(X, Y), new Position(0, 1), new Position(X, Y + 1));
-  testMove(new Position(X, Y), new Position(1, 1), new Position(X + 1, Y + 1));
-  testMove(new Position(X, Y), new Position(1, 0), new Position(X + 1, Y));
-  testMove(new Position(X, Y), new Position(0, 0), new Position(X, Y));
+  testMove(new Position(X, Y), "+1.+1", new Position(X + 1, Y + 1));
+  testMove(new Position(X, Y), "+1.-1", new Position(X + 1, Y - 1));
+  testMove(new Position(X, Y), "-1.-1", new Position(X - 1, Y - 1));
 });
 
 const testCoordinatesToPosition = (

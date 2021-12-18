@@ -31,10 +31,13 @@ class Position {
   equals(position: Position) {
     return this.x === position.x && this.y === position.y;
   }
-  getArrivalPosition(move: Position): Position {
-    return new Position(this.x + move.x, this.y + move.y);
+  getArrivalPosition(move: MoveStr) {
+    return this.addMove(Position.getPositionFromMove(move));
   }
 
+  private addMove(move: Position): Position {
+    return new Position(this.x + move.x, this.y + move.y);
+  }
   getX(): number {
     return this.x;
   }

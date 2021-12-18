@@ -29,8 +29,8 @@ const testGetEatenPlaysData: {
     plays: [
       new EatenPlay(
         position,
-        position.getArrivalPosition(Position.getPositionFromMove("+2.+2")),
-        position.getArrivalPosition(Position.getPositionFromMove("+1.+1"))
+        position.getArrivalPosition("+2.+2"),
+        position.getArrivalPosition("+1.+1")
       ),
     ],
   },
@@ -39,8 +39,8 @@ const testGetEatenPlaysData: {
     plays: [
       new EatenPlay(
         position,
-        position.getArrivalPosition(Position.getPositionFromMove("+2.-2")),
-        position.getArrivalPosition(Position.getPositionFromMove("+1.-1"))
+        position.getArrivalPosition("+2.-2"),
+        position.getArrivalPosition("+1.-1")
       ),
     ],
   },
@@ -49,8 +49,8 @@ const testGetEatenPlaysData: {
     plays: [
       new EatenPlay(
         position,
-        position.getArrivalPosition(Position.getPositionFromMove("-2.+2")),
-        position.getArrivalPosition(Position.getPositionFromMove("-1.+1"))
+        position.getArrivalPosition("-2.+2"),
+        position.getArrivalPosition("-1.+1")
       ),
     ],
   },
@@ -59,8 +59,8 @@ const testGetEatenPlaysData: {
     plays: [
       new EatenPlay(
         position,
-        position.getArrivalPosition(Position.getPositionFromMove("-2.-2")),
-        position.getArrivalPosition(Position.getPositionFromMove("-1.-1"))
+        position.getArrivalPosition("-2.-2"),
+        position.getArrivalPosition("-1.-1")
       ),
     ],
   },
@@ -78,13 +78,13 @@ const testGetEatenPlaysData: {
     plays: [
       new EatenPlay(
         position,
-        position.getArrivalPosition(Position.getPositionFromMove("+2.-2")),
-        position.getArrivalPosition(Position.getPositionFromMove("+1.-1"))
+        position.getArrivalPosition("+2.-2"),
+        position.getArrivalPosition("+1.-1")
       ),
       new EatenPlay(
         position,
-        position.getArrivalPosition(Position.getPositionFromMove("-2.-2")),
-        position.getArrivalPosition(Position.getPositionFromMove("-1.-1"))
+        position.getArrivalPosition("-2.-2"),
+        position.getArrivalPosition("-1.-1")
       ),
     ],
   },
@@ -93,7 +93,7 @@ const unitTestGetEatenPlay = (eatenPlay: {
   situation: PieceSituation;
   plays: TravelPlay[];
 }) => {
-  it(`expect to return plays from [${Object.keys(
+  it(`expect to return eatenPlays from [${Object.keys(
     eatenPlay.situation
   )}] `, () => {
     expect(
@@ -105,8 +105,61 @@ describe("test getEatenPlay()", () => {
   testGetEatenPlaysData.forEach(unitTestGetEatenPlay);
 });
 
-describe("test getTravelPlay()", () => {
-  it("", () => {
-    expect(pawnWhite.getTravelPlays()).toStrictEqual([]);
+const testGetTravelPlaysData: {
+  situation: PieceSituation;
+  plays: TravelPlay[];
+  player: Player;
+}[] = [
+  {
+    player: new Player(WHITE, TOP, "player"),
+    situation: { "+1.-1": pawnBlack, "-1.-1": new Box() },
+    plays: [new TravelPlay(position, position.getArrivalPosition("-1.-1"))],
+  },
+  {
+    player: new Player(WHITE, TOP, "player"),
+    situation: { "+1.-1": pawnBlack, "-1.-1": pawnBlack },
+    plays: [],
+  },
+  {
+    player: new Player(WHITE, TOP, "player"),
+    situation: { "+1.-1": new Box(), "-1.-1": new Box() },
+    plays: [
+      new TravelPlay(position, position.getArrivalPosition("-1.-1")),
+      new TravelPlay(position, position.getArrivalPosition("+1.-1")),
+    ],
+  },
+  {
+    player: new Player(WHITE, BOTTOM, "player"),
+    situation: { "+1.+1": pawnBlack, "-1.+1": new Box() },
+    plays: [new TravelPlay(position, position.getArrivalPosition("-1.+1"))],
+  },
+  {
+    player: new Player(WHITE, BOTTOM, "player"),
+    situation: { "+1.+1": pawnBlack, "-1.+1": pawnBlack },
+    plays: [],
+  },
+  {
+    player: new Player(WHITE, BOTTOM, "player"),
+    situation: { "+1.+1": new Box(), "-1.+1": new Box() },
+    plays: [
+      new TravelPlay(position, position.getArrivalPosition("-1.+1")),
+      new TravelPlay(position, position.getArrivalPosition("+1.+1")),
+    ],
+  },
+];
+const unitTestGetTravelPlay = (travelPlay: {
+  situation: PieceSituation;
+  player: Player;
+  plays: TravelPlay[];
+}) => {
+  it(`expect to return travelPlays from [${Object.keys(
+    travelPlay.situation
+  )}] `, () => {
+    expect(
+      new Pawn(travelPlay.player).getTravelPlays(travelPlay.situation, position)
+    ).toIncludeSameMembers(travelPlay.plays);
   });
+};
+describe("test getTravelPlay()", () => {
+  testGetTravelPlaysData.map(unitTestGetTravelPlay);
 });
