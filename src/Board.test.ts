@@ -1,15 +1,30 @@
 import Board from "./Board";
-import { CLASSIC_BOARD, EMPTY_BOARD, ONE_PAWN_BOARD } from "./BoardState";
+import {
+  CLASSIC_BOARD,
+  EAT_BOARD,
+  EMPTY_BOARD,
+  ONE_PAWN_BOARD,
+} from "./BoardState";
 import Box from "./Box";
+import EatenPlay from "./EatenPlay";
 import Pawn from "./Pawn";
+import Piece from "./Piece";
 import Player from "./Player";
 import Position from "./Position";
 import { forBoard } from "./utils/fn";
-import { MoveStr, PieceSituation, TOP, WHITE } from "./utils/type";
+import {
+  BLACK,
+  BOTTOM,
+  MoveStr,
+  PieceSituation,
+  TOP,
+  WHITE,
+} from "./utils/type";
 
 const emptyBoard = new Board(EMPTY_BOARD);
 const onePawn = new Board(ONE_PAWN_BOARD);
 const startBoard = new Board(CLASSIC_BOARD);
+const eatBoard = new Board(EAT_BOARD);
 
 const START_BOARD_JSON = {
   A1: { type: "Pawn", player: "white" },
@@ -96,6 +111,91 @@ describe("test getAroundSituation()", () => {
   });
 
   const A2 = new Position(1, 0);
-
   testUnitGetAroundSituation(A2, ["-1.-1"], {});
+});
+
+describe("test getEatenPlay()", () => {
+  const pawnWhite = new Pawn(new Player(WHITE, BOTTOM, "white"));
+  const pawnBlack = new Pawn(new Player(BLACK, TOP, "white"));
+  const testGetEatenPlay: {
+    position: Position;
+    piece: Piece;
+    eatenPlaysExpected: EatenPlay[];
+  }[] = [
+    {
+      position: new Position(0, 0),
+      piece: pawnWhite,
+      eatenPlaysExpected: [
+        new EatenPlay(
+          new Position(0, 0),
+          new Position(2, 2),
+          new Position(1, 1)
+        ),
+      ],
+    },
+    {
+      position: new Position(2, 0),
+      piece: pawnWhite,
+      eatenPlaysExpected: [
+        new EatenPlay(
+          new Position(2, 0),
+          new Position(0, 2),
+          new Position(1, 1)
+        ),
+        new EatenPlay(
+          new Position(2, 0),
+          new Position(4, 2),
+          new Position(3, 1)
+        ),
+      ],
+    },
+    {
+      position: new Position(1, 1),
+      piece: pawnBlack,
+      eatenPlaysExpected: [],
+    },
+    {
+      position: new Position(2, 4),
+      piece: pawnBlack,
+      eatenPlaysExpected: [
+        new EatenPlay(
+          new Position(2, 4),
+          new Position(0, 2),
+          new Position(1, 3)
+        ),
+        new EatenPlay(
+          new Position(2, 4),
+          new Position(4, 2),
+          new Position(3, 3)
+        ),
+        new EatenPlay(
+          new Position(2, 4),
+          new Position(4, 6),
+          new Position(3, 5)
+        ),
+        new EatenPlay(
+          new Position(2, 4),
+          new Position(0, 6),
+          new Position(1, 5)
+        ),
+      ],
+    },
+  ];
+  const unitTestEatenPlay = ({
+    position,
+    piece,
+    eatenPlaysExpected,
+  }: {
+    position: Position;
+    piece: Piece;
+    eatenPlaysExpected: EatenPlay[];
+  }) => {
+    it(`should return [${eatenPlaysExpected.map((eatenPlay) =>
+      eatenPlay.toStr()
+    )}] for ${JSON.stringify(piece.getJSON())} in ${position.toStr()}`, () =>
+      expect(eatBoard.getPieceEatenPlays(piece, position)).toIncludeSameMembers(
+        eatenPlaysExpected
+      ));
+  };
+  testGetEatenPlay.map(unitTestEatenPlay);
 });

@@ -28,13 +28,15 @@ class Pawn extends Piece {
     }
   }
   getEatenPlays(situation: PieceSituation, position: Position): EatenPlay[] {
-    const result:EatenPlay[] = [];
+    const result: EatenPlay[] = [];
+
     const possibleMoves: MoveStr[][] = [
       ["+1.+1", "+2.+2"],
       ["+1.-1", "+2.-2"],
       ["-1.+1", "-2.+2"],
       ["-1.-1", "-2.-2"],
     ];
+    console.log(situation, "_______");
     possibleMoves.forEach((moves) => {
       if (this.canBeEatenPlay(situation[moves[0]], situation[moves[1]])) {
         result.push(
@@ -46,6 +48,8 @@ class Pawn extends Piece {
         );
       }
     });
+    console.log(result, position);
+
     return result;
   }
 

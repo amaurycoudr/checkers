@@ -12,5 +12,6 @@ const config: Config.InitialOptions = {
     },
   },
   coverageReporters: ["json-summary", "text"],
+  setupFilesAfterEnv: ["jest-extended/all"],
 };
 export default config;

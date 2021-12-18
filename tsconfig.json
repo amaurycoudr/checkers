@@ -21,6 +21,7 @@
     "isolatedModules": true,
     "noEmit": true,
   },
+ "files": ["global.d.ts"],
   "include": [
     "src"
   ],
