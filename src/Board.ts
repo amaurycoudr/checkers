@@ -103,28 +103,24 @@ class Board {
     const pieces = this.getPlayerPieces(player);
     const eatenPlays: EatenPlay[] = [];
     map(pieces, (piece, coordinate) => {
-      if (piece) {
-        eatenPlays.push(
-          ...this.getPieceEatenPlays(
-            piece,
-            Position.getPositionFromCoordinate(coordinate as Coordinates)
-          )
-        );
-      }
+      eatenPlays.push(
+        ...this.getPieceEatenPlays(
+          piece!,
+          Position.getPositionFromCoordinate(coordinate as Coordinates)
+        )
+      );
     });
     if (eatenPlays.length > 0) {
       return eatenPlays;
     }
     const travelMoves: TravelPlay[] = [];
     map(pieces, (piece, coordinate) => {
-      if (piece) {
-        travelMoves.push(
-          ...this.getPieceTravelPlays(
-            piece,
-            Position.getPositionFromCoordinate(coordinate as Coordinates)
-          )
-        );
-      }
+      travelMoves.push(
+        ...this.getPieceTravelPlays(
+          piece!,
+          Position.getPositionFromCoordinate(coordinate as Coordinates)
+        )
+      );
     });
     return travelMoves;
   }
