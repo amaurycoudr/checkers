@@ -46,7 +46,10 @@ class Position {
   }
 
   static getPositionFromCoordinate(coordinates: Coordinates): Position {
-    const yCoordinate = parseInt(coordinates[1], 10) as CoordinateY;
+    const yCoordinate = parseInt(
+      coordinates.slice(1, coordinates.length),
+      10
+    ) as CoordinateY;
     const y = coordinatesY.indexOf(yCoordinate);
     const xCoordinate = coordinates[0] as CoordinateX;
     const x = coordinatesX.indexOf(xCoordinate);

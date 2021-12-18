@@ -15,8 +15,12 @@ const emptyLine = (): LengthType<Box> => [
   new Box(),
   new Box(),
   new Box(),
+  new Box(),
+  new Box(),
 ];
 const playerLine = (player: Player, isEven: boolean): LengthType<Box> => [
+  isEven ? new Pawn(player) : new Box(),
+  isEven ? new Box() : new Pawn(player),
   isEven ? new Pawn(player) : new Box(),
   isEven ? new Box() : new Pawn(player),
   isEven ? new Pawn(player) : new Box(),
@@ -35,9 +39,13 @@ const onePawnLine = (player: Player): LengthType<Box> => [
   new Box(),
   new Box(),
   new Box(),
+  new Box(),
+  new Box(),
 ];
 
 export const EMPTY_BOARD: BoardState = [
+  emptyLine(),
+  emptyLine(),
   emptyLine(),
   emptyLine(),
   emptyLine(),
@@ -57,13 +65,17 @@ export const ONE_WHITE_PAWN_BOARD: BoardState = [
   emptyLine(),
   emptyLine(),
   emptyLine(),
+  emptyLine(),
+  emptyLine(),
 ];
 export const CLASSIC_BOARD: BoardState = [
   playerLine(playerWhite, true),
   playerLine(playerWhite, false),
   playerLine(playerWhite, true),
+  playerLine(playerWhite, false),
   emptyLine(),
   emptyLine(),
+  playerLine(playerBlack, true),
   playerLine(playerBlack, false),
   playerLine(playerBlack, true),
   playerLine(playerBlack, false),
@@ -77,10 +89,14 @@ export const EAT_BOARD: BoardState = [
   playerLine(playerWhite, false),
   emptyLine(),
   emptyLine(),
+  emptyLine(),
+  emptyLine(),
 ];
 
 export const a1PawnBoard = (player: Player): BoardState => [
   onePawnLine(player),
+  emptyLine(),
+  emptyLine(),
   emptyLine(),
   emptyLine(),
   emptyLine(),

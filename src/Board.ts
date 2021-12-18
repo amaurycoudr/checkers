@@ -1,7 +1,10 @@
+import { map } from "lodash";
 import { BoardState } from "./BoardState";
+import EatenPlay from "./EatenPlay";
 import Piece from "./Piece";
 import Player from "./Player";
 import Position from "./Position";
+import TravelPlay from "./TravelPlay";
 import { INDEX_MAX, INDEX_MIN } from "./utils/board";
 import { ERROR_NOT_PIECE, ERROR_OUT_OF_BOUND } from "./utils/error";
 import { forBoard } from "./utils/fn";
@@ -95,6 +98,35 @@ class Board {
       } catch {}
     });
     return result;
+  }
+  getPlayerPlays(player: Player): TravelPlay[] {
+    const pieces = this.getPlayerPieces(player);
+    const eatenPlays: EatenPlay[] = [];
+    map(pieces, (piece, coordinate) => {
+      if (piece) {
+        eatenPlays.push(
+          ...this.getPieceEatenPlays(
+            piece,
+            Position.getPositionFromCoordinate(coordinate as Coordinates)
+          )
+        );
+      }
+    });
+    if (eatenPlays.length > 0) {
+      return eatenPlays;
+    }
+    const travelMoves: TravelPlay[] = [];
+    map(pieces, (piece, coordinate) => {
+      if (piece) {
+        travelMoves.push(
+          ...this.getPieceTravelPlays(
+            piece,
+            Position.getPositionFromCoordinate(coordinate as Coordinates)
+          )
+        );
+      }
+    });
+    return travelMoves;
   }
 }
 export default Board;
