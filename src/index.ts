@@ -1,3 +1,5 @@
+import Position from "./Position/Position";
 import CheckersParty from "./PublicApi/PublicApi";
 
-export default { CheckersParty };
+export { Position };
+export default CheckersParty;
