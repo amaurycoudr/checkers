@@ -1,3 +1,15 @@
+import { map } from "lodash";
+import Box from "../Box/Box";
+import EatenPlay from "../EatenPlay/EatenPlay";
+import Pawn from "../Pawn/Pawn";
+import Piece from "../Piece/Piece";
+import Player from "../Player/Player";
+import Position from "../Position/Position";
+import { methodTest } from "../test/utils";
+import TravelPlay from "../TravelPlay/TravelPlay";
+import { ERROR_OUT_OF_BOUND } from "../utils/error";
+import { forBoard } from "../utils/fn";
+import { BLACK, MoveStr, PieceSituation, WHITE } from "../utils/type";
 import Board from "./Board";
 import {
   a1PawnBoard,
@@ -7,25 +19,6 @@ import {
   ONE_WHITE_PAWN_BOARD,
   START_BOARD_JSON,
 } from "./BoardState";
-import EatenPlay from "../EatenPlay/EatenPlay";
-import Pawn from "../Pawn/Pawn";
-import Piece from "../Piece/Piece";
-import Player from "../Player/Player";
-import Position from "../Position/Position";
-import TravelPlay from "../TravelPlay/TravelPlay";
-import { ERROR_OUT_OF_BOUND } from "../utils/error";
-import { forBoard } from "../utils/fn";
-import {
-  BLACK,
-  BOTTOM,
-  MoveStr,
-  PieceSituation,
-  TOP,
-  WHITE,
-} from "../utils/type";
-import { methodTest } from "../test/utils";
-import { map } from "lodash";
-import Box from "../Box/Box";
 
 const emptyBoard = new Board(EMPTY_BOARD);
 const onePawnBoard = new Board(ONE_WHITE_PAWN_BOARD);
@@ -49,7 +42,7 @@ methodTest(emptyBoard.getJSON, () => {
   it("should return {} for EMPTY_BOARD", () => {
     expect(emptyBoard.getJSON()).toStrictEqual({});
   });
-  const whitePawn = new Pawn(new Player(WHITE, TOP, "white"));
+  const whitePawn = new Pawn(new Player(WHITE, "white"));
   it(`should return { A1: ${JSON.stringify(
     whitePawn.getJSON()
   )} } for ONE_PAWN_BOARD`, () => {
@@ -130,8 +123,8 @@ methodTest(startBoard.getAroundSituation, () => {
 });
 
 methodTest(eatBoard.getPieceEatenPlays, () => {
-  const pawnWhite = new Pawn(new Player(WHITE, BOTTOM, "white"));
-  const pawnBlack = new Pawn(new Player(BLACK, TOP, "white"));
+  const pawnWhite = new Pawn(new Player(WHITE, "white"));
+  const pawnBlack = new Pawn(new Player(BLACK, "white"));
   type testEatenPlay = {
     position: Position;
     piece: Piece;
@@ -217,8 +210,8 @@ methodTest(eatBoard.getPieceEatenPlays, () => {
 });
 
 methodTest(emptyBoard.getPlayerPieces, () => {
-  const whitePlayer = new Player(WHITE, TOP, "test");
-  const blackPlayer = new Player(BLACK, BOTTOM, "test");
+  const whitePlayer = new Player(WHITE, "test");
+  const blackPlayer = new Player(BLACK, "test");
   const a1WhitePawnBoard = new Board(a1PawnBoard(whitePlayer));
   it("should return {} for emptyBoard", () => {
     expect(emptyBoard.getPlayerPieces(whitePlayer)).toStrictEqual({});
@@ -235,8 +228,8 @@ methodTest(emptyBoard.getPlayerPieces, () => {
 });
 
 methodTest(emptyBoard.getPieceTravelPlays, () => {
-  const pawnWhite = new Pawn(new Player(WHITE, BOTTOM, "white"));
-  const pawnBlack = new Pawn(new Player(BLACK, TOP, "white"));
+  const pawnWhite = new Pawn(new Player(WHITE, "white"));
+  const pawnBlack = new Pawn(new Player(BLACK, "white"));
   type testTravelPlay = {
     position: Position;
     piece: Piece;
@@ -284,19 +277,19 @@ methodTest(emptyBoard.getPieceTravelPlays, () => {
 methodTest(eatBoard.getPlayerPlays, () => {
   it("should return eatenPlays if eatenPlays possible ", () => {
     eatBoard
-      .getPlayerPlays(new Player(WHITE, TOP, "test"))
+      .getPlayerPlays(new Player(WHITE, "test"))
       .forEach((play) => expect(play instanceof EatenPlay).toBe(true));
   });
   it("should return travelPlays if only travelPlays possible", () => {
     startBoard
-      .getPlayerPlays(new Player(WHITE, TOP, "test"))
+      .getPlayerPlays(new Player(WHITE, "test"))
       .forEach((play) => expect(play instanceof EatenPlay).toBe(false));
   });
 
   const move = new TravelPlay(new Position(0, 0), new Position(1, 1));
   it(`should return ${move.toStr()} for the onePawnBoard`, () => {
     expect(
-      onePawnBoard.getPlayerPlays(new Player(WHITE, TOP, "test"))[0]
+      onePawnBoard.getPlayerPlays(new Player(WHITE, "test"))[0]
     ).toStrictEqual(move);
   });
 });

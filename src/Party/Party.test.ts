@@ -1,15 +1,14 @@
 import { CLASSIC_BOARD, START_BOARD_JSON } from "../Board/BoardState";
-import Party from "./Party";
 import { PlayerBlack, PlayerWhite } from "../Player/Player";
 import Position from "../Position/Position";
-import TravelPlay from "../TravelPlay/TravelPlay";
-import { BOTTOM, TOP } from "../utils/type";
 import { methodTest } from "../test/utils";
+import TravelPlay from "../TravelPlay/TravelPlay";
+import Party from "./Party";
 
 const startParty = new Party(
   CLASSIC_BOARD,
-  new PlayerWhite(BOTTOM, "moutarde"),
-  new PlayerBlack(TOP, "colonel")
+  new PlayerWhite("moutarde"),
+  new PlayerBlack("colonel")
 );
 methodTest(startParty.getCurrentBoardJSON, () => {
   it("should be START_BOARD_JSON when current board is CLASSIC_BOARD", () => {

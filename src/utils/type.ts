@@ -5,10 +5,6 @@ export const BLACK = "black";
 export const WHITE = "white";
 export type Color = typeof WHITE | typeof BLACK;
 
-export const TOP = "top";
-export const BOTTOM = "bottom";
-export type Side = typeof TOP | typeof BOTTOM;
-
 export type LengthType<T> = [T, T, T, T, T, T, T, T, T, T];
 
 export const coordinatesY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
@@ -48,6 +44,7 @@ export type PieceMoves = MoveStr[];
 export type PieceSituation = { [key in PieceMoves[number]]?: Box };
 
 export type BoardJSON = { [key in Coordinates]?: PieceJSON };
+export type PlayJSON = { from: Coordinates; to: Coordinates };
 
 export type PartyState = {
   playerTurn: Player;

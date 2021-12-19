@@ -1,13 +1,12 @@
-import { BLACK, Color, Side, TOP, WHITE } from "../utils/type";
+import { Json, Utils } from "../genericInterface";
+import { BLACK, Color, WHITE } from "../utils/type";
 
-class Player {
+class Player implements Utils, Json {
   private color: Color;
-  private position: Side;
   private name: string;
 
-  constructor(color: Color, position: Side, name: string) {
+  constructor(color: Color, name: string) {
     this.name = name;
-    this.position = position;
     this.color = color;
   }
 
@@ -20,7 +19,11 @@ class Player {
   }
 
   public isTop() {
-    return this.position === TOP;
+    return this.color === BLACK;
+  }
+
+  getJSON() {
+    return { color: this.color, name: this.name };
   }
 
   public getColor() {
@@ -29,15 +32,15 @@ class Player {
 }
 export default Player;
 class PlayerWhite extends Player {
-  constructor(side: Side, name: string) {
-    super(WHITE, side, name);
+  constructor(name: string) {
+    super(WHITE, name);
   }
 }
 export { PlayerWhite };
+export { PlayerBlack };
 
 class PlayerBlack extends Player {
-  constructor(side: Side, name: string) {
-    super(BLACK, side, name);
+  constructor(name: string) {
+    super(BLACK, name);
   }
 }
-export { PlayerBlack };

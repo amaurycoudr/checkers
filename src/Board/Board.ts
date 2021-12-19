@@ -1,4 +1,4 @@
-import { cloneDeep, map } from "lodash";
+import { cloneDeep, isEqual, map } from "lodash";
 import { BoardState } from "./BoardState";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import Piece from "../Piece/Piece";
@@ -16,8 +16,9 @@ import {
   PieceSituation,
 } from "../utils/type";
 import Box from "../Box/Box";
+import { Utils } from "../genericInterface";
 export type PlayerPieces = { [key in Coordinates]?: Piece };
-class Board {
+class Board implements Utils {
   private board: BoardState;
 
   constructor(initBoard: BoardState) {
@@ -160,6 +161,13 @@ class Board {
       newBoard.setBox(play.eaten, new Box());
     }
     return newBoard;
+  }
+
+  equals(board: Board) {
+    return isEqual(board.getJSON(), this.getJSON());
+  }
+  toStr(): string {
+    return JSON.stringify(this.getJSON());
   }
 }
 export default Board;

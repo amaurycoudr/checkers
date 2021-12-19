@@ -1,11 +1,11 @@
 import Box from "../Box/Box";
 import Pawn from "../Pawn/Pawn";
 import Player from "../Player/Player";
-import { BLACK, BOTTOM, LengthType, TOP, WHITE } from "../utils/type";
+import { BLACK, LengthType, WHITE } from "../utils/type";
 
 export type BoardState = LengthType<LengthType<Box>>;
-const playerWhite = new Player(WHITE, BOTTOM, "Moutarde");
-const playerBlack = new Player(BLACK, TOP, "Le Blanc");
+const playerWhite = new Player(WHITE, "Moutarde");
+const playerBlack = new Player(BLACK, "Le Blanc");
 const emptyLine = (): LengthType<Box> => [
   new Box(),
   new Box(),
