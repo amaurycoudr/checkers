@@ -9,8 +9,10 @@ import { INDEX_MAX, INDEX_MIN } from "../utils/board";
 import { ERROR_NOT_PIECE, ERROR_OUT_OF_BOUND } from "../utils/error";
 import { forBoard } from "../utils/fn";
 import {
+  BoardArray,
   BoardJSON,
   Coordinates,
+  LineArray,
   PieceJSON,
   PieceMoves,
   PieceSituation,
@@ -49,6 +51,43 @@ class Board implements Utils {
       }
     });
     return JSON;
+  }
+
+  getArray(): BoardArray {
+    const emptyLine = (): LineArray => [
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+    ];
+    const array: BoardArray = [
+      emptyLine(),
+      emptyLine(),
+      emptyLine(),
+      emptyLine(),
+      emptyLine(),
+      emptyLine(),
+      emptyLine(),
+      emptyLine(),
+      emptyLine(),
+      emptyLine(),
+    ];
+    Board.forBoardState((position: Position) => {
+      const json = this.getPositionJson(position);
+      if (json) {
+        array[position.getY()][position.getX()] = json;
+      } else {
+      }
+    });
+    console.log(array);
+
+    return array;
   }
 
   private static forBoardState(fn: (p: Position) => void) {

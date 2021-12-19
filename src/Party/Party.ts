@@ -55,7 +55,6 @@ class Party {
     }
     this.makePlay(realPlay);
     const canPlayAgain = this.canCurrentPlayerPlayAgain(realPlay);
-    console.log(canPlayAgain, play);
 
     if (!canPlayAgain) {
       this.updateCurrentPlayer();
@@ -86,7 +85,6 @@ class Party {
 
   private updateCurrentPlayer() {
     const isBlackTurn = this.playerTurn.equals(this.playerBlack);
-    console.log(isBlackTurn, this.playerTurn, this.playerBlack);
 
     this.playerTurn = isBlackTurn ? this.playerWhite : this.playerBlack;
   }
