@@ -1,8 +1,8 @@
-import Board from "./Board";
-import { BoardState } from "./BoardState";
-import Player, { PlayerBlack, PlayerWhite } from "./Player";
-import TravelPlay from "./TravelPlay";
-import { BoardJSON, PartyState, WHITE } from "./utils/type";
+import Board from "../Board/Board";
+import { BoardState } from "../Board/BoardState";
+import Player, { PlayerBlack, PlayerWhite } from "../Player/Player";
+import TravelPlay from "../TravelPlay/TravelPlay";
+import { BoardJSON, PartyState, WHITE } from "../utils/type";
 
 class Party {
   private playerWhite: Player;

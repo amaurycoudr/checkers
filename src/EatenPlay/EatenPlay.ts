@@ -1,5 +1,5 @@
-import Position from "./Position";
-import TravelPlay from "./TravelPlay";
+import Position from "../Position/Position";
+import TravelPlay from "../TravelPlay/TravelPlay";
 
 class EatenPlay extends TravelPlay {
   eaten: Position;

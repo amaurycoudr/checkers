@@ -1,5 +1,5 @@
-import { INDEX_MAX, INDEX_MIN } from "./utils/board";
-import { ERROR_COORDINATE_OUT } from "./utils/error";
+import { INDEX_MAX, INDEX_MIN } from "../utils/board";
+import { ERROR_COORDINATE_OUT } from "../utils/error";
 import {
   Coordinates,
   coordinatesX,
@@ -8,7 +8,7 @@ import {
   CoordinateY,
   MoveCoordinate,
   MoveStr,
-} from "./utils/type";
+} from "../utils/type";
 class Position {
   private x: number;
   private y: number;

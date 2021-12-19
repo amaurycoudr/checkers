@@ -1,9 +1,9 @@
-import Box from "../Box";
-import EatenPlay from "../EatenPlay";
-import Piece from "../Piece";
-import Player from "../Player";
-import Position from "../Position";
-import TravelPlay from "../TravelPlay";
+import Box from "../Box/Box";
+import EatenPlay from "../EatenPlay/EatenPlay";
+import Piece from "../Piece/Piece";
+import Player from "../Player/Player";
+import Position from "../Position/Position";
+import TravelPlay from "../TravelPlay/TravelPlay";
 import { MoveStr, PieceJSON, PieceSituation } from "../utils/type";
 
 class Pawn extends Piece {

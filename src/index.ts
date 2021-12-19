@@ -1,5 +1,5 @@
-import Position from "./Position";
-import Player from "./Player";
-import Box from "./Box";
+import Position from "./Position/Position";
+import Player from "./Player/Player";
+import Box from "./Box/Box";
 
 export default { Position, Player, Box };

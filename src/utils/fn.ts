@@ -1,4 +1,4 @@
-import Position from "../Position";
+import Position from "../Position/Position";
 import { INDEX_MAX, INDEX_MIN } from "./board";
 import { moveCoordinate, MoveNumber } from "./type";
 

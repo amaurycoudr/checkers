@@ -1,5 +1,5 @@
-import Box from "../Box";
-import Player from "../Player";
+import Box from "../Box/Box";
+import Player from "../Player/Player";
 
 export const BLACK = "black";
 export const WHITE = "white";
@@ -44,8 +44,8 @@ export type PieceJSON = {
   type: string;
   player: Color;
 };
-export type PieceMove = MoveStr[];
-export type PieceSituation = { [key in PieceMove[number]]?: Box };
+export type PieceMoves = MoveStr[];
+export type PieceSituation = { [key in PieceMoves[number]]?: Box };
 
 export type BoardJSON = { [key in Coordinates]?: PieceJSON };
 
