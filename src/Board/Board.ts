@@ -1,4 +1,4 @@
-import { map } from "lodash";
+import { cloneDeep, map } from "lodash";
 import { BoardState } from "./BoardState";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import Piece from "../Piece/Piece";
@@ -15,6 +15,7 @@ import {
   PieceMoves,
   PieceSituation,
 } from "../utils/type";
+import Box from "../Box/Box";
 export type PlayerPieces = { [key in Coordinates]?: Piece };
 class Board {
   private board: BoardState;
@@ -28,6 +29,13 @@ class Board {
       throw new Error(ERROR_OUT_OF_BOUND);
     }
     return this.board[position.getY()][position.getX()];
+  }
+
+  setBox(position: Position, newValue: Box) {
+    if (!position.isInBoard()) {
+      throw new Error(ERROR_OUT_OF_BOUND);
+    }
+    this.board[position.getY()][position.getX()] = newValue;
   }
 
   getJSON(): BoardJSON {
@@ -128,17 +136,30 @@ class Board {
     });
     return travelPlays;
   }
+
   getPieceEatenPlays(piece: Piece, position: Position) {
     return piece.getEatenPlays(
       this.getAroundSituation(position, piece.eatenMoves),
       position
     );
   }
+
   getPieceTravelPlays(piece: Piece, position: Position) {
     return piece.getTravelPlays(
       this.getAroundSituation(position, piece.travelMoves),
       position
     );
+  }
+
+  getNewBoardFromPlay(play: TravelPlay | EatenPlay) {
+    const newBoardState = cloneDeep(this.board);
+    const newBoard = new Board(newBoardState);
+    newBoard.setBox(play.to, newBoard.getBox(play.from));
+    newBoard.setBox(play.from, new Box());
+    if (play instanceof EatenPlay) {
+      newBoard.setBox(play.eaten, new Box());
+    }
+    return newBoard;
   }
 }
 export default Board;

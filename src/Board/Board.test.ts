@@ -25,6 +25,7 @@ import {
 } from "../utils/type";
 import { methodTest } from "../test/utils";
 import { map } from "lodash";
+import Box from "../Box/Box";
 
 const emptyBoard = new Board(EMPTY_BOARD);
 const onePawnBoard = new Board(ONE_WHITE_PAWN_BOARD);
@@ -297,5 +298,30 @@ methodTest(eatBoard.getPlayerPlays, () => {
     expect(
       onePawnBoard.getPlayerPlays(new Player(WHITE, TOP, "test"))[0]
     ).toStrictEqual(move);
+  });
+});
+
+methodTest(eatBoard.getNewBoardFromPlay, () => {
+  it("should return a board where from is a Box and to is Equal to from previous value", () => {
+    const A1 = new Position(0, 0);
+    const B2 = new Position(1, 1);
+    const play = new TravelPlay(A1, B2);
+    const newBoard = onePawnBoard.getNewBoardFromPlay(play);
+    const box = new Box();
+
+    expect(newBoard.getBox(A1)).toStrictEqual(box);
+    expect(newBoard.getBox(B2)).toStrictEqual(onePawnBoard.getBox(A1));
+  });
+  it("should return a board where from and eaten is a Box and to is Equal to from previous value", () => {
+    const A1 = new Position(0, 0);
+    const B2 = new Position(1, 1);
+    const C3 = new Position(2, 2);
+    const play = new EatenPlay(A1, C3, B2);
+    const newBoard = eatBoard.getNewBoardFromPlay(play);
+    const box = new Box();
+
+    expect(newBoard.getBox(A1)).toStrictEqual(box);
+    expect(newBoard.getBox(B2)).toStrictEqual(box);
+    expect(newBoard.getBox(C3)).toStrictEqual(eatBoard.getBox(A1));
   });
 });
