@@ -1,6 +1,6 @@
 {
   "name": "amaurycoudr-checkers",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "checkers game",
   "source": "scr/index.ts",
   "main": "lib/index.js",
