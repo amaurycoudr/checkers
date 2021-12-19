@@ -1,4 +1,4 @@
-import { BLACK, Color, Side, TOP, WHITE } from "./utils/type";
+import { BLACK, Color, Side, TOP, WHITE } from "../utils/type";
 
 class Player {
   private color: Color;

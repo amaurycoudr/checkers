@@ -1,4 +1,4 @@
-import Position from "./Position";
+import Position from "../Position/Position";
 
 class TravelPlay {
   protected from: Position;

@@ -1,9 +1,9 @@
-import Box from "./Box";
-import TravelPlay from "./TravelPlay";
-import Player from "./Player";
-import Position from "./Position";
-import { MoveStr, PieceJSON, PieceSituation } from "./utils/type";
-import EatenPlay from "./EatenPlay";
+import Box from "../Box/Box";
+import TravelPlay from "../TravelPlay/TravelPlay";
+import Player from "../Player/Player";
+import Position from "../Position/Position";
+import { MoveStr, PieceJSON, PieceSituation } from "../utils/type";
+import EatenPlay from "../EatenPlay/EatenPlay";
 
 export default abstract class Piece extends Box {
   protected player: Player;

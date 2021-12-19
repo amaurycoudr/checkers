@@ -1,10 +1,10 @@
-import Box from "../Box";
+import Box from "../Box/Box";
 import Pawn from "./Pawn";
-import TravelPlay from "../TravelPlay";
-import Player from "../Player";
-import Position from "../Position";
+import TravelPlay from "../TravelPlay/TravelPlay";
+import Player from "../Player/Player";
+import Position from "../Position/Position";
 import { BLACK, BOTTOM, PieceSituation, TOP, WHITE } from "../utils/type";
-import EatenPlay from "../EatenPlay";
+import EatenPlay from "../EatenPlay/EatenPlay";
 import { map } from "lodash";
 import { methodTest } from "../test/utils";
 const whitePlayer = new Player(WHITE, TOP, "bam");

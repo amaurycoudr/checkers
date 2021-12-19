@@ -7,12 +7,12 @@ import {
   ONE_WHITE_PAWN_BOARD,
   START_BOARD_JSON,
 } from "./BoardState";
-import EatenPlay from "../EatenPlay";
+import EatenPlay from "../EatenPlay/EatenPlay";
 import Pawn from "../Pawn/Pawn";
-import Piece from "../Piece";
-import Player from "../Player";
-import Position from "../Position";
-import TravelPlay from "../TravelPlay";
+import Piece from "../Piece/Piece";
+import Player from "../Player/Player";
+import Position from "../Position/Position";
+import TravelPlay from "../TravelPlay/TravelPlay";
 import { ERROR_OUT_OF_BOUND } from "../utils/error";
 import { forBoard } from "../utils/fn";
 import {

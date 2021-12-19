@@ -1,5 +1,5 @@
-import Box from "../Box";
-import Player from "../Player";
+import Box from "../Box/Box";
+import Player from "../Player/Player";
 
 export const BLACK = "black";
 export const WHITE = "white";

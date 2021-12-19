@@ -1,16 +1,17 @@
 import Player from "./Player";
-import { BLACK, BOTTOM, TOP, WHITE } from "./utils/type";
+import { BLACK, BOTTOM, TOP, WHITE } from "../utils/type";
+import { methodTest } from "../test/utils";
 const name = "namePlayer";
 
 const playerBlackBottom = new Player(BLACK, BOTTOM, name);
 const playerWhiteTop = new Player(WHITE, TOP, name);
-describe("test toStr()", () => {
+methodTest(playerBlackBottom.toStr, () => {
   it("should return ${name} the ${color} player ", () => {
     expect(playerBlackBottom.toStr()).toBe(`${name} the ${BLACK} player`);
   });
 });
 
-describe("test equals(player P)", () => {
+methodTest(playerBlackBottom.equals, () => {
   it("should return true if same color", () => {
     expect(playerBlackBottom.equals(playerBlackBottom)).toBe(true);
   });
@@ -19,7 +20,7 @@ describe("test equals(player P)", () => {
   });
 });
 
-describe("test isTop()", () => {
+methodTest(playerBlackBottom.isTop, () => {
   it("should return false if position " + TOP, () => {
     expect(playerWhiteTop.isTop()).toBe(true);
   });

@@ -1,6 +1,6 @@
-import Box from "../Box";
+import Box from "../Box/Box";
 import Pawn from "../Pawn/Pawn";
-import Player from "../Player";
+import Player from "../Player/Player";
 import { BLACK, BOTTOM, LengthType, TOP, WHITE } from "../utils/type";
 
 export type BoardState = LengthType<LengthType<Box>>;

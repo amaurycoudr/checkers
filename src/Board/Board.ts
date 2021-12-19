@@ -1,10 +1,10 @@
 import { map } from "lodash";
 import { BoardState } from "./BoardState";
-import EatenPlay from "../EatenPlay";
-import Piece from "../Piece";
-import Player from "../Player";
-import Position from "../Position";
-import TravelPlay from "../TravelPlay";
+import EatenPlay from "../EatenPlay/EatenPlay";
+import Piece from "../Piece/Piece";
+import Player from "../Player/Player";
+import Position from "../Position/Position";
+import TravelPlay from "../TravelPlay/TravelPlay";
 import { INDEX_MAX, INDEX_MIN } from "../utils/board";
 import { ERROR_NOT_PIECE, ERROR_OUT_OF_BOUND } from "../utils/error";
 import { forBoard } from "../utils/fn";
