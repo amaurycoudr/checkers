@@ -8,3 +8,5 @@ rollup.config.js
 README.md
 jest.config.ts
 babel.config.js
+testSetup.js
+global.d.ts

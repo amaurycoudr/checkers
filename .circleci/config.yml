@@ -28,7 +28,9 @@ jobs:
           root: ~/repo
           paths: 
             - .
-  build:
+  
+
+  build_deploy:
     <<: *defaults
     steps:
       - attach_workspace:
@@ -36,12 +38,6 @@ jobs:
       - run:
           name: Build package
           command: yarn build
-
-  deploy:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ~/repo
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
@@ -54,18 +50,10 @@ workflows:
   test_build_deploy:
     jobs:
       - test
-      - build:
+      - build_deploy:
           requires:
-              - test
+            - test
           filters:
-              tags:
-                only: /^v.*/
-      - deploy:
-          requires:
-            - build
-          filters:
-              tags:
-                only: /^v.*/
               branches:
                 only:
                   - master
