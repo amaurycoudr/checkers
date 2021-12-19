@@ -1,5 +1,5 @@
-import Board from "./Board";
-import { BoardState } from "./BoardState";
+import Board from "./Board/Board";
+import { BoardState } from "./Board/BoardState";
 import Player, { PlayerBlack, PlayerWhite } from "./Player";
 import TravelPlay from "./TravelPlay";
 import { BoardJSON, PartyState, WHITE } from "./utils/type";

@@ -1,7 +1,7 @@
-import Box from "./Box";
-import Pawn from "./Pawn/Pawn";
-import Player from "./Player";
-import { BLACK, BOTTOM, LengthType, TOP, WHITE } from "./utils/type";
+import Box from "../Box";
+import Pawn from "../Pawn/Pawn";
+import Player from "../Player";
+import { BLACK, BOTTOM, LengthType, TOP, WHITE } from "../utils/type";
 
 export type BoardState = LengthType<LengthType<Box>>;
 const playerWhite = new Player(WHITE, BOTTOM, "Moutarde");
@@ -105,3 +105,45 @@ export const a1PawnBoard = (player: Player): BoardState => [
   emptyLine(),
   emptyLine(),
 ];
+export const START_BOARD_JSON = {
+  A1: { type: "Pawn", player: "white" },
+  C1: { type: "Pawn", player: "white" },
+  E1: { type: "Pawn", player: "white" },
+  G1: { type: "Pawn", player: "white" },
+  I1: { type: "Pawn", player: "white" },
+  B2: { type: "Pawn", player: "white" },
+  D2: { type: "Pawn", player: "white" },
+  F2: { type: "Pawn", player: "white" },
+  H2: { type: "Pawn", player: "white" },
+  J2: { type: "Pawn", player: "white" },
+  A3: { type: "Pawn", player: "white" },
+  C3: { type: "Pawn", player: "white" },
+  E3: { type: "Pawn", player: "white" },
+  G3: { type: "Pawn", player: "white" },
+  I3: { type: "Pawn", player: "white" },
+  B4: { type: "Pawn", player: "white" },
+  D4: { type: "Pawn", player: "white" },
+  F4: { type: "Pawn", player: "white" },
+  H4: { type: "Pawn", player: "white" },
+  J4: { type: "Pawn", player: "white" },
+  A7: { type: "Pawn", player: "black" },
+  C7: { type: "Pawn", player: "black" },
+  E7: { type: "Pawn", player: "black" },
+  G7: { type: "Pawn", player: "black" },
+  I7: { type: "Pawn", player: "black" },
+  B8: { type: "Pawn", player: "black" },
+  D8: { type: "Pawn", player: "black" },
+  F8: { type: "Pawn", player: "black" },
+  H8: { type: "Pawn", player: "black" },
+  J8: { type: "Pawn", player: "black" },
+  A9: { type: "Pawn", player: "black" },
+  C9: { type: "Pawn", player: "black" },
+  E9: { type: "Pawn", player: "black" },
+  G9: { type: "Pawn", player: "black" },
+  I9: { type: "Pawn", player: "black" },
+  B10: { type: "Pawn", player: "black" },
+  D10: { type: "Pawn", player: "black" },
+  F10: { type: "Pawn", player: "black" },
+  H10: { type: "Pawn", player: "black" },
+  J10: { type: "Pawn", player: "black" },
+};

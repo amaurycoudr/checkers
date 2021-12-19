@@ -1,3 +1,3 @@
-export const functionTest = (fnName: string, tests: jest.EmptyFunction) => {
-  describe(`______test ${fnName}()"`, tests);
+export const methodTest = (method: Function, tests: jest.EmptyFunction) => {
+  describe(`--- test ${method.toString().split("{")[0]}`, tests);
 };

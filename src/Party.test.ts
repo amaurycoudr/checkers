@@ -1,5 +1,4 @@
-import { START_BOARD_JSON } from "./Board.test";
-import { CLASSIC_BOARD } from "./BoardState";
+import { CLASSIC_BOARD, START_BOARD_JSON } from "./Board/BoardState";
 import Party from "./Party";
 import { PlayerBlack, PlayerWhite } from "./Player";
 import Position from "./Position";

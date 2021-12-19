@@ -6,7 +6,7 @@ import Position from "../Position";
 import { BLACK, BOTTOM, PieceSituation, TOP, WHITE } from "../utils/type";
 import EatenPlay from "../EatenPlay";
 import { map } from "lodash";
-import { functionTest } from "../test/utils";
+import { methodTest } from "../test/utils";
 const whitePlayer = new Player(WHITE, TOP, "bam");
 const blackPlayer = new Player(BLACK, BOTTOM, "bam");
 
@@ -15,14 +15,14 @@ const position = new Position(3, 3);
 const pawnWhite = new Pawn(whitePlayer);
 const pawnBlack = new Pawn(blackPlayer);
 
-functionTest(pawnWhite.getJSON.name, () => {
+methodTest(pawnWhite.getJSON, () => {
   it(`should return {type:"Pawn, player:${WHITE}} for pawnWhite.getJSON()`, () => {
     expect(pawnWhite.getJSON().player).toBe(WHITE);
     expect(pawnWhite.getJSON().type).toBe(Pawn.type);
   });
 });
 
-functionTest(pawnWhite.getEatenPlays.name, () => {
+methodTest(pawnWhite.getEatenPlays, () => {
   type DataEatenPlays = {
     situation: PieceSituation;
     plays: EatenPlay[];
@@ -110,7 +110,7 @@ functionTest(pawnWhite.getEatenPlays.name, () => {
   dataEatenPlays.forEach(unitTestGetEatenPlay);
 });
 
-functionTest(pawnWhite.getTravelPlays.name, () => {
+methodTest(pawnWhite.getTravelPlays, () => {
   const testGetTravelPlaysData: {
     situation: PieceSituation;
     plays: TravelPlay[];
