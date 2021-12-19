@@ -1,6 +1,6 @@
 import { classicBoard } from "../Board/BoardState";
 import Party, { PlayersJSON } from "../Party/Party";
-import { PlayerJSON, PlayerWhite } from "../Player/Player";
+import { PlayerBlack, PlayerJSON, PlayerWhite } from "../Player/Player";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { BoardJSON, PlayJSON } from "../utils/type";
 
@@ -13,7 +13,7 @@ class PublicApi {
   private party: Party;
   constructor(playerWhiteName: string, playerBlackName: string) {
     const playerWhite = new PlayerWhite(playerWhiteName);
-    const playerBlack = new PlayerWhite(playerBlackName);
+    const playerBlack = new PlayerBlack(playerBlackName);
     this.party = new Party(
       classicBoard(playerWhite, playerBlack),
       playerWhite,

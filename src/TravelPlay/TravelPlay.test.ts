@@ -6,7 +6,7 @@ const to = new Position(1, 1);
 const play1 = new TravelPlay(from, to);
 const play1Bis = new TravelPlay(from, to);
 const play2 = new TravelPlay(to, from);
-
+const play1JSON = { from: from.getCoordinate(), to: to.getCoordinate() };
 methodTest(play1.toStr, () => {
   it(`should return {from: ${from.toStr()}, to: ${to.toStr()}} for Move(${from.toStr()}, ${to.toStr()})`, () => {
     expect(play1.toStr()).toBe(`{from: ${from.toStr()}, to: ${to.toStr()}}`);
@@ -24,8 +24,15 @@ methodTest(play1.equals, () => {
 });
 
 methodTest(play1.getJSON, () => {
-  const play1JSON = { from: from.getCoordinate(), to: to.getCoordinate() };
   it(`should return ${JSON.stringify(play1JSON)} for ${play1.toStr()}`, () => {
     expect(play1.getJSON()).toStrictEqual(play1JSON);
+  });
+});
+
+methodTest(TravelPlay.playFromJson, () => {
+  it(`should return ${play1.toStr()} from ${JSON.stringify(
+    play1JSON
+  )} `, () => {
+    expect(TravelPlay.playFromJson(play1JSON)).toStrictEqual(play1);
   });
 });

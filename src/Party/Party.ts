@@ -55,7 +55,7 @@ class Party {
     }
     this.makePlay(realPlay);
     const canPlayAgain = this.canCurrentPlayerPlayAgain(realPlay);
-    console.log(canPlayAgain);
+    console.log(canPlayAgain, play);
 
     if (!canPlayAgain) {
       this.updateCurrentPlayer();
@@ -74,26 +74,20 @@ class Party {
 
   private canCurrentPlayerPlayAgain(play: TravelPlay) {
     const isEatenPlay = play instanceof EatenPlay;
-    console.log(play);
 
     const canEatFromNewPosition =
       this.getCurrentBoard().getPieceEatenPlays(
         this.getCurrentBoard().getBox(play.to) as Piece,
         play.to
       ).length > 0;
-    console.log(
-      play.to,
-      this.getCurrentBoard().getPieceEatenPlays(
-        this.getCurrentBoard().getBox(play.to) as Piece,
-        play.to
-      )
-    );
 
     return isEatenPlay && canEatFromNewPosition;
   }
 
   private updateCurrentPlayer() {
     const isBlackTurn = this.playerTurn.equals(this.playerBlack);
+    console.log(isBlackTurn, this.playerTurn, this.playerBlack);
+
     this.playerTurn = isBlackTurn ? this.playerWhite : this.playerBlack;
   }
 }
