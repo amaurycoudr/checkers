@@ -3,16 +3,19 @@ import Board from "../Board/Board";
 import { BoardState } from "../Board/BoardState";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import Piece from "../Piece/Piece";
-import Player, { PlayerBlack, PlayerWhite } from "../Player/Player";
+import Player, { PlayerBlack, PlayerJSON, PlayerWhite } from "../Player/Player";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { ERROR_PLAY_NOT_POSSIBLE } from "../utils/error";
-import { BoardJSON, PartyState, PlayJSON, WHITE } from "../utils/type";
 
+export type PlayersJSON = {
+  white: PlayerJSON;
+  black: PlayerJSON;
+};
 class Party {
   private playerWhite: Player;
   private playerBlack: Player;
   private turns: Board[];
-  private partyState: PartyState;
+  private playerTurn: Player;
 
   constructor(
     initBoard: BoardState,
@@ -22,11 +25,11 @@ class Party {
     this.playerWhite = playerWhite;
     this.playerBlack = playerBlack;
     this.turns = [new Board(cloneDeep(initBoard))];
-    this.partyState = { playerTurn: playerWhite };
+    this.playerTurn = playerWhite;
   }
 
   getPlaysPossible(): TravelPlay[] {
-    return this.getCurrentBoard().getPlayerPlays(this.partyState.playerTurn);
+    return this.getCurrentBoard().getPlayerPlays(this.playerTurn);
   }
 
   getCurrentBoard(): Board {
@@ -34,7 +37,14 @@ class Party {
   }
 
   getCurrentPlayer(): Player {
-    return this.partyState.playerTurn;
+    return this.playerTurn;
+  }
+
+  getPlayersJson(): PlayersJSON {
+    return {
+      white: this.playerWhite.getJSON(),
+      black: this.playerBlack.getJSON(),
+    };
   }
 
   playTurn(play: TravelPlay) {
@@ -83,10 +93,8 @@ class Party {
   }
 
   private updateCurrentPlayer() {
-    const isBlackTurn = this.partyState.playerTurn.equals(this.playerBlack);
-    this.partyState.playerTurn = isBlackTurn
-      ? this.playerWhite
-      : this.playerBlack;
+    const isBlackTurn = this.playerTurn.equals(this.playerBlack);
+    this.playerTurn = isBlackTurn ? this.playerWhite : this.playerBlack;
   }
 }
 export default Party;

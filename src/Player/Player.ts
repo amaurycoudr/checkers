@@ -1,6 +1,7 @@
 import { Json, Utils } from "../genericInterface";
 import { BLACK, Color, WHITE } from "../utils/type";
 
+export type PlayerJSON = { color: Color; name: string };
 class Player implements Utils, Json {
   private color: Color;
   private name: string;
@@ -22,7 +23,7 @@ class Player implements Utils, Json {
     return this.color === BLACK;
   }
 
-  getJSON() {
+  getJSON(): PlayerJSON {
     return { color: this.color, name: this.name };
   }
 

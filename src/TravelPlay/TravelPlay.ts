@@ -22,5 +22,12 @@ class TravelPlay implements Utils {
   getJSON(): PlayJSON {
     return { from: this.from.getJSON(), to: this.to.getJSON() };
   }
+
+  static playFromJson(json: PlayJSON): TravelPlay {
+    return new TravelPlay(
+      Position.getPositionFromCoordinate(json.from),
+      Position.getPositionFromCoordinate(json.to)
+    );
+  }
 }
 export default TravelPlay;

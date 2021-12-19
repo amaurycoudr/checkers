@@ -83,6 +83,20 @@ export const CLASSIC_BOARD: BoardState = [
   playerLine(playerBlack, true),
   playerLine(playerBlack, false),
 ];
+export const classicBoard = (player1: Player, player2: Player): BoardState => {
+  return [
+    playerLine(player1, true),
+    playerLine(player1, false),
+    playerLine(player1, true),
+    playerLine(player1, false),
+    emptyLine(),
+    emptyLine(),
+    playerLine(player2, true),
+    playerLine(player2, false),
+    playerLine(player2, true),
+    playerLine(player2, false),
+  ];
+};
 export const EAT_BOARD: BoardState = [
   playerLine(playerWhite, true),
   playerLine(playerBlack, false),
