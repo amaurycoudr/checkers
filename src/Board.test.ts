@@ -7,7 +7,7 @@ import {
   ONE_WHITE_PAWN_BOARD,
 } from "./BoardState";
 import EatenPlay from "./EatenPlay";
-import Pawn from "./Pawn";
+import Pawn from "./Pawn/Pawn";
 import Piece from "./Piece";
 import Player from "./Player";
 import Position from "./Position";

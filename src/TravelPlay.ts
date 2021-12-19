@@ -12,5 +12,6 @@ class TravelPlay {
   toStr() {
     return `{from: ${this.from.toStr()}, to: ${this.to.toStr()}}`;
   }
+  
 }
 export default TravelPlay;

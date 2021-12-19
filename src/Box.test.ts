@@ -1,5 +1,5 @@
 import Box from "./Box";
-import Pawn from "./Pawn";
+import Pawn from "./Pawn/Pawn";
 import Piece from "./Piece";
 import Player from "./Player";
 import { BLACK, TOP } from "./utils/type";

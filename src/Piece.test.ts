@@ -1,4 +1,4 @@
-import Pawn from "./Pawn";
+import Pawn from "./Pawn/Pawn";
 import Player from "./Player";
 import { BLACK, BOTTOM, TOP, WHITE } from "./utils/type";
 

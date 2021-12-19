@@ -1,10 +1,10 @@
-import Box from "./Box";
-import EatenPlay from "./EatenPlay";
-import Piece from "./Piece";
-import Player from "./Player";
-import Position from "./Position";
-import TravelPlay from "./TravelPlay";
-import { MoveStr, PieceJSON, PieceSituation } from "./utils/type";
+import Box from "../Box";
+import EatenPlay from "../EatenPlay";
+import Piece from "../Piece";
+import Player from "../Player";
+import Position from "../Position";
+import TravelPlay from "../TravelPlay";
+import { MoveStr, PieceJSON, PieceSituation } from "../utils/type";
 
 class Pawn extends Piece {
   static type = "Pawn";
@@ -77,6 +77,9 @@ class Pawn extends Piece {
   }
   getJSON(): PieceJSON {
     return { type: Pawn.type, player: this.player.getColor() };
+  }
+  toStr(): string {
+    return `${Pawn.type} ${this.player.getColor()}`;
   }
 }
 export default Pawn;
