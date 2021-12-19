@@ -1,5 +1,3 @@
-import Position from "./Position/Position";
-import Player from "./Player/Player";
-import Box from "./Box/Box";
+import CheckersParty from "./PublicApi/PublicApi";
 
-export default { Position, Player, Box };
+export default { CheckersParty };

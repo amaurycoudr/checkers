@@ -1,14 +1,14 @@
+import { map } from "lodash";
 import Box from "../Box/Box";
-import Pawn from "./Pawn";
-import TravelPlay from "../TravelPlay/TravelPlay";
+import EatenPlay from "../EatenPlay/EatenPlay";
 import Player from "../Player/Player";
 import Position from "../Position/Position";
-import { BLACK, BOTTOM, PieceSituation, TOP, WHITE } from "../utils/type";
-import EatenPlay from "../EatenPlay/EatenPlay";
-import { map } from "lodash";
 import { methodTest } from "../test/utils";
-const whitePlayer = new Player(WHITE, TOP, "bam");
-const blackPlayer = new Player(BLACK, BOTTOM, "bam");
+import TravelPlay from "../TravelPlay/TravelPlay";
+import { BLACK, PieceSituation, WHITE } from "../utils/type";
+import Pawn from "./Pawn";
+const whitePlayer = new Player(WHITE, "bam");
+const blackPlayer = new Player(BLACK, "bam");
 
 const position = new Position(3, 3);
 
@@ -117,17 +117,17 @@ methodTest(pawnWhite.getTravelPlays, () => {
     player: Player;
   }[] = [
     {
-      player: new Player(WHITE, TOP, "player"),
+      player: new Player(BLACK, "player"),
       situation: { "+1.-1": pawnBlack, "-1.-1": new Box() },
       plays: [new TravelPlay(position, position.getArrivalPosition("-1.-1"))],
     },
     {
-      player: new Player(WHITE, TOP, "player"),
+      player: new Player(BLACK, "player"),
       situation: { "+1.-1": pawnBlack, "-1.-1": pawnBlack },
       plays: [],
     },
     {
-      player: new Player(WHITE, TOP, "player"),
+      player: new Player(BLACK, "player"),
       situation: { "+1.-1": new Box(), "-1.-1": new Box() },
       plays: [
         new TravelPlay(position, position.getArrivalPosition("-1.-1")),
@@ -135,17 +135,17 @@ methodTest(pawnWhite.getTravelPlays, () => {
       ],
     },
     {
-      player: new Player(WHITE, BOTTOM, "player"),
+      player: new Player(WHITE, "player"),
       situation: { "+1.+1": pawnBlack, "-1.+1": new Box() },
       plays: [new TravelPlay(position, position.getArrivalPosition("-1.+1"))],
     },
     {
-      player: new Player(WHITE, BOTTOM, "player"),
+      player: new Player(WHITE, "player"),
       situation: { "+1.+1": pawnBlack, "-1.+1": pawnBlack },
       plays: [],
     },
     {
-      player: new Player(WHITE, BOTTOM, "player"),
+      player: new Player(WHITE, "player"),
       situation: { "+1.+1": new Box(), "-1.+1": new Box() },
       plays: [
         new TravelPlay(position, position.getArrivalPosition("-1.+1")),

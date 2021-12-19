@@ -1,3 +1,15 @@
+import { map } from "lodash";
+import Box from "../Box/Box";
+import EatenPlay from "../EatenPlay/EatenPlay";
+import Pawn from "../Pawn/Pawn";
+import Piece from "../Piece/Piece";
+import Player from "../Player/Player";
+import Position from "../Position/Position";
+import { methodTest } from "../test/utils";
+import TravelPlay from "../TravelPlay/TravelPlay";
+import { ERROR_OUT_OF_BOUND } from "../utils/error";
+import { forBoard } from "../utils/fn";
+import { BLACK, MoveStr, PieceSituation, WHITE } from "../utils/type";
 import Board from "./Board";
 import {
   a1PawnBoard,
@@ -7,26 +19,9 @@ import {
   ONE_WHITE_PAWN_BOARD,
   START_BOARD_JSON,
 } from "./BoardState";
-import EatenPlay from "../EatenPlay/EatenPlay";
-import Pawn from "../Pawn/Pawn";
-import Piece from "../Piece/Piece";
-import Player from "../Player/Player";
-import Position from "../Position/Position";
-import TravelPlay from "../TravelPlay/TravelPlay";
-import { ERROR_OUT_OF_BOUND } from "../utils/error";
-import { forBoard } from "../utils/fn";
-import {
-  BLACK,
-  BOTTOM,
-  MoveStr,
-  PieceSituation,
-  TOP,
-  WHITE,
-} from "../utils/type";
-import { methodTest } from "../test/utils";
-import { map } from "lodash";
 
 const emptyBoard = new Board(EMPTY_BOARD);
+const emptyBoardBis = new Board(EMPTY_BOARD);
 const onePawnBoard = new Board(ONE_WHITE_PAWN_BOARD);
 const startBoard = new Board(CLASSIC_BOARD);
 const eatBoard = new Board(EAT_BOARD);
@@ -44,11 +39,36 @@ methodTest(emptyBoard.getBox, () => {
   });
 });
 
+methodTest(emptyBoard.setBox, () => {
+  it("should throw an error if out of bound", () => {
+    expect(() =>
+      emptyBoard.setBox(new Position(-1, -1), new Box())
+    ).toThrowError(ERROR_OUT_OF_BOUND);
+  });
+});
+
+methodTest(emptyBoard.toStr, () => {
+  it("should return START_BOARD_JSON for CLASSIC_BOARD", () => {
+    expect(startBoard.toStr()).toStrictEqual(JSON.stringify(START_BOARD_JSON));
+  });
+});
+methodTest(emptyBoard.equals, () => {
+  it("should return false if it is a different board", () => {
+    expect(emptyBoard.equals(onePawnBoard)).toBeFalse();
+    expect(emptyBoard.equals(startBoard)).toBeFalse();
+    expect(emptyBoard.equals(eatBoard)).toBeFalse();
+  });
+
+  it("should return true if it as the same boardState", () => {
+    expect(emptyBoard.equals(emptyBoardBis)).toBeTrue();
+  });
+});
+
 methodTest(emptyBoard.getJSON, () => {
   it("should return {} for EMPTY_BOARD", () => {
     expect(emptyBoard.getJSON()).toStrictEqual({});
   });
-  const whitePawn = new Pawn(new Player(WHITE, TOP, "white"));
+  const whitePawn = new Pawn(new Player(WHITE, "white"));
   it(`should return { A1: ${JSON.stringify(
     whitePawn.getJSON()
   )} } for ONE_PAWN_BOARD`, () => {
@@ -129,8 +149,8 @@ methodTest(startBoard.getAroundSituation, () => {
 });
 
 methodTest(eatBoard.getPieceEatenPlays, () => {
-  const pawnWhite = new Pawn(new Player(WHITE, BOTTOM, "white"));
-  const pawnBlack = new Pawn(new Player(BLACK, TOP, "white"));
+  const pawnWhite = new Pawn(new Player(WHITE, "white"));
+  const pawnBlack = new Pawn(new Player(BLACK, "white"));
   type testEatenPlay = {
     position: Position;
     piece: Piece;
@@ -216,8 +236,8 @@ methodTest(eatBoard.getPieceEatenPlays, () => {
 });
 
 methodTest(emptyBoard.getPlayerPieces, () => {
-  const whitePlayer = new Player(WHITE, TOP, "test");
-  const blackPlayer = new Player(BLACK, BOTTOM, "test");
+  const whitePlayer = new Player(WHITE, "test");
+  const blackPlayer = new Player(BLACK, "test");
   const a1WhitePawnBoard = new Board(a1PawnBoard(whitePlayer));
   it("should return {} for emptyBoard", () => {
     expect(emptyBoard.getPlayerPieces(whitePlayer)).toStrictEqual({});
@@ -234,8 +254,8 @@ methodTest(emptyBoard.getPlayerPieces, () => {
 });
 
 methodTest(emptyBoard.getPieceTravelPlays, () => {
-  const pawnWhite = new Pawn(new Player(WHITE, BOTTOM, "white"));
-  const pawnBlack = new Pawn(new Player(BLACK, TOP, "white"));
+  const pawnWhite = new Pawn(new Player(WHITE, "white"));
+  const pawnBlack = new Pawn(new Player(BLACK, "white"));
   type testTravelPlay = {
     position: Position;
     piece: Piece;
@@ -283,19 +303,44 @@ methodTest(emptyBoard.getPieceTravelPlays, () => {
 methodTest(eatBoard.getPlayerPlays, () => {
   it("should return eatenPlays if eatenPlays possible ", () => {
     eatBoard
-      .getPlayerPlays(new Player(WHITE, TOP, "test"))
+      .getPlayerPlays(new Player(WHITE, "test"))
       .forEach((play) => expect(play instanceof EatenPlay).toBe(true));
   });
   it("should return travelPlays if only travelPlays possible", () => {
     startBoard
-      .getPlayerPlays(new Player(WHITE, TOP, "test"))
+      .getPlayerPlays(new Player(WHITE, "test"))
       .forEach((play) => expect(play instanceof EatenPlay).toBe(false));
   });
 
   const move = new TravelPlay(new Position(0, 0), new Position(1, 1));
   it(`should return ${move.toStr()} for the onePawnBoard`, () => {
     expect(
-      onePawnBoard.getPlayerPlays(new Player(WHITE, TOP, "test"))[0]
+      onePawnBoard.getPlayerPlays(new Player(WHITE, "test"))[0]
     ).toStrictEqual(move);
+  });
+});
+
+methodTest(eatBoard.getNewBoardFromPlay, () => {
+  it("should return a board where from is a Box and to is Equal to from previous value", () => {
+    const A1 = new Position(0, 0);
+    const B2 = new Position(1, 1);
+    const play = new TravelPlay(A1, B2);
+    const newBoard = onePawnBoard.getNewBoardFromPlay(play);
+    const box = new Box();
+
+    expect(newBoard.getBox(A1)).toStrictEqual(box);
+    expect(newBoard.getBox(B2)).toStrictEqual(onePawnBoard.getBox(A1));
+  });
+  it("should return a board where from and eaten is a Box and to is Equal to from previous value", () => {
+    const A1 = new Position(0, 0);
+    const B2 = new Position(1, 1);
+    const C3 = new Position(2, 2);
+    const play = new EatenPlay(A1, C3, B2);
+    const newBoard = eatBoard.getNewBoardFromPlay(play);
+    const box = new Box();
+
+    expect(newBoard.getBox(A1)).toStrictEqual(box);
+    expect(newBoard.getBox(B2)).toStrictEqual(box);
+    expect(newBoard.getBox(C3)).toStrictEqual(eatBoard.getBox(A1));
   });
 });

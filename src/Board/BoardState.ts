@@ -1,12 +1,12 @@
 import Box from "../Box/Box";
 import Pawn from "../Pawn/Pawn";
 import Player from "../Player/Player";
-import { BLACK, BOTTOM, LengthType, TOP, WHITE } from "../utils/type";
+import { BLACK, LengthType, WHITE } from "../utils/type";
 
 export type BoardState = LengthType<LengthType<Box>>;
-const playerWhite = new Player(WHITE, BOTTOM, "Moutarde");
-const playerBlack = new Player(BLACK, TOP, "Le Blanc");
-const emptyLine = (): LengthType<Box> => [
+const playerWhite = new Player(WHITE, "Moutarde");
+const playerBlack = new Player(BLACK, "Le Blanc");
+export const emptyLine = (): LengthType<Box> => [
   new Box(),
   new Box(),
   new Box(),
@@ -18,7 +18,10 @@ const emptyLine = (): LengthType<Box> => [
   new Box(),
   new Box(),
 ];
-const playerLine = (player: Player, isEven: boolean): LengthType<Box> => [
+export const playerLine = (
+  player: Player,
+  isEven: boolean
+): LengthType<Box> => [
   isEven ? new Pawn(player) : new Box(),
   isEven ? new Box() : new Pawn(player),
   isEven ? new Pawn(player) : new Box(),
@@ -30,7 +33,7 @@ const playerLine = (player: Player, isEven: boolean): LengthType<Box> => [
   isEven ? new Pawn(player) : new Box(),
   isEven ? new Box() : new Pawn(player),
 ];
-const onePawnLine = (player: Player): LengthType<Box> => [
+export const onePawnLine = (player: Player): LengthType<Box> => [
   new Pawn(player),
   new Box(),
   new Box(),
@@ -80,6 +83,20 @@ export const CLASSIC_BOARD: BoardState = [
   playerLine(playerBlack, true),
   playerLine(playerBlack, false),
 ];
+export const classicBoard = (player1: Player, player2: Player): BoardState => {
+  return [
+    playerLine(player1, true),
+    playerLine(player1, false),
+    playerLine(player1, true),
+    playerLine(player1, false),
+    emptyLine(),
+    emptyLine(),
+    playerLine(player2, true),
+    playerLine(player2, false),
+    playerLine(player2, true),
+    playerLine(player2, false),
+  ];
+};
 export const EAT_BOARD: BoardState = [
   playerLine(playerWhite, true),
   playerLine(playerBlack, false),
@@ -87,6 +104,19 @@ export const EAT_BOARD: BoardState = [
   playerLine(playerWhite, false),
   playerLine(playerBlack, true),
   playerLine(playerWhite, false),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+];
+
+export const TWO_PLAY_BOARD: BoardState = [
+  playerLine(playerWhite, true),
+  playerLine(playerBlack, false),
+  emptyLine(),
+  playerLine(playerBlack, false),
+  emptyLine(),
+  emptyLine(),
   emptyLine(),
   emptyLine(),
   emptyLine(),

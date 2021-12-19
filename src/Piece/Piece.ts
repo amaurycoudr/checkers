@@ -4,8 +4,9 @@ import Player from "../Player/Player";
 import Position from "../Position/Position";
 import { MoveStr, PieceJSON, PieceSituation } from "../utils/type";
 import EatenPlay from "../EatenPlay/EatenPlay";
+import { Utils } from "../genericInterface";
 
-export default abstract class Piece extends Box {
+export default abstract class Piece extends Box implements Utils {
   protected player: Player;
   abstract travelMoves: MoveStr[];
   abstract eatenMoves: MoveStr[];

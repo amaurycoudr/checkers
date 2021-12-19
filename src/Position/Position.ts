@@ -1,3 +1,4 @@
+import { Utils } from "../genericInterface";
 import { INDEX_MAX, INDEX_MIN } from "../utils/board";
 import { ERROR_COORDINATE_OUT } from "../utils/error";
 import {
@@ -9,7 +10,7 @@ import {
   MoveCoordinate,
   MoveStr,
 } from "../utils/type";
-class Position {
+class Position implements Utils {
   private x: number;
   private y: number;
 
@@ -28,9 +29,15 @@ class Position {
   toStr() {
     return `(${this.x},${this.y})`;
   }
+
   equals(position: Position) {
     return this.x === position.x && this.y === position.y;
   }
+
+  getJSON(): Coordinates {
+    return this.getCoordinate();
+  }
+
   getArrivalPosition(move: MoveStr) {
     return this.addMove(Position.getPositionFromMove(move));
   }
