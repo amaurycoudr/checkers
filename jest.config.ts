@@ -7,10 +7,11 @@ const config: Config.InitialOptions = {
   coverageThreshold: {
     global: {
       branches: 80,
-      functions: 100,
+      functions: 90,
       lines: 80,
     },
   },
-  coverageReporters: ["json-summary", "lcov"],
+  coverageReporters: ["json-summary", "text"],
+  setupFilesAfterEnv: ["jest-extended/all"],
 };
 export default config;

@@ -1,4 +1,4 @@
-import { Player } from ".";
+import Player from "./Player";
 import { BLACK, BOTTOM, TOP, WHITE } from "./utils/type";
 const name = "namePlayer";
 

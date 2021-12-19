@@ -1,11 +1,11 @@
-import { Color, Position, TOP } from "./utils/type";
+import { BLACK, Color, Side, TOP, WHITE } from "./utils/type";
 
 class Player {
   private color: Color;
-  private position: Position;
+  private position: Side;
   private name: string;
 
-  constructor(color: Color, position: Position, name: string) {
+  constructor(color: Color, position: Side, name: string) {
     this.name = name;
     this.position = position;
     this.color = color;
@@ -22,5 +22,22 @@ class Player {
   public isTop() {
     return this.position === TOP;
   }
+
+  public getColor() {
+    return this.color;
+  }
 }
 export default Player;
+class PlayerWhite extends Player {
+  constructor(side: Side, name: string) {
+    super(WHITE, side, name);
+  }
+}
+export { PlayerWhite };
+
+class PlayerBlack extends Player {
+  constructor(side: Side, name: string) {
+    super(BLACK, side, name);
+  }
+}
+export { PlayerBlack };
