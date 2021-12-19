@@ -32,18 +32,22 @@ class Board {
 
   getJSON(): BoardJSON {
     const JSON: BoardJSON = {};
+    Board.forBoardState((position: Position) => {
+      const coordinate = position.getCoordinate();
+      const json = this.getPositionJson(position);
+      if (json) {
+        JSON[coordinate] = json;
+      }
+    });
+    return JSON;
+  }
+
+  private static forBoardState(fn: (p: Position) => void) {
     for (let y = INDEX_MIN; y <= INDEX_MAX; y++) {
       for (let x = INDEX_MIN; x <= INDEX_MAX; x++) {
-        const position = new Position(x, y);
-        const coordinate = position.getCoordinate();
-        const json = this.getPositionJson(position);
-        if (json) {
-          JSON[coordinate] = json;
-        }
+        fn(new Position(x, y));
       }
     }
-
-    return JSON;
   }
 
   private getPositionJson(position: Position): PieceJSON | undefined {
@@ -75,18 +79,6 @@ class Board {
     }, {});
   }
 
-  getPieceEatenPlays(piece: Piece, position: Position) {
-    return piece.getEatenPlays(
-      this.getAroundSituation(position, piece.eatenMoves),
-      position
-    );
-  }
-  getPieceTravelPlays(piece: Piece, position: Position) {
-    return piece.getTravelPlays(
-      this.getAroundSituation(position, piece.travelMoves),
-      position
-    );
-  }
   getPlayerPieces(player: Player): PlayerPieces {
     const result: PlayerPieces = {};
     forBoard((position) => {
@@ -99,7 +91,17 @@ class Board {
     });
     return result;
   }
+
   getPlayerPlays(player: Player): TravelPlay[] {
+    const eatenPlays = this.getPlayerEatenPlays(player);
+    if (eatenPlays.length > 0) {
+      return eatenPlays;
+    }
+    const travelMoves: TravelPlay[] = this.getPlayerTravelPlays(player);
+    return travelMoves;
+  }
+
+  private getPlayerEatenPlays(player: Player) {
     const pieces = this.getPlayerPieces(player);
     const eatenPlays: EatenPlay[] = [];
     map(pieces, (piece, coordinate) => {
@@ -110,19 +112,33 @@ class Board {
         )
       );
     });
-    if (eatenPlays.length > 0) {
-      return eatenPlays;
-    }
-    const travelMoves: TravelPlay[] = [];
+    return eatenPlays;
+  }
+
+  private getPlayerTravelPlays(player: Player) {
+    const pieces = this.getPlayerPieces(player);
+    const travelPlays: TravelPlay[] = [];
     map(pieces, (piece, coordinate) => {
-      travelMoves.push(
+      travelPlays.push(
         ...this.getPieceTravelPlays(
           piece!,
           Position.getPositionFromCoordinate(coordinate as Coordinates)
         )
       );
     });
-    return travelMoves;
+    return travelPlays;
+  }
+  getPieceEatenPlays(piece: Piece, position: Position) {
+    return piece.getEatenPlays(
+      this.getAroundSituation(position, piece.eatenMoves),
+      position
+    );
+  }
+  getPieceTravelPlays(piece: Piece, position: Position) {
+    return piece.getTravelPlays(
+      this.getAroundSituation(position, piece.travelMoves),
+      position
+    );
   }
 }
 export default Board;

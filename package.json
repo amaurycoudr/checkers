@@ -16,7 +16,9 @@
     "test:ts": "tsc --noEmit",
     "test:jest": "jest --coverage",
     "test:makeBadge": "node_modules/.bin/jest-badges-readme",
-    "build": "shx rm -rf lib type && rollup -c"
+    "build": "yarn clean && yarn rollup",
+    "clean": "shx rm -rf lib type",
+    "rollup": "rollup -c"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",

@@ -1,4 +1,5 @@
 import Box from "../Box";
+import Player from "../Player";
 
 export const BLACK = "black";
 export const WHITE = "white";
@@ -47,3 +48,8 @@ export type PieceMove = MoveStr[];
 export type PieceSituation = { [key in PieceMove[number]]?: Box };
 
 export type BoardJSON = { [key in Coordinates]?: PieceJSON };
+
+export type PartyState = {
+  playerTurn: Player;
+  lastPositionMove?: Coordinates;
+};

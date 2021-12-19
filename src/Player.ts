@@ -1,4 +1,4 @@
-import { Color, Side, TOP } from "./utils/type";
+import { BLACK, Color, Side, TOP, WHITE } from "./utils/type";
 
 class Player {
   private color: Color;
@@ -28,3 +28,16 @@ class Player {
   }
 }
 export default Player;
+class PlayerWhite extends Player {
+  constructor(side: Side, name: string) {
+    super(WHITE, side, name);
+  }
+}
+export { PlayerWhite };
+
+class PlayerBlack extends Player {
+  constructor(side: Side, name: string) {
+    super(BLACK, side, name);
+  }
+}
+export { PlayerBlack };

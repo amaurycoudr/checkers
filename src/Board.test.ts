@@ -28,7 +28,7 @@ const onePawnBoard = new Board(ONE_WHITE_PAWN_BOARD);
 const startBoard = new Board(CLASSIC_BOARD);
 const eatBoard = new Board(EAT_BOARD);
 
-const START_BOARD_JSON = {
+export const START_BOARD_JSON = {
   A1: { type: "Pawn", player: "white" },
   C1: { type: "Pawn", player: "white" },
   E1: { type: "Pawn", player: "white" },
