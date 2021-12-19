@@ -62,12 +62,13 @@ methodTest(startParty.playTurn, () => {
     new PlayerBlack("colonel")
   );
 
-  const play = new TravelPlay(new Position(1, 3), new Position(0, 4));
+  const playOne = new TravelPlay(new Position(1, 3), new Position(0, 4));
+  const playTwo = new TravelPlay(new Position(0, 6), new Position(1, 5));
   const onePlayBoardState: BoardState = cloneDeep(CLASSIC_BOARD);
   onePlayBoardState[4][0] = onePlayBoardState[3][1];
   onePlayBoardState[3][1] = new Box();
   const onePlayBoard = new Board(onePlayBoardState);
-  onePlayParty.playTurn(play);
+  onePlayParty.playTurn(playOne);
   it("after onePlay getCurrentBoard should return onePlayBoard", () => {
     expect(onePlayParty.getCurrentBoard()).toStrictEqual(onePlayBoard);
   });
@@ -77,14 +78,27 @@ methodTest(startParty.playTurn, () => {
   });
 
   const twoPlayParty = new Party(
+    CLASSIC_BOARD,
+    new PlayerWhite("moutarde"),
+    new PlayerBlack("colonel")
+  );
+
+  twoPlayParty.playTurn(playOne);
+  twoPlayParty.playTurn(playTwo);
+
+  it("after twoPlay getCurrentPlayer should return be white", () => {
+    expect(twoPlayParty.getCurrentPlayer().getColor()).toBe(WHITE);
+  });
+
+  const twoEatenPlayParty = new Party(
     TWO_PLAY_BOARD,
     new PlayerWhite("moutarde"),
     new PlayerBlack("colonel")
   );
 
-  const twoPlay = new TravelPlay(new Position(0, 0), new Position(2, 2));
-  twoPlayParty.playTurn(twoPlay);
-  it("after onePlay getCurrentPlayer should return white", () => {
-    expect(twoPlayParty.getCurrentPlayer().getColor()).toBe(WHITE);
+  const playTwoEaten = new TravelPlay(new Position(0, 0), new Position(2, 2));
+  twoEatenPlayParty.playTurn(playTwoEaten);
+  it("after onePlay getCurrentPlayer should still be white", () => {
+    expect(twoEatenPlayParty.getCurrentPlayer().getColor()).toBe(WHITE);
   });
 });

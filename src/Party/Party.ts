@@ -1,6 +1,7 @@
 import { cloneDeep } from "lodash";
 import Board from "../Board/Board";
 import { BoardState } from "../Board/BoardState";
+import EatenPlay from "../EatenPlay/EatenPlay";
 import Piece from "../Piece/Piece";
 import Player, { PlayerBlack, PlayerWhite } from "../Player/Player";
 import TravelPlay from "../TravelPlay/TravelPlay";
@@ -44,6 +45,8 @@ class Party {
     }
     this.makePlay(realPlay);
     const canPlayAgain = this.canCurrentPlayerPlayAgain(realPlay);
+    console.log(canPlayAgain);
+
     if (!canPlayAgain) {
       this.updateCurrentPlayer();
     }
@@ -60,19 +63,28 @@ class Party {
   }
 
   private canCurrentPlayerPlayAgain(play: TravelPlay) {
-    const isEatenPlay = play;
+    const isEatenPlay = play instanceof EatenPlay;
+    console.log(play);
+
     const canEatFromNewPosition =
       this.getCurrentBoard().getPieceEatenPlays(
         this.getCurrentBoard().getBox(play.to) as Piece,
         play.to
       ).length > 0;
+    console.log(
+      play.to,
+      this.getCurrentBoard().getPieceEatenPlays(
+        this.getCurrentBoard().getBox(play.to) as Piece,
+        play.to
+      )
+    );
+
     return isEatenPlay && canEatFromNewPosition;
   }
 
   private updateCurrentPlayer() {
-    this.partyState.playerTurn = this.partyState.playerTurn.equals(
-      this.playerBlack
-    )
+    const isBlackTurn = this.partyState.playerTurn.equals(this.playerBlack);
+    this.partyState.playerTurn = isBlackTurn
       ? this.playerWhite
       : this.playerBlack;
   }

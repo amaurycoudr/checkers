@@ -21,6 +21,7 @@ import {
 } from "./BoardState";
 
 const emptyBoard = new Board(EMPTY_BOARD);
+const emptyBoardBis = new Board(EMPTY_BOARD);
 const onePawnBoard = new Board(ONE_WHITE_PAWN_BOARD);
 const startBoard = new Board(CLASSIC_BOARD);
 const eatBoard = new Board(EAT_BOARD);
@@ -35,6 +36,31 @@ methodTest(emptyBoard.getBox, () => {
     expect(() => emptyBoard.getBox(new Position(-1, -1))).toThrowError(
       ERROR_OUT_OF_BOUND
     );
+  });
+});
+
+methodTest(emptyBoard.setBox, () => {
+  it("should throw an error if out of bound", () => {
+    expect(() =>
+      emptyBoard.setBox(new Position(-1, -1), new Box())
+    ).toThrowError(ERROR_OUT_OF_BOUND);
+  });
+});
+
+methodTest(emptyBoard.toStr, () => {
+  it("should return START_BOARD_JSON for CLASSIC_BOARD", () => {
+    expect(startBoard.toStr()).toStrictEqual(JSON.stringify(START_BOARD_JSON));
+  });
+});
+methodTest(emptyBoard.equals, () => {
+  it("should return false if it is a different board", () => {
+    expect(emptyBoard.equals(onePawnBoard)).toBeFalse();
+    expect(emptyBoard.equals(startBoard)).toBeFalse();
+    expect(emptyBoard.equals(eatBoard)).toBeFalse();
+  });
+
+  it("should return true if it as the same boardState", () => {
+    expect(emptyBoard.equals(emptyBoardBis)).toBeTrue();
   });
 });
 
