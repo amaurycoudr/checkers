@@ -1,5 +1,5 @@
-/node_modules
-/coverage
+node_modules
+coverage
 tsconfig.tsbuildinfo
-/lib
-/type
+lib
+type
