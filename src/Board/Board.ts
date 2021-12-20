@@ -85,7 +85,6 @@ class Board implements Utils {
       } else {
       }
     });
-    console.log(array);
 
     return array;
   }
