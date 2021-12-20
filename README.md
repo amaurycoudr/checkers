@@ -8,7 +8,7 @@
 
 the purpose of this package is to offer a simple api to be able to play to the checkers
 
-:warning: **for the moment the work is still in progress**
+> :warning: **for the moment the work is still in progress**
 
 # CheckersParty
 
@@ -59,3 +59,5 @@ this returns an object of this format :
   ]
 }
 ```
+
+> :information_source: this is the result of `party.getBoard()` at the first turn
