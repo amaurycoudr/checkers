@@ -23,7 +23,7 @@ class PublicApi {
     );
   }
 
-  getBoard(): PartyState {
+  getState(): PartyState {
     return {
       board: this.party.getCurrentBoard().getArray(),
       playerTurn: this.party.getCurrentPlayer().getJSON(),
@@ -34,7 +34,7 @@ class PublicApi {
 
   play(play: PlayJSON): PartyState {
     this.party.playTurn(TravelPlay.playFromJson(play));
-    return this.getBoard();
+    return this.getState();
   }
 }
 export default PublicApi;

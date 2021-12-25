@@ -21,17 +21,17 @@ const startPlaysPossible = [
   new TravelPlay(new Position(9, 3), new Position(8, 4)),
 ].map((play) => play.getJSON());
 
-methodTest(party.getBoard, () => {
+methodTest(party.getState, () => {
   it("should return board === START_BOARD_ARRAY at the start", () => {
-    expect(party.getBoard().board).toStrictEqual(START_BOARD_ARRAY);
+    expect(party.getState().board).toStrictEqual(START_BOARD_ARRAY);
   });
 
   it("should return plays === startPlayPossible at the start", () => {
-    expect(party.getBoard().plays).toIncludeSameMembers(startPlaysPossible);
+    expect(party.getState().plays).toIncludeSameMembers(startPlaysPossible);
   });
 
   it("should return  board === ONE_PLAY_BOARD_ARRAY after play({ from: 'B4', to: 'A5' })", () => {
     party.play({ from: "B4", to: "A5" });
-    expect(party.getBoard().board).toStrictEqual(ONE_PLAY_BOARD_ARRAY);
+    expect(party.getState().board).toStrictEqual(ONE_PLAY_BOARD_ARRAY);
   });
 });

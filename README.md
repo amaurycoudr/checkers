@@ -8,7 +8,7 @@
 
 the purpose of this package is to offer a simple api to be able to play to the checkers
 
-> :warning: **for the moment the work is still in progress**
+> :warning: **For the moment the work is still in progress**
 
 # CheckersParty
 
@@ -18,7 +18,9 @@ To start a party you only need to create a new instance of **CheckersParty**
 const party = new CheckersParty("whitePlayerName", "blackPlayerName");
 ```
 
-To access the state of the party you can use the method `getBoard()`
+### party.getBoard()
+
+To access the state of the party you can use the method `getState()`
 this returns an object of this format :
 
 ```json
@@ -60,4 +62,9 @@ this returns an object of this format :
 }
 ```
 
-> :information_source: this is the result of `party.getBoard()` at the first turn
+> :information_source: This is the result of `party.getState()` at the first turn
+
+### party.play(move: Movement)
+
+Take in argument the move you want to play like `{ "from": "B4", "to": "A5" }`.
+Return the state of the party (the new result for `party.getBoard()`).
