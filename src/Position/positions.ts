@@ -66,6 +66,17 @@ const F8 = Position.fromCoordinate("F8");
 const F9 = Position.fromCoordinate("F9");
 const F10 = Position.fromCoordinate("F10");
 
+const G1 = Position.fromCoordinate("G1");
+const G2 = Position.fromCoordinate("G2");
+const G3 = Position.fromCoordinate("G3");
+const G4 = Position.fromCoordinate("G4");
+const G5 = Position.fromCoordinate("G5");
+const G6 = Position.fromCoordinate("G6");
+const G7 = Position.fromCoordinate("G7");
+const G8 = Position.fromCoordinate("G8");
+const G9 = Position.fromCoordinate("G9");
+const G10 = Position.fromCoordinate("G10");
+
 const H1 = Position.fromCoordinate("H1");
 const H2 = Position.fromCoordinate("H2");
 const H3 = Position.fromCoordinate("H3");
@@ -190,4 +201,14 @@ export {
   J8,
   J9,
   J10,
+  G1,
+  G2,
+  G3,
+  G4,
+  G5,
+  G6,
+  G7,
+  G8,
+  G9,
+  G10,
 };

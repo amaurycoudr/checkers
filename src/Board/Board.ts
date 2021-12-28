@@ -16,7 +16,7 @@ import {
   PieceJSON,
   PieceMoves,
 } from "../utils/type";
-import BoxContent from "../BoxContent/BoxContent";
+import EmptyBox from "../EmptyBox/EmptyBox";
 import { Utils } from "../genericInterface";
 import PieceSituation, {
   PieceSituationType,
@@ -61,7 +61,7 @@ class Board implements Utils {
     return this.board[position.getY()][position.getX()];
   }
 
-  setBox(position: Position, newValue: BoxContent) {
+  setBox(position: Position, newValue: EmptyBox) {
     if (!position.isInBoard()) {
       throw new Error(ERROR_OUT_OF_BOUND);
     }
@@ -207,9 +207,9 @@ class Board implements Utils {
     const newBoardState = cloneDeep(this.board);
     const newBoard = new Board(newBoardState);
     newBoard.setBox(play.to, newBoard.getBox(play.from));
-    newBoard.setBox(play.from, new BoxContent());
+    newBoard.setBox(play.from, new EmptyBox());
     if (play instanceof EatenPlay) {
-      newBoard.setBox(play.eaten, new BoxContent());
+      newBoard.setBox(play.eaten, new EmptyBox());
     }
     return newBoard;
   }

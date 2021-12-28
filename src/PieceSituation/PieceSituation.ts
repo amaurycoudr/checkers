@@ -1,9 +1,9 @@
 import { isEqual, map } from "lodash";
-import BoxContent from "../BoxContent/BoxContent";
+import EmptyBox from "../EmptyBox/EmptyBox";
 import { Utils } from "../genericInterface";
 import { MoveStr } from "../utils/type";
 
-export type PieceSituationType = { [key in MoveStr[number]]?: BoxContent };
+export type PieceSituationType = { [key in MoveStr[number]]?: EmptyBox };
 class PieceSituation implements Utils {
   private situation: PieceSituationType;
   constructor(situation: PieceSituationType) {

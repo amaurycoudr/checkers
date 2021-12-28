@@ -2,15 +2,10 @@ import Pawn from "../Pawn/Pawn";
 import Player from "../Player/Player";
 import { methodTest } from "../test/utils";
 import { BLACK } from "../utils/type";
-import BoxContent from "./BoxContent";
+import EmptyBox from "./EmptyBox";
 
-const emptyBox = new BoxContent();
+const emptyBox = new EmptyBox();
 const pieceBox = new Pawn(new Player(BLACK));
-methodTest(emptyBox.isPiece, () => {
-  it("should be false if it is not a Piece", () => {
-    expect(emptyBox.isPiece()).toBe(false);
-  });
-});
 
 methodTest(emptyBox.equals, () => {
   it("should be false if it is not a box", () => {

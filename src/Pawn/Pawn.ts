@@ -1,14 +1,14 @@
-import BoxContent from "../BoxContent/BoxContent";
+import EmptyBox from "../EmptyBox/EmptyBox";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import Piece from "../Piece/Piece";
 import PieceSituation from "../PieceSituation/PieceSituation";
 import Player from "../Player/Player";
 import Position from "../Position/Position";
 import TravelPlay from "../TravelPlay/TravelPlay";
-import { MoveStr, PieceJSON } from "../utils/type";
+import { BoardContent, MoveStr, PieceJSON } from "../utils/type";
 
 class Pawn extends Piece {
-  static type = "Pawn";
+  type = "Pawn";
   travelMoves: MoveStr[];
   eatenMoves = EATEN_MOVES_SITUATION;
   secondEatenMoves = EATEN_MOVES_SITUATION;
@@ -45,10 +45,10 @@ class Pawn extends Piece {
   }
 
   private canBeEatenPlay(
-    eaten: BoxContent | undefined,
-    to: BoxContent | undefined
+    eaten: BoardContent | undefined,
+    to: BoardContent | undefined
   ): boolean {
-    const isArrivedEmpty = to && !to.isPiece();
+    const isArrivedEmpty = to && !(to instanceof Piece);
     const isNearOpponent =
       eaten && eaten instanceof Piece && eaten.isOpponent(this.player);
     return !!isArrivedEmpty && !!isNearOpponent;
@@ -59,7 +59,7 @@ class Pawn extends Piece {
     this.travelMoves.forEach((move) => {
       const box = situation.get()[move];
 
-      if (box && !box.isPiece()) {
+      if (box && !(box instanceof Piece)) {
         result.push(
           new TravelPlay(position, position.getArrivalPosition(move))
         );
@@ -68,10 +68,10 @@ class Pawn extends Piece {
     return result;
   }
   getJSON(): PieceJSON {
-    return { type: Pawn.type, player: this.player.getColor() };
+    return { type: this.type, player: this.player.getColor() };
   }
   toStr(): string {
-    return `${Pawn.type} ${this.player.getColor()}`;
+    return `${this.type} ${this.player.getColor()}`;
   }
 }
 

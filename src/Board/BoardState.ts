@@ -1,49 +1,52 @@
-import BoxContent from "../BoxContent/BoxContent";
+import EmptyBox from "../EmptyBox/EmptyBox";
 import Pawn from "../Pawn/Pawn";
+import Piece from "../Piece/Piece";
 import Player from "../Player/Player";
 import { BLACK, LengthType, WHITE } from "../utils/type";
 
-export type BoardState = LengthType<LengthType<BoxContent>>;
+
+
+export type BoardState = LengthType<LengthType<EmptyBox | Piece>>;
 const playerWhite = new Player(WHITE);
 const playerBlack = new Player(BLACK);
-export const emptyLine = (): LengthType<BoxContent> => [
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
+export const emptyLine = (): LengthType<EmptyBox> => [
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
 ];
 export const playerLine = (
   player: Player,
   isEven: boolean
-): LengthType<BoxContent> => [
-  isEven ? new Pawn(player) : new BoxContent(),
-  isEven ? new BoxContent() : new Pawn(player),
-  isEven ? new Pawn(player) : new BoxContent(),
-  isEven ? new BoxContent() : new Pawn(player),
-  isEven ? new Pawn(player) : new BoxContent(),
-  isEven ? new BoxContent() : new Pawn(player),
-  isEven ? new Pawn(player) : new BoxContent(),
-  isEven ? new BoxContent() : new Pawn(player),
-  isEven ? new Pawn(player) : new BoxContent(),
-  isEven ? new BoxContent() : new Pawn(player),
+): LengthType<EmptyBox> => [
+  isEven ? new Pawn(player) : new EmptyBox(),
+  isEven ? new EmptyBox() : new Pawn(player),
+  isEven ? new Pawn(player) : new EmptyBox(),
+  isEven ? new EmptyBox() : new Pawn(player),
+  isEven ? new Pawn(player) : new EmptyBox(),
+  isEven ? new EmptyBox() : new Pawn(player),
+  isEven ? new Pawn(player) : new EmptyBox(),
+  isEven ? new EmptyBox() : new Pawn(player),
+  isEven ? new Pawn(player) : new EmptyBox(),
+  isEven ? new EmptyBox() : new Pawn(player),
 ];
-export const onePawnLine = (player: Player): LengthType<BoxContent> => [
+export const onePawnLine = (player: Player): LengthType<EmptyBox> => [
   new Pawn(player),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
-  new BoxContent(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
+  new EmptyBox(),
 ];
 
 export const EMPTY_BOARD: BoardState = [

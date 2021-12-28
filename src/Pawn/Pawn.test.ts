@@ -1,4 +1,4 @@
-import { box } from "../BoxContent/boxes";
+import { box } from "../EmptyBox/emptyBoxes";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import { eatenPlay } from "../EatenPlay/eatenPlays";
 import PieceSituation, {
@@ -14,7 +14,7 @@ import { pawnBlack, pawnWhite } from "./pawns";
 methodTest(pawnWhite.getJSON, () => {
   it(`should return {type:"Pawn, player:${WHITE}} for pawnWhite.getJSON()`, () => {
     expect(pawnWhite.getJSON().player).toBe(WHITE);
-    expect(pawnWhite.getJSON().type).toBe(Pawn.type);
+    expect(pawnWhite.getJSON().type).toBe(pawnWhite.type);
   });
 });
 

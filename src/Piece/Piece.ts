@@ -1,4 +1,4 @@
-import BoxContent from "../BoxContent/BoxContent";
+import EmptyBox from "../EmptyBox/EmptyBox";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import Player from "../Player/Player";
 import Position from "../Position/Position";
@@ -7,25 +7,28 @@ import EatenPlay from "../EatenPlay/EatenPlay";
 import { Utils } from "../genericInterface";
 import PieceSituation from "../PieceSituation/PieceSituation";
 
-export default abstract class Piece extends BoxContent implements Utils {
+export default abstract class Piece implements Utils {
   protected player: Player;
   abstract travelMoves: MoveStr[];
   abstract eatenMoves: MoveStr[];
+  abstract type: string;
   abstract secondEatenMoves: MoveStr[];
   hasBeenEaten: boolean;
 
   constructor(player: Player) {
-    super();
     this.player = player;
     this.hasBeenEaten = false;
-  }
-  isPiece(): boolean {
-    return true;
   }
 
   isOpponent(otherPlayer: Player) {
     return !otherPlayer.equals(this.player);
   }
+
+  equals(o: Piece): boolean {
+    return o.player.equals(this.player) && o.type === this.type;
+  }
+
+  abstract toStr(): string;
 
   abstract getEatenPlays(
     situation: PieceSituation,

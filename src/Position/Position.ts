@@ -45,6 +45,7 @@ class Position implements Utils {
   private addMove(move: Position): Position {
     return new Position(this.x + move.x, this.y + move.y);
   }
+
   getX(): number {
     return this.x;
   }

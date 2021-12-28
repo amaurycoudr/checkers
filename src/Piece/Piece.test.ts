@@ -1,21 +1,17 @@
 import Pawn from "../Pawn/Pawn";
+import { pawnBlack, pawnWhite } from "../Pawn/pawns";
 import Player from "../Player/Player";
+import { playerBlack, playerWhite } from "../Player/players";
 import { methodTest } from "../test/utils";
 import { BLACK, WHITE } from "../utils/type";
 
-const blackTopPlayer = new Player(BLACK);
-const whiteBottomPlayer = new Player(WHITE);
-
-const blackTopPiece = new Pawn(blackTopPlayer);
-const whiteBottomPiece = new Pawn(whiteBottomPlayer);
-
-methodTest(blackTopPiece.isOpponent, () => {
+methodTest(pawnBlack.isOpponent, () => {
   it("return false if piece Player has the same color", () => {
-    expect(blackTopPiece.isOpponent(blackTopPlayer)).toBe(false);
-    expect(whiteBottomPiece.isOpponent(whiteBottomPlayer)).toBe(false);
+    expect(pawnBlack.isOpponent(playerBlack)).toBe(false);
+    expect(pawnWhite.isOpponent(playerWhite)).toBe(false);
   });
   it("return true if piece Player has a different color", () => {
-    expect(blackTopPiece.isOpponent(whiteBottomPlayer)).toBe(true);
-    expect(whiteBottomPiece.isOpponent(blackTopPlayer)).toBe(true);
+    expect(pawnBlack.isOpponent(playerWhite)).toBe(true);
+    expect(pawnWhite.isOpponent(playerBlack)).toBe(true);
   });
 });

@@ -1,5 +1,5 @@
 import { map } from "lodash";
-import BoxContent from "../BoxContent/BoxContent";
+import EmptyBox from "../EmptyBox/EmptyBox";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import Pawn from "../Pawn/Pawn";
 import Piece from "../Piece/Piece";
@@ -45,7 +45,7 @@ methodTest(emptyBoard.getBox, () => {
 methodTest(emptyBoard.setBox, () => {
   it("should throw an error if out of bound", () => {
     expect(() =>
-      emptyBoard.setBox(new Position(-1, -1), new BoxContent())
+      emptyBoard.setBox(new Position(-1, -1), new EmptyBox())
     ).toThrowError(ERROR_OUT_OF_BOUND);
   });
 });
@@ -329,7 +329,7 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
     const B2 = new Position(1, 1);
     const play = new TravelPlay(A1, B2);
     const newBoard = onePawnBoard.getNewBoardFromPlay(play);
-    const box = new BoxContent();
+    const box = new EmptyBox();
 
     expect(newBoard.getBox(A1)).toStrictEqual(box);
     expect(newBoard.getBox(B2)).toStrictEqual(onePawnBoard.getBox(A1));
@@ -340,7 +340,7 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
     const C3 = new Position(2, 2);
     const play = new EatenPlay(A1, C3, B2);
     const newBoard = eatBoard.getNewBoardFromPlay(play);
-    const box = new BoxContent();
+    const box = new EmptyBox();
 
     expect(newBoard.getBox(A1)).toStrictEqual(box);
     expect(newBoard.getBox(B2)).toStrictEqual(box);

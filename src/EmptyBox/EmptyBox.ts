@@ -1,10 +1,7 @@
 import { isEqual } from "lodash";
 import { Utils } from "../genericInterface";
 
-class BoxContent implements Utils {
-  isPiece(): boolean {
-    return false;
-  }
+class EmptyBox implements Utils {
   toStr() {
     return "Box";
   }
@@ -12,4 +9,4 @@ class BoxContent implements Utils {
     return isEqual(this, o);
   }
 }
-export default BoxContent;
+export default EmptyBox;
