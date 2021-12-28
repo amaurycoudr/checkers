@@ -10,8 +10,8 @@ import { ERROR_PLAY_NOT_POSSIBLE } from "../utils/error";
 import { BLACK, WHITE } from "../utils/type";
 import Party from "./Party";
 
-const playerWhite = new PlayerWhite("moutarde");
-const playerBlack = new PlayerBlack("colonel");
+const playerWhite = new PlayerWhite();
+const playerBlack = new PlayerBlack();
 
 const startParty = new Party(CLASSIC_BOARD, playerWhite, playerBlack);
 methodTest(startParty.getCurrentBoard, () => {
@@ -66,8 +66,8 @@ methodTest(startParty.playTurn, () => {
 
   const twoPlayParty = new Party(
     CLASSIC_BOARD,
-    new PlayerWhite("moutarde"),
-    new PlayerBlack("colonel")
+    new PlayerWhite(),
+    new PlayerBlack()
   );
 
   twoPlayParty.playTurn(playOne);
@@ -79,8 +79,8 @@ methodTest(startParty.playTurn, () => {
 
   const twoEatenPlayParty = new Party(
     TWO_PLAY_BOARD,
-    new PlayerWhite("moutarde"),
-    new PlayerBlack("colonel")
+    new PlayerWhite(),
+    new PlayerBlack()
   );
 
   const playTwoEaten = new TravelPlay(new Position(0, 0), new Position(2, 2));

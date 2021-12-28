@@ -27,7 +27,7 @@ class Player implements Utils {
 }
 export default Player;
 class PlayerWhite extends Player {
-  constructor(name: string) {
+  constructor() {
     super(WHITE);
   }
 }
@@ -35,7 +35,7 @@ export { PlayerWhite };
 export { PlayerBlack };
 
 class PlayerBlack extends Player {
-  constructor(name: string) {
+  constructor() {
     super(BLACK);
   }
 }

@@ -12,9 +12,9 @@ export type PartyState = {
 class PublicApi {
   private party: Party;
 
-  constructor(playerWhiteName: string, playerBlackName: string) {
-    const playerWhite = new PlayerWhite(playerWhiteName);
-    const playerBlack = new PlayerBlack(playerBlackName);
+  constructor() {
+    const playerWhite = new PlayerWhite();
+    const playerBlack = new PlayerBlack();
     this.party = new Party(
       classicBoard(playerWhite, playerBlack),
       playerWhite,

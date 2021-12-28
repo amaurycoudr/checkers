@@ -7,7 +7,7 @@ import {
 import { methodTest } from "../test/utils";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import PublicApi from "./PublicApi";
-const party = new PublicApi("moutarde", "colonel");
+const party = new PublicApi();
 
 const startPlaysPossible = [
   new TravelPlay(new Position(1, 3), new Position(0, 4)),
