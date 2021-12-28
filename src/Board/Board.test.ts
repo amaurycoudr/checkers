@@ -1,15 +1,18 @@
 import { map } from "lodash";
-import Box from "../Box/Box";
+import BoxContent from "../BoxContent/BoxContent";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import Pawn from "../Pawn/Pawn";
 import Piece from "../Piece/Piece";
+import PieceSituation, {
+  PieceSituationType,
+} from "../PieceSituation/PieceSituation";
 import Player from "../Player/Player";
 import Position from "../Position/Position";
 import { methodTest } from "../test/utils";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { ERROR_OUT_OF_BOUND } from "../utils/error";
 import { forBoard } from "../utils/fn";
-import { BLACK, MoveStr, PieceSituation, WHITE } from "../utils/type";
+import { BLACK, MoveStr, WHITE } from "../utils/type";
 import Board from "./Board";
 import {
   a1PawnBoard,
@@ -42,7 +45,7 @@ methodTest(emptyBoard.getBox, () => {
 methodTest(emptyBoard.setBox, () => {
   it("should throw an error if out of bound", () => {
     expect(() =>
-      emptyBoard.setBox(new Position(-1, -1), new Box())
+      emptyBoard.setBox(new Position(-1, -1), new BoxContent())
     ).toThrowError(ERROR_OUT_OF_BOUND);
   });
 });
@@ -84,7 +87,7 @@ methodTest(startBoard.getAroundSituation, () => {
   type DataGetAroundSituation = {
     position: Position;
     moves: MoveStr[];
-    expected: PieceSituation;
+    expected: PieceSituationType;
   };
 
   const A1 = new Position(0, 0);
@@ -140,9 +143,9 @@ methodTest(startBoard.getAroundSituation, () => {
       expected,
       (situation, move) => `${move}:${situation?.toStr()}, `
     )}} for position: ${position.toStr()}, Moves : ${moves.toString()}`, () => {
-      expect(startBoard.getAroundSituation(position, moves)).toStrictEqual(
-        expected
-      );
+      expect(
+        startBoard.getAroundSituation(position, moves).get()
+      ).toStrictEqual(expected);
     });
   };
   dataGetAroundSituation.forEach(unitTestGetAroundSituation);
@@ -326,7 +329,7 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
     const B2 = new Position(1, 1);
     const play = new TravelPlay(A1, B2);
     const newBoard = onePawnBoard.getNewBoardFromPlay(play);
-    const box = new Box();
+    const box = new BoxContent();
 
     expect(newBoard.getBox(A1)).toStrictEqual(box);
     expect(newBoard.getBox(B2)).toStrictEqual(onePawnBoard.getBox(A1));
@@ -337,7 +340,7 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
     const C3 = new Position(2, 2);
     const play = new EatenPlay(A1, C3, B2);
     const newBoard = eatBoard.getNewBoardFromPlay(play);
-    const box = new Box();
+    const box = new BoxContent();
 
     expect(newBoard.getBox(A1)).toStrictEqual(box);
     expect(newBoard.getBox(B2)).toStrictEqual(box);

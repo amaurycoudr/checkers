@@ -1,12 +1,13 @@
-import Box from "../Box/Box";
+import BoxContent from "../BoxContent/BoxContent";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import Player from "../Player/Player";
 import Position from "../Position/Position";
-import { MoveStr, PieceJSON, PieceSituation } from "../utils/type";
+import { MoveStr, PieceJSON } from "../utils/type";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import { Utils } from "../genericInterface";
+import PieceSituation from "../PieceSituation/PieceSituation";
 
-export default abstract class Piece extends Box implements Utils {
+export default abstract class Piece extends BoxContent implements Utils {
   protected player: Player;
   abstract travelMoves: MoveStr[];
   abstract eatenMoves: MoveStr[];

@@ -1,22 +1,12 @@
-import Box from "../Box/Box";
+import BoxContent from "../BoxContent/BoxContent";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import Piece from "../Piece/Piece";
+import PieceSituation from "../PieceSituation/PieceSituation";
 import Player from "../Player/Player";
 import Position from "../Position/Position";
 import TravelPlay from "../TravelPlay/TravelPlay";
-import { MoveStr, PieceJSON, PieceSituation } from "../utils/type";
-const EATEN_MOVES: MoveStr[] = [
-  "-1.+1",
-  "-2.+2",
-  "+1.+1",
-  "+2.+2",
-  "+1.-1",
-  "+2.-2",
-  "-1.-1",
-  "-2.-2",
-];
-const TOP_TRAVEL_MOVES: MoveStr[] = ["-1.-1", "+1.-1"];
-const BOTTOM_TRAVEL_MOVES: MoveStr[] = ["-1.+1", "+1.+1"];
+import { MoveStr, PieceJSON } from "../utils/type";
+
 class Pawn extends Piece {
   static type = "Pawn";
   travelMoves: MoveStr[];
@@ -42,7 +32,12 @@ class Pawn extends Piece {
     ];
 
     possibleMoves.forEach((moves) => {
-      if (this.canBeEatenPlay(situation[moves[0]], situation[moves[1]])) {
+      if (
+        this.canBeEatenPlay(
+          situation.get()[moves[0]],
+          situation.get()[moves[1]]
+        )
+      ) {
         result.push(
           new EatenPlay(
             position,
@@ -57,8 +52,8 @@ class Pawn extends Piece {
   }
 
   private canBeEatenPlay(
-    near: Box | undefined,
-    arrived: Box | undefined
+    near: BoxContent | undefined,
+    arrived: BoxContent | undefined
   ): boolean {
     const isArrivedEmpty = arrived && !arrived.isPiece();
     const isNearOpponent =
@@ -69,7 +64,7 @@ class Pawn extends Piece {
   getTravelPlays(situation: PieceSituation, position: Position): TravelPlay[] {
     const result: TravelPlay[] = [];
     this.travelMoves.forEach((move) => {
-      const box = situation[move];
+      const box = situation.get()[move];
 
       if (box && !box.isPiece()) {
         result.push(
@@ -86,4 +81,19 @@ class Pawn extends Piece {
     return `${Pawn.type} ${this.player.getColor()}`;
   }
 }
+
+const EATEN_MOVES: MoveStr[] = [
+  "-1.+1",
+  "-2.+2",
+  "+1.+1",
+  "+2.+2",
+  "+1.-1",
+  "+2.-2",
+  "-1.-1",
+  "-2.-2",
+];
+const TOP_TRAVEL_MOVES: MoveStr[] = ["-1.-1", "+1.-1"];
+
+const BOTTOM_TRAVEL_MOVES: MoveStr[] = ["-1.+1", "+1.+1"];
+
 export default Pawn;

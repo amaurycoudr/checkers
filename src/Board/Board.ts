@@ -15,10 +15,12 @@ import {
   LineArray,
   PieceJSON,
   PieceMoves,
-  PieceSituation,
 } from "../utils/type";
-import Box from "../Box/Box";
+import BoxContent from "../BoxContent/BoxContent";
 import { Utils } from "../genericInterface";
+import PieceSituation, {
+  PieceSituationType,
+} from "../PieceSituation/PieceSituation";
 export type PlayerPieces = { [key in Coordinates]?: Piece };
 
 const emptyLine = (): LineArray => [
@@ -59,7 +61,7 @@ class Board implements Utils {
     return this.board[position.getY()][position.getX()];
   }
 
-  setBox(position: Position, newValue: Box) {
+  setBox(position: Position, newValue: BoxContent) {
     if (!position.isInBoard()) {
       throw new Error(ERROR_OUT_OF_BOUND);
     }
@@ -117,7 +119,7 @@ class Board implements Utils {
   }
 
   getAroundSituation(position: Position, moves: PieceMoves): PieceSituation {
-    return moves.reduce((prev, curr): PieceSituation => {
+    const situation = moves.reduce((prev, curr): PieceSituationType => {
       const arrivalPosition = position.getArrivalPosition(curr);
 
       const box = arrivalPosition.isInBoard() && this.getBox(arrivalPosition);
@@ -127,6 +129,7 @@ class Board implements Utils {
       }
       return prev;
     }, {});
+    return new PieceSituation(situation);
   }
 
   getPlayerPieces(player: Player): PlayerPieces {
@@ -158,7 +161,7 @@ class Board implements Utils {
       eatenPlays.push(
         ...this.getPieceEatenPlays(
           piece!,
-          Position.getPositionFromCoordinate(coordinate as Coordinates)
+          Position.fromCoordinate(coordinate as Coordinates)
         )
       );
     });
@@ -172,7 +175,7 @@ class Board implements Utils {
       travelPlays.push(
         ...this.getPieceTravelPlays(
           piece!,
-          Position.getPositionFromCoordinate(coordinate as Coordinates)
+          Position.fromCoordinate(coordinate as Coordinates)
         )
       );
     });
@@ -204,9 +207,9 @@ class Board implements Utils {
     const newBoardState = cloneDeep(this.board);
     const newBoard = new Board(newBoardState);
     newBoard.setBox(play.to, newBoard.getBox(play.from));
-    newBoard.setBox(play.from, new Box());
+    newBoard.setBox(play.from, new BoxContent());
     if (play instanceof EatenPlay) {
-      newBoard.setBox(play.eaten, new Box());
+      newBoard.setBox(play.eaten, new BoxContent());
     }
     return newBoard;
   }

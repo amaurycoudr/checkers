@@ -72,11 +72,11 @@ const testCoordinatesToPosition = (
   const coordinates: Coordinates = `${coordinatesX[x]}${coordinatesY[y]}`;
   it(`should return ${position.toStr()} for ${coordinates} `, () => {
     expect(
-      Position.getPositionFromCoordinate(coordinates).equals(position)
+      Position.fromCoordinate(coordinates).equals(position)
     ).toBe(true);
   });
 };
-methodTest(Position.getPositionFromCoordinate, () => {
+methodTest(Position.fromCoordinate, () => {
   forBoard(testCoordinatesToPosition);
 });
 
@@ -117,9 +117,9 @@ const testForMove =
   };
 const unitTestForGetPositionFromMove = (position: Position, move: MoveStr) =>
   it(`getPositionFromMove(${move}) should return ${position.toStr()}`, () => {
-    expect(Position.getPositionFromMove(move).equals(position)).toBe(true);
+    expect(Position.fromMove(move).equals(position)).toBe(true);
   });
 
-methodTest(Position.getPositionFromMove, () => {
+methodTest(Position.fromMove, () => {
   forMove(testForMove(unitTestForGetPositionFromMove));
 });

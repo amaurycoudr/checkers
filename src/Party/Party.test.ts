@@ -1,17 +1,15 @@
 import { cloneDeep } from "lodash";
 import Board from "../Board/Board";
 import { BoardState, CLASSIC_BOARD, TWO_PLAY_BOARD } from "../Board/BoardState";
-import Box from "../Box/Box";
+import BoxContent from "../BoxContent/BoxContent";
 import { PlayerBlack, PlayerWhite } from "../Player/Player";
+import { playerBlack, playerWhite } from "../Player/players";
 import Position from "../Position/Position";
 import { methodTest } from "../test/utils";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { ERROR_PLAY_NOT_POSSIBLE } from "../utils/error";
 import { BLACK, WHITE } from "../utils/type";
 import Party from "./Party";
-
-const playerWhite = new PlayerWhite();
-const playerBlack = new PlayerBlack();
 
 const startParty = new Party(CLASSIC_BOARD, playerWhite, playerBlack);
 methodTest(startParty.getCurrentBoard, () => {
@@ -57,18 +55,14 @@ methodTest(startParty.playTurn, () => {
     const onePlayParty = new Party(CLASSIC_BOARD, playerWhite, playerBlack);
     const onePlayBoardState: BoardState = cloneDeep(CLASSIC_BOARD);
     onePlayBoardState[4][0] = onePlayBoardState[3][1];
-    onePlayBoardState[3][1] = new Box();
+    onePlayBoardState[3][1] = new BoxContent();
     const onePlayBoard = new Board(onePlayBoardState);
     onePlayParty.playTurn(playOne);
     expect(onePlayParty.getCurrentBoard()).toStrictEqual(onePlayBoard);
     expect(onePlayParty.getCurrentPlayer().getColor()).toBe(BLACK);
   });
 
-  const twoPlayParty = new Party(
-    CLASSIC_BOARD,
-    new PlayerWhite(),
-    new PlayerBlack()
-  );
+  const twoPlayParty = new Party(CLASSIC_BOARD, playerWhite, playerBlack);
 
   twoPlayParty.playTurn(playOne);
   twoPlayParty.playTurn(playTwo);

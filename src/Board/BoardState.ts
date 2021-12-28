@@ -1,49 +1,49 @@
-import Box from "../Box/Box";
+import BoxContent from "../BoxContent/BoxContent";
 import Pawn from "../Pawn/Pawn";
 import Player from "../Player/Player";
 import { BLACK, LengthType, WHITE } from "../utils/type";
 
-export type BoardState = LengthType<LengthType<Box>>;
+export type BoardState = LengthType<LengthType<BoxContent>>;
 const playerWhite = new Player(WHITE);
 const playerBlack = new Player(BLACK);
-export const emptyLine = (): LengthType<Box> => [
-  new Box(),
-  new Box(),
-  new Box(),
-  new Box(),
-  new Box(),
-  new Box(),
-  new Box(),
-  new Box(),
-  new Box(),
-  new Box(),
+export const emptyLine = (): LengthType<BoxContent> => [
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
 ];
 export const playerLine = (
   player: Player,
   isEven: boolean
-): LengthType<Box> => [
-  isEven ? new Pawn(player) : new Box(),
-  isEven ? new Box() : new Pawn(player),
-  isEven ? new Pawn(player) : new Box(),
-  isEven ? new Box() : new Pawn(player),
-  isEven ? new Pawn(player) : new Box(),
-  isEven ? new Box() : new Pawn(player),
-  isEven ? new Pawn(player) : new Box(),
-  isEven ? new Box() : new Pawn(player),
-  isEven ? new Pawn(player) : new Box(),
-  isEven ? new Box() : new Pawn(player),
+): LengthType<BoxContent> => [
+  isEven ? new Pawn(player) : new BoxContent(),
+  isEven ? new BoxContent() : new Pawn(player),
+  isEven ? new Pawn(player) : new BoxContent(),
+  isEven ? new BoxContent() : new Pawn(player),
+  isEven ? new Pawn(player) : new BoxContent(),
+  isEven ? new BoxContent() : new Pawn(player),
+  isEven ? new Pawn(player) : new BoxContent(),
+  isEven ? new BoxContent() : new Pawn(player),
+  isEven ? new Pawn(player) : new BoxContent(),
+  isEven ? new BoxContent() : new Pawn(player),
 ];
-export const onePawnLine = (player: Player): LengthType<Box> => [
+export const onePawnLine = (player: Player): LengthType<BoxContent> => [
   new Pawn(player),
-  new Box(),
-  new Box(),
-  new Box(),
-  new Box(),
-  new Box(),
-  new Box(),
-  new Box(),
-  new Box(),
-  new Box(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
+  new BoxContent(),
 ];
 
 export const EMPTY_BOARD: BoardState = [

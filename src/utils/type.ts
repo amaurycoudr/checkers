@@ -1,4 +1,4 @@
-import Box from "../Box/Box";
+import BoxContent from "../BoxContent/BoxContent";
 
 export const BLACK = "black";
 export const WHITE = "white";
@@ -40,7 +40,7 @@ export type PieceJSON = {
   player: Color;
 };
 export type PieceMoves = MoveStr[];
-export type PieceSituation = { [key in PieceMoves[number]]?: Box };
+
 
 export type BoardJSON = { [key in Coordinates]?: PieceJSON };
 export type LineArray = LengthType<PieceJSON | undefined>;

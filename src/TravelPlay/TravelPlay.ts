@@ -25,8 +25,8 @@ class TravelPlay implements Utils {
 
   static fromJson(json: PlayJSON): TravelPlay {
     return new TravelPlay(
-      Position.getPositionFromCoordinate(json.from),
-      Position.getPositionFromCoordinate(json.to)
+      Position.fromCoordinate(json.from),
+      Position.fromCoordinate(json.to)
     );
   }
   static fromMove(from: Position, to: MoveStr) {

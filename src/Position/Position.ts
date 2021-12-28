@@ -39,7 +39,7 @@ class Position implements Utils {
   }
 
   getArrivalPosition(move: MoveStr) {
-    return this.addMove(Position.getPositionFromMove(move));
+    return this.addMove(Position.fromMove(move));
   }
 
   private addMove(move: Position): Position {
@@ -52,7 +52,7 @@ class Position implements Utils {
     return this.y;
   }
 
-  static getPositionFromCoordinate(coordinates: Coordinates): Position {
+  static fromCoordinate(coordinates: Coordinates): Position {
     const yCoordinate = parseInt(
       coordinates.slice(1, coordinates.length),
       10
@@ -72,7 +72,7 @@ class Position implements Utils {
     return `${x}${y}`;
   }
 
-  static getPositionFromMove(moveDescription: MoveStr): Position {
+  static fromMove(moveDescription: MoveStr): Position {
     const x = this.getXorYFromMoveCoordinate(
       moveDescription.slice(0, 2) as MoveCoordinate
     );
