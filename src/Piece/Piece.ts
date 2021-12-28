@@ -18,7 +18,7 @@ export default abstract class Piece extends Box implements Utils {
     this.player = player;
     this.hasBeenEaten = false;
   }
-  isNotEmpty(): boolean {
+  isPiece(): boolean {
     return true;
   }
 

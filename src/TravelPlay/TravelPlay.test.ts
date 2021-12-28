@@ -29,10 +29,10 @@ methodTest(play1.getJSON, () => {
   });
 });
 
-methodTest(TravelPlay.playFromJson, () => {
+methodTest(TravelPlay.fromJson, () => {
   it(`should return ${play1.toStr()} from ${JSON.stringify(
     play1JSON
   )} `, () => {
-    expect(TravelPlay.playFromJson(play1JSON)).toStrictEqual(play1);
+    expect(TravelPlay.fromJson(play1JSON)).toStrictEqual(play1);
   });
 });

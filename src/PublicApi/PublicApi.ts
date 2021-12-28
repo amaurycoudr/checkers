@@ -31,7 +31,7 @@ class PublicApi {
   }
 
   play(play: PlayJSON): PartyState {
-    this.party.playTurn(TravelPlay.playFromJson(play));
+    this.party.playTurn(TravelPlay.fromJson(play));
     return this.getState();
   }
 }

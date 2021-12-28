@@ -1,19 +1,13 @@
 import { map } from "lodash";
-import Box from "../Box/Box";
+import { box } from "../Box/boxes";
 import EatenPlay from "../EatenPlay/EatenPlay";
-import Player from "../Player/Player";
-import Position from "../Position/Position";
+import { D4 } from "../Position/positions";
 import { methodTest } from "../test/utils";
+
 import TravelPlay from "../TravelPlay/TravelPlay";
-import { BLACK, PieceSituation, WHITE } from "../utils/type";
+import { PieceSituation, WHITE } from "../utils/type";
 import Pawn from "./Pawn";
-const whitePlayer = new Player(WHITE);
-const blackPlayer = new Player(BLACK);
-
-const position = new Position(3, 3);
-
-const pawnWhite = new Pawn(whitePlayer);
-const pawnBlack = new Pawn(blackPlayer);
+import { pawnBlack, pawnWhite } from "./pawns";
 
 methodTest(pawnWhite.getJSON, () => {
   it(`should return {type:"Pawn, player:${WHITE}} for pawnWhite.getJSON()`, () => {
@@ -29,66 +23,66 @@ methodTest(pawnWhite.getEatenPlays, () => {
   };
   const dataEatenPlays: DataEatenPlays[] = [
     {
-      situation: { "+1.+1": pawnBlack, "+2.+2": new Box() },
+      situation: { "+1.+1": pawnBlack, "+2.+2": box },
       plays: [
         new EatenPlay(
-          position,
-          position.getArrivalPosition("+2.+2"),
-          position.getArrivalPosition("+1.+1")
+          D4,
+          D4.getArrivalPosition("+2.+2"),
+          D4.getArrivalPosition("+1.+1")
         ),
       ],
     },
     {
-      situation: { "+1.-1": pawnBlack, "+2.-2": new Box() },
+      situation: { "+1.-1": pawnBlack, "+2.-2": box },
       plays: [
         new EatenPlay(
-          position,
-          position.getArrivalPosition("+2.-2"),
-          position.getArrivalPosition("+1.-1")
+          D4,
+          D4.getArrivalPosition("+2.-2"),
+          D4.getArrivalPosition("+1.-1")
         ),
       ],
     },
     {
-      situation: { "-1.+1": pawnBlack, "-2.+2": new Box() },
+      situation: { "-1.+1": pawnBlack, "-2.+2": box },
       plays: [
         new EatenPlay(
-          position,
-          position.getArrivalPosition("-2.+2"),
-          position.getArrivalPosition("-1.+1")
+          D4,
+          D4.getArrivalPosition("-2.+2"),
+          D4.getArrivalPosition("-1.+1")
         ),
       ],
     },
     {
-      situation: { "-1.-1": pawnBlack, "-2.-2": new Box() },
+      situation: { "-1.-1": pawnBlack, "-2.-2": box },
       plays: [
         new EatenPlay(
-          position,
-          position.getArrivalPosition("-2.-2"),
-          position.getArrivalPosition("-1.-1")
+          D4,
+          D4.getArrivalPosition("-2.-2"),
+          D4.getArrivalPosition("-1.-1")
         ),
       ],
     },
     {
-      situation: { "-1.-1": new Box(), "-2.-2": new Box() },
+      situation: { "-1.-1": box, "-2.-2": box },
       plays: [],
     },
     {
       situation: {
         "-1.-1": pawnBlack,
-        "-2.-2": new Box(),
+        "-2.-2": box,
         "+1.-1": pawnBlack,
-        "+2.-2": new Box(),
+        "+2.-2": box,
       },
       plays: [
         new EatenPlay(
-          position,
-          position.getArrivalPosition("+2.-2"),
-          position.getArrivalPosition("+1.-1")
+          D4,
+          D4.getArrivalPosition("+2.-2"),
+          D4.getArrivalPosition("+1.-1")
         ),
         new EatenPlay(
-          position,
-          position.getArrivalPosition("-2.-2"),
-          position.getArrivalPosition("-1.-1")
+          D4,
+          D4.getArrivalPosition("-2.-2"),
+          D4.getArrivalPosition("-1.-1")
         ),
       ],
     },
@@ -102,70 +96,68 @@ methodTest(pawnWhite.getEatenPlays, () => {
       (situation, coordinate) => `${coordinate}:${situation?.toStr()}`
     )}] the plays : [${eatenPlay.plays.map((play) => play.toStr())}]  `;
     it(descriptionTest, () => {
-      expect(
-        pawnWhite.getEatenPlays(eatenPlay.situation, position)
-      ).toStrictEqual(eatenPlay.plays);
+      expect(pawnWhite.getEatenPlays(eatenPlay.situation, D4)).toStrictEqual(
+        eatenPlay.plays
+      );
     });
   };
   dataEatenPlays.forEach(unitTestGetEatenPlay);
 });
-
+type TravelPlayData = {
+  situation: PieceSituation;
+  plays: TravelPlay[];
+  pawn: Pawn;
+};
 methodTest(pawnWhite.getTravelPlays, () => {
-  const testGetTravelPlaysData: {
-    situation: PieceSituation;
-    plays: TravelPlay[];
-    player: Player;
-  }[] = [
+  const testGetTravelPlaysData: TravelPlayData[] = [
     {
-      player: new Player(BLACK),
-      situation: { "+1.-1": pawnBlack, "-1.-1": new Box() },
-      plays: [new TravelPlay(position, position.getArrivalPosition("-1.-1"))],
+      pawn: pawnBlack,
+      situation: { "+1.-1": pawnBlack, "-1.-1": box },
+      plays: [TravelPlay.fromMove(D4, "-1.-1")],
     },
     {
-      player: new Player(BLACK),
+      pawn: pawnBlack,
       situation: { "+1.-1": pawnBlack, "-1.-1": pawnBlack },
       plays: [],
     },
     {
-      player: new Player(BLACK),
-      situation: { "+1.-1": new Box(), "-1.-1": new Box() },
+      pawn: pawnBlack,
+      situation: {},
+      plays: [],
+    },
+    {
+      pawn: pawnBlack,
+      situation: { "+1.-1": box, "-1.-1": box },
       plays: [
-        new TravelPlay(position, position.getArrivalPosition("-1.-1")),
-        new TravelPlay(position, position.getArrivalPosition("+1.-1")),
+        TravelPlay.fromMove(D4, "-1.-1"),
+        TravelPlay.fromMove(D4, "+1.-1"),
       ],
     },
     {
-      player: new Player(WHITE),
-      situation: { "+1.+1": pawnBlack, "-1.+1": new Box() },
-      plays: [new TravelPlay(position, position.getArrivalPosition("-1.+1"))],
+      pawn: pawnWhite,
+      situation: { "+1.+1": pawnBlack, "-1.+1": box },
+      plays: [TravelPlay.fromMove(D4, "-1.+1")],
     },
     {
-      player: new Player(WHITE),
+      pawn: pawnWhite,
       situation: { "+1.+1": pawnBlack, "-1.+1": pawnBlack },
       plays: [],
     },
     {
-      player: new Player(WHITE),
-      situation: { "+1.+1": new Box(), "-1.+1": new Box() },
+      pawn: pawnWhite,
+      situation: { "+1.+1": box, "-1.+1": box },
       plays: [
-        new TravelPlay(position, position.getArrivalPosition("-1.+1")),
-        new TravelPlay(position, position.getArrivalPosition("+1.+1")),
+        TravelPlay.fromMove(D4, "-1.+1"),
+        TravelPlay.fromMove(D4, "+1.+1"),
       ],
     },
   ];
-  const unitTestGetTravelPlay = (travelPlay: {
-    situation: PieceSituation;
-    player: Player;
-    plays: TravelPlay[];
-  }) => {
+  const unitTestGetTravelPlay = (travelPlay: TravelPlayData) => {
     it(`expect to return travelPlays from [${Object.keys(
       travelPlay.situation
     )}] `, () => {
       expect(
-        new Pawn(travelPlay.player).getTravelPlays(
-          travelPlay.situation,
-          position
-        )
+        travelPlay.pawn.getTravelPlays(travelPlay.situation, D4)
       ).toIncludeSameMembers(travelPlay.plays);
     });
   };

@@ -60,7 +60,7 @@ class Pawn extends Piece {
     near: Box | undefined,
     arrived: Box | undefined
   ): boolean {
-    const isArrivedEmpty = arrived && !arrived.isNotEmpty();
+    const isArrivedEmpty = arrived && !arrived.isPiece();
     const isNearOpponent =
       near && near instanceof Piece && near.isOpponent(this.player);
     return !!isArrivedEmpty && !!isNearOpponent;
@@ -71,7 +71,7 @@ class Pawn extends Piece {
     this.travelMoves.forEach((move) => {
       const box = situation[move];
 
-      if (box && !box.isNotEmpty()) {
+      if (box && !box.isPiece()) {
         result.push(
           new TravelPlay(position, position.getArrivalPosition(move))
         );

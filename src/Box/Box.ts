@@ -2,7 +2,7 @@ import { isEqual } from "lodash";
 import { Utils } from "../genericInterface";
 
 class Box implements Utils {
-  isNotEmpty(): boolean {
+  isPiece(): boolean {
     return false;
   }
   toStr() {

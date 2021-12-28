@@ -1,6 +1,6 @@
 import { Utils } from "../genericInterface";
 import Position from "../Position/Position";
-import { PlayJSON } from "../utils/type";
+import { MoveStr, PlayJSON } from "../utils/type";
 
 class TravelPlay implements Utils {
   from: Position;
@@ -23,11 +23,14 @@ class TravelPlay implements Utils {
     return { from: this.from.getJSON(), to: this.to.getJSON() };
   }
 
-  static playFromJson(json: PlayJSON): TravelPlay {
+  static fromJson(json: PlayJSON): TravelPlay {
     return new TravelPlay(
       Position.getPositionFromCoordinate(json.from),
       Position.getPositionFromCoordinate(json.to)
     );
+  }
+  static fromMove(from: Position, to: MoveStr) {
+    return new TravelPlay(from, from.getArrivalPosition(to));
   }
 }
 export default TravelPlay;

@@ -6,9 +6,9 @@ import Box from "./Box";
 
 const emptyBox = new Box();
 const pieceBox = new Pawn(new Player(BLACK));
-methodTest(emptyBox.isNotEmpty, () => {
+methodTest(emptyBox.isPiece, () => {
   it("should be false if it is not a Piece", () => {
-    expect(emptyBox.isNotEmpty()).toBe(false);
+    expect(emptyBox.isPiece()).toBe(false);
   });
 });
 
