@@ -10,11 +10,7 @@ export const forBoard = (fn: (p: Position, x: number, y: number) => void) => {
   }
 };
 export const forMove = (
-  fn: (
-    p: Position,
-    x: MoveNumber,
-    y: MoveNumber
-  ) => void
+  fn: (p: Position, x: MoveNumber, y: MoveNumber) => void
 ) => {
   moveCoordinate.forEach((x) => {
     moveCoordinate.forEach((y) => {

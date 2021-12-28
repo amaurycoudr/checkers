@@ -1,7 +1,6 @@
 import { methodTest } from "../test/utils";
 import { BLACK, WHITE } from "../utils/type";
 import Player from "./Player";
-const name = "namePlayer";
 
 const playerBlackBottom = new Player(BLACK);
 const playerWhiteTop = new Player(WHITE);
@@ -15,7 +14,7 @@ methodTest(playerBlackBottom.equals, () => {
   it("should return true if same color", () => {
     expect(playerBlackBottom.equals(playerBlackBottom)).toBe(true);
   });
-  it("should return false if same color", () => {
+  it("should return false if different color", () => {
     expect(playerBlackBottom.equals(playerWhiteTop)).toBe(false);
   });
 });

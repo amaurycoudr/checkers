@@ -10,8 +10,8 @@ import { MoveStr, PieceJSON } from "../utils/type";
 class Pawn extends Piece {
   static type = "Pawn";
   travelMoves: MoveStr[];
-  eatenMoves = EATEN_MOVES;
-  secondEatenMoves = EATEN_MOVES;
+  eatenMoves = EATEN_MOVES_SITUATION;
+  secondEatenMoves = EATEN_MOVES_SITUATION;
 
   constructor(player: Player) {
     super(player);
@@ -24,25 +24,18 @@ class Pawn extends Piece {
   getEatenPlays(situation: PieceSituation, position: Position): EatenPlay[] {
     const result: EatenPlay[] = [];
 
-    const possibleMoves: MoveStr[][] = [
-      ["+1.+1", "+2.+2"],
-      ["+1.-1", "+2.-2"],
-      ["-1.+1", "-2.+2"],
-      ["-1.-1", "-2.-2"],
-    ];
-
-    possibleMoves.forEach((moves) => {
+    EATEN_MOVES_COMBINATION.forEach((combination) => {
       if (
         this.canBeEatenPlay(
-          situation.get()[moves[0]],
-          situation.get()[moves[1]]
+          situation.get()[combination.eaten],
+          situation.get()[combination.to]
         )
       ) {
         result.push(
-          new EatenPlay(
+          EatenPlay.eatenPlayFromMove(
             position,
-            position.getArrivalPosition(moves[1]),
-            position.getArrivalPosition(moves[0])
+            combination.to,
+            combination.eaten
           )
         );
       }
@@ -52,12 +45,12 @@ class Pawn extends Piece {
   }
 
   private canBeEatenPlay(
-    near: BoxContent | undefined,
-    arrived: BoxContent | undefined
+    eaten: BoxContent | undefined,
+    to: BoxContent | undefined
   ): boolean {
-    const isArrivedEmpty = arrived && !arrived.isPiece();
+    const isArrivedEmpty = to && !to.isPiece();
     const isNearOpponent =
-      near && near instanceof Piece && near.isOpponent(this.player);
+      eaten && eaten instanceof Piece && eaten.isOpponent(this.player);
     return !!isArrivedEmpty && !!isNearOpponent;
   }
 
@@ -82,7 +75,7 @@ class Pawn extends Piece {
   }
 }
 
-const EATEN_MOVES: MoveStr[] = [
+const EATEN_MOVES_SITUATION: MoveStr[] = [
   "-1.+1",
   "-2.+2",
   "+1.+1",
@@ -92,6 +85,14 @@ const EATEN_MOVES: MoveStr[] = [
   "-1.-1",
   "-2.-2",
 ];
+
+const EATEN_MOVES_COMBINATION: { to: MoveStr; eaten: MoveStr }[] = [
+  { eaten: "+1.+1", to: "+2.+2" },
+  { eaten: "+1.-1", to: "+2.-2" },
+  { eaten: "-1.+1", to: "-2.+2" },
+  { eaten: "-1.-1", to: "-2.-2" },
+];
+
 const TOP_TRAVEL_MOVES: MoveStr[] = ["-1.-1", "+1.-1"];
 
 const BOTTOM_TRAVEL_MOVES: MoveStr[] = ["-1.+1", "+1.+1"];

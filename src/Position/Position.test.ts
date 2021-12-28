@@ -9,117 +9,112 @@ import {
   MoveNumber,
   MoveStr,
 } from "../utils/type";
-import { methodTest } from "../test/utils";
+import {
+  methodTest,
+  methodTestFordBoard,
+  methodTestForMove,
+  methodTestMap,
+} from "../test/utils";
+import { A1, A10, B10, B3, J1, J10 } from "./positions";
 
 const X = 1;
 const Y = 2;
 const infMin = INDEX_MIN - 3;
-const supMax = INDEX_MAX + 2;
-
-const position = new Position(X, Y);
-const positionLimitMin = new Position(INDEX_MIN, INDEX_MIN);
-const positionLimitMinMax = new Position(INDEX_MAX, INDEX_MAX);
 
 const positionYInfMin = new Position(X, infMin);
-const positionYISupMin = new Position(X, supMax);
-const positionXInfMin = new Position(infMin, Y);
-const positionXISupMin = new Position(supMax, Y);
 
-methodTest(position.isInBoard, () => {
-  it("return true when the Position is in the board and false otherwise", () => {
-    const expectInBoardToBe = (position: Position, toBe: boolean) =>
-      expect(position.isInBoard()).toBe(toBe);
+type InBoardData = {
+  position: Position;
+  isInBoardShouldReturn: boolean;
+};
+methodTestMap<InBoardData>(
+  A1.isInBoard,
+  [
+    { position: A1, isInBoardShouldReturn: true },
+    { position: A10, isInBoardShouldReturn: true },
+    { position: J1, isInBoardShouldReturn: true },
+    { position: J10, isInBoardShouldReturn: true },
+    { position: B3, isInBoardShouldReturn: true },
+    { position: new Position(-1, -1), isInBoardShouldReturn: false },
+    { position: new Position(-1, 1), isInBoardShouldReturn: false },
+    { position: new Position(1, -1), isInBoardShouldReturn: false },
+    { position: new Position(1, -10), isInBoardShouldReturn: false },
+    { position: new Position(-10, 1), isInBoardShouldReturn: false },
+  ],
+  (data) =>
+    `should return ${data.isInBoardShouldReturn} for ${data.position.toStr()}`,
+  (data) => {
+    expect(data.position.isInBoard()).toBe(data.isInBoardShouldReturn);
+  }
+);
 
-    expectInBoardToBe(position, true);
-    expectInBoardToBe(positionLimitMin, true);
-    expectInBoardToBe(positionLimitMinMax, true);
-
-    expectInBoardToBe(positionYInfMin, false);
-    expectInBoardToBe(positionYISupMin, false);
-    expectInBoardToBe(positionXInfMin, false);
-    expectInBoardToBe(positionXISupMin, false);
+methodTest(A1.toStr, () => {
+  it("for A1 should it return '(0,0)'", () => {
+    expect(A1.toStr()).toBe(`(${A1.getX()},${A1.getY()})`);
   });
 });
 
-methodTest(position.toStr, () => {
-  it("for new Position(X,Y) it return '(X,Y)'", () => {
-    expect(position.toStr()).toBe(`(${X},${Y})`);
-  });
-});
-
-methodTest(position.equals, () => {
+methodTest(A1.equals, () => {
   it("return true if x1,y1===x2,y2", () => {
-    expect(position.equals(position)).toBe(true);
-    expect(position.equals(positionYInfMin)).toBe(false);
-  });
-});
-
-methodTest(position.getArrivalPosition, () => {
-  const testMove = (start: Position, move: MoveStr, arrived: Position) =>
-    it(`return ${arrived.toStr()} if move was ${move} and start ${start.toStr()}`, () => {
-      expect(start.getArrivalPosition(move).equals(arrived)).toBe(true);
-    });
-  testMove(new Position(X, Y), "+1.+1", new Position(X + 1, Y + 1));
-  testMove(new Position(X, Y), "+1.-1", new Position(X + 1, Y - 1));
-  testMove(new Position(X, Y), "-1.-1", new Position(X - 1, Y - 1));
-});
-
-const testCoordinatesToPosition = (
-  position: Position,
-  x: number,
-  y: number
-) => {
-  const coordinates: Coordinates = `${coordinatesX[x]}${coordinatesY[y]}`;
-  it(`should return ${position.toStr()} for ${coordinates} `, () => {
-    expect(
-      Position.fromCoordinate(coordinates).equals(position)
-    ).toBe(true);
-  });
-};
-methodTest(Position.fromCoordinate, () => {
-  forBoard(testCoordinatesToPosition);
-});
-
-const testPositionForGetCoordinate = (
-  position: Position,
-  x: number,
-  y: number
-) => {
-  const coordinates: Coordinates = `${coordinatesX[x]}${coordinatesY[y]}`;
-  it(`should return ${coordinates} for ${position.toStr()} `, () => {
-    expect(position.getCoordinate()).toBe(coordinates);
-  });
-};
-methodTest(position.getCoordinate, () => {
-  forBoard(testPositionForGetCoordinate);
-  it(`should throw en error if the position is out of bond`, () => {
-    expect(() => positionYInfMin.getCoordinate()).toThrow(ERROR_COORDINATE_OUT);
+    expect(A1.equals(A1)).toBe(true);
+    expect(A1.equals(A10)).toBe(false);
   });
 });
 
 const testForMove =
-  (test: (position: Position, move: MoveStr) => void) =>
-  (position: Position, x: MoveNumber, y: MoveNumber) => {
-    const move1: MoveStr = `+${x}.+${y}`;
+  (test: (positionArrived: Position, move: MoveStr) => void) =>
+  (xMove: MoveNumber, yMove: MoveNumber) => {
+    const movePP = `+${xMove}.+${yMove}` as MoveStr;
+    const positionPP = new Position(+xMove, +yMove);
 
-    const move2: MoveStr = `-${x}.+${y}`;
-    const position2 = new Position(-x, y);
+    const moveMP = `-${xMove}.+${yMove}` as MoveStr;
+    const positionMP = new Position(-xMove, +yMove);
 
-    const move3: MoveStr = `-${x}.-${y}`;
-    const position3 = new Position(-x, -y);
+    const moveMM = `-${xMove}.-${yMove}` as MoveStr;
+    const positionMM = new Position(-xMove, -yMove);
 
-    const move4: MoveStr = `+${x}.-${y}`;
-    const position4 = new Position(x, -y);
-    test(position, move1);
-    test(position2, move2);
-    test(position3, move3);
-    test(position4, move4);
+    const movePM = `+${xMove}.-${yMove}` as MoveStr;
+    const positionPM = new Position(+xMove, -yMove);
+    test(positionPP, movePP);
+    test(positionPM, movePM);
+    test(positionMP, moveMP);
+    test(positionMM, moveMM);
   };
-const unitTestForGetPositionFromMove = (position: Position, move: MoveStr) =>
-  it(`getPositionFromMove(${move}) should return ${position.toStr()}`, () => {
-    expect(Position.fromMove(move).equals(position)).toBe(true);
-  });
 
-methodTest(Position.fromMove, () => {
-  forMove(testForMove(unitTestForGetPositionFromMove));
+methodTestForMove(A1.getArrivalPosition, (xMove, yMove) => {
+  testForMove((positionArrived: Position, move: MoveStr) => {
+    it(`should return ${positionArrived.toStr()} for MOVE: ${move} (from A1) `, () => {
+      expect(A1.getArrivalPosition(move)).toStrictEqual(positionArrived);
+    });
+  })(xMove as MoveNumber, yMove as MoveNumber);
+});
+
+methodTestForMove(Position.fromMove, (xMove, yMove) => {
+  testForMove((positionArrived: Position, move: MoveStr) => {
+    it(`should return ${positionArrived.toStr()} for ${move} `, () => {
+      expect(Position.fromMove(move).equals(positionArrived)).toBe(true);
+    });
+  })(xMove as MoveNumber, yMove as MoveNumber);
+});
+
+methodTestFordBoard(Position.fromCoordinate, (position, x, y) => {
+  const coordinates: Coordinates = `${coordinatesX[x]}${coordinatesY[y]}`;
+  it(`should return ${position.toStr()} for ${coordinates} `, () => {
+    expect(Position.fromCoordinate(coordinates).equals(position)).toBe(true);
+  });
+});
+
+methodTestFordBoard(A1.getCoordinate, (position, x, y) => {
+  const coordinates: Coordinates = `${coordinatesX[x]}${coordinatesY[y]}`;
+  it(`should return ${coordinates} for ${position.toStr()} `, () => {
+    expect(position.getCoordinate()).toBe(coordinates);
+  });
+});
+
+methodTest(A1.getCoordinate, () => {
+  it(`should throw en error if the position is out of bond`, () => {
+    expect(() => new Position(-1, 0).getCoordinate()).toThrow(
+      ERROR_COORDINATE_OUT
+    );
+  });
 });
