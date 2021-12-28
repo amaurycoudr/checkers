@@ -40,12 +40,7 @@ class Party {
     return this.playerTurn;
   }
 
-  getPlayersJson(): PlayersJSON {
-    return {
-      white: this.playerWhite.getJSON(),
-      black: this.playerBlack.getJSON(),
-    };
-  }
+  
 
   playTurn(play: TravelPlay) {
     const realPlay = this.findPlayInPossible(play);
@@ -75,7 +70,7 @@ class Party {
     const isEatenPlay = play instanceof EatenPlay;
 
     const canEatFromNewPosition =
-      this.getCurrentBoard().getPieceEatenPlays(
+      this.getCurrentBoard().getPieceSecondEatenPlays(
         this.getCurrentBoard().getBox(play.to) as Piece,
         play.to
       ).length > 0;

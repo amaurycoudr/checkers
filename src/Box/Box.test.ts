@@ -5,7 +5,7 @@ import { BLACK } from "../utils/type";
 import Box from "./Box";
 
 const emptyBox = new Box();
-const pieceBox = new Pawn(new Player(BLACK, "test"));
+const pieceBox = new Pawn(new Player(BLACK));
 methodTest(emptyBox.isNotEmpty, () => {
   it("should be false if it is not a Piece", () => {
     expect(emptyBox.isNotEmpty()).toBe(false);

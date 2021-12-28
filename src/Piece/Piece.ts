@@ -10,6 +10,7 @@ export default abstract class Piece extends Box implements Utils {
   protected player: Player;
   abstract travelMoves: MoveStr[];
   abstract eatenMoves: MoveStr[];
+  abstract secondEatenMoves: MoveStr[];
   hasBeenEaten: boolean;
 
   constructor(player: Player) {

@@ -3,8 +3,8 @@ import Player from "../Player/Player";
 import { methodTest } from "../test/utils";
 import { BLACK, WHITE } from "../utils/type";
 
-const blackTopPlayer = new Player(BLACK, "test");
-const whiteBottomPlayer = new Player(WHITE, "test");
+const blackTopPlayer = new Player(BLACK);
+const whiteBottomPlayer = new Player(WHITE);
 
 const blackTopPiece = new Pawn(blackTopPlayer);
 const whiteBottomPiece = new Pawn(whiteBottomPlayer);

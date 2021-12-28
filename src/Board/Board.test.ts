@@ -68,7 +68,7 @@ methodTest(emptyBoard.getJSON, () => {
   it("should return {} for EMPTY_BOARD", () => {
     expect(emptyBoard.getJSON()).toStrictEqual({});
   });
-  const whitePawn = new Pawn(new Player(WHITE, "white"));
+  const whitePawn = new Pawn(new Player(WHITE));
   it(`should return { A1: ${JSON.stringify(
     whitePawn.getJSON()
   )} } for ONE_PAWN_BOARD`, () => {
@@ -149,8 +149,8 @@ methodTest(startBoard.getAroundSituation, () => {
 });
 
 methodTest(eatBoard.getPieceEatenPlays, () => {
-  const pawnWhite = new Pawn(new Player(WHITE, "white"));
-  const pawnBlack = new Pawn(new Player(BLACK, "white"));
+  const pawnWhite = new Pawn(new Player(WHITE));
+  const pawnBlack = new Pawn(new Player(BLACK));
   type testEatenPlay = {
     position: Position;
     piece: Piece;
@@ -236,8 +236,8 @@ methodTest(eatBoard.getPieceEatenPlays, () => {
 });
 
 methodTest(emptyBoard.getPlayerPieces, () => {
-  const whitePlayer = new Player(WHITE, "test");
-  const blackPlayer = new Player(BLACK, "test");
+  const whitePlayer = new Player(WHITE);
+  const blackPlayer = new Player(BLACK);
   const a1WhitePawnBoard = new Board(a1PawnBoard(whitePlayer));
   it("should return {} for emptyBoard", () => {
     expect(emptyBoard.getPlayerPieces(whitePlayer)).toStrictEqual({});
@@ -254,8 +254,8 @@ methodTest(emptyBoard.getPlayerPieces, () => {
 });
 
 methodTest(emptyBoard.getPieceTravelPlays, () => {
-  const pawnWhite = new Pawn(new Player(WHITE, "white"));
-  const pawnBlack = new Pawn(new Player(BLACK, "white"));
+  const pawnWhite = new Pawn(new Player(WHITE));
+  const pawnBlack = new Pawn(new Player(BLACK));
   type testTravelPlay = {
     position: Position;
     piece: Piece;
@@ -303,20 +303,20 @@ methodTest(emptyBoard.getPieceTravelPlays, () => {
 methodTest(eatBoard.getPlayerPlays, () => {
   it("should return eatenPlays if eatenPlays possible ", () => {
     eatBoard
-      .getPlayerPlays(new Player(WHITE, "test"))
+      .getPlayerPlays(new Player(WHITE))
       .forEach((play) => expect(play instanceof EatenPlay).toBe(true));
   });
   it("should return travelPlays if only travelPlays possible", () => {
     startBoard
-      .getPlayerPlays(new Player(WHITE, "test"))
+      .getPlayerPlays(new Player(WHITE))
       .forEach((play) => expect(play instanceof EatenPlay).toBe(false));
   });
 
   const move = new TravelPlay(new Position(0, 0), new Position(1, 1));
   it(`should return ${move.toStr()} for the onePawnBoard`, () => {
-    expect(
-      onePawnBoard.getPlayerPlays(new Player(WHITE, "test"))[0]
-    ).toStrictEqual(move);
+    expect(onePawnBoard.getPlayerPlays(new Player(WHITE))[0]).toStrictEqual(
+      move
+    );
   });
 });
 

@@ -5,26 +5,30 @@ import Player from "../Player/Player";
 import Position from "../Position/Position";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { MoveStr, PieceJSON, PieceSituation } from "../utils/type";
-
+const EATEN_MOVES: MoveStr[] = [
+  "-1.+1",
+  "-2.+2",
+  "+1.+1",
+  "+2.+2",
+  "+1.-1",
+  "+2.-2",
+  "-1.-1",
+  "-2.-2",
+];
+const TOP_TRAVEL_MOVES: MoveStr[] = ["-1.-1", "+1.-1"];
+const BOTTOM_TRAVEL_MOVES: MoveStr[] = ["-1.+1", "+1.+1"];
 class Pawn extends Piece {
   static type = "Pawn";
   travelMoves: MoveStr[];
-  eatenMoves: MoveStr[] = [
-    "-1.+1",
-    "-2.+2",
-    "+1.+1",
-    "+2.+2",
-    "+1.-1",
-    "+2.-2",
-    "-1.-1",
-    "-2.-2",
-  ];
+  eatenMoves = EATEN_MOVES;
+  secondEatenMoves = EATEN_MOVES;
+
   constructor(player: Player) {
     super(player);
     if (player.isTop()) {
-      this.travelMoves = ["-1.-1", "+1.-1"];
+      this.travelMoves = TOP_TRAVEL_MOVES;
     } else {
-      this.travelMoves = ["+1.+1", "-1.+1"];
+      this.travelMoves = BOTTOM_TRAVEL_MOVES;
     }
   }
   getEatenPlays(situation: PieceSituation, position: Position): EatenPlay[] {

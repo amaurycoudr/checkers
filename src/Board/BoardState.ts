@@ -4,8 +4,8 @@ import Player from "../Player/Player";
 import { BLACK, LengthType, WHITE } from "../utils/type";
 
 export type BoardState = LengthType<LengthType<Box>>;
-const playerWhite = new Player(WHITE, "Moutarde");
-const playerBlack = new Player(BLACK, "Le Blanc");
+const playerWhite = new Player(WHITE);
+const playerBlack = new Player(BLACK);
 export const emptyLine = (): LengthType<Box> => [
   new Box(),
   new Box(),

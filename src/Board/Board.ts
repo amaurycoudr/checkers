@@ -20,6 +20,31 @@ import {
 import Box from "../Box/Box";
 import { Utils } from "../genericInterface";
 export type PlayerPieces = { [key in Coordinates]?: Piece };
+
+const emptyLine = (): LineArray => [
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+];
+const emptyArray = (): BoardArray => [
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+];
 class Board implements Utils {
   private board: BoardState;
 
@@ -54,30 +79,8 @@ class Board implements Utils {
   }
 
   getArray(): BoardArray {
-    const emptyLine = (): LineArray => [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ];
-    const array: BoardArray = [
-      emptyLine(),
-      emptyLine(),
-      emptyLine(),
-      emptyLine(),
-      emptyLine(),
-      emptyLine(),
-      emptyLine(),
-      emptyLine(),
-      emptyLine(),
-      emptyLine(),
-    ];
+    const array = emptyArray();
+
     Board.forBoardState((position: Position) => {
       const json = this.getPositionJson(position);
       if (json) {
@@ -179,6 +182,13 @@ class Board implements Utils {
   getPieceEatenPlays(piece: Piece, position: Position) {
     return piece.getEatenPlays(
       this.getAroundSituation(position, piece.eatenMoves),
+      position
+    );
+  }
+
+  getPieceSecondEatenPlays(piece: Piece, position: Position) {
+    return piece.getEatenPlays(
+      this.getAroundSituation(position, piece.secondEatenMoves),
       position
     );
   }

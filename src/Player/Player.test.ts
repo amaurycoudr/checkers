@@ -3,11 +3,11 @@ import { BLACK, WHITE } from "../utils/type";
 import Player from "./Player";
 const name = "namePlayer";
 
-const playerBlackBottom = new Player(BLACK, name);
-const playerWhiteTop = new Player(WHITE, name);
+const playerBlackBottom = new Player(BLACK);
+const playerWhiteTop = new Player(WHITE);
 methodTest(playerBlackBottom.toStr, () => {
-  it(`should return ${name} the ${WHITE} player `, () => {
-    expect(playerBlackBottom.toStr()).toBe(`${name} the ${BLACK} player`);
+  it(`should return ${BLACK} player `, () => {
+    expect(playerBlackBottom.toStr()).toBe(`${BLACK} player`);
   });
 });
 
@@ -26,12 +26,5 @@ methodTest(playerBlackBottom.isTop, () => {
   });
   it("should return true if is " + BLACK, () => {
     expect(playerBlackBottom.isTop()).toBe(true);
-  });
-});
-
-methodTest(playerBlackBottom.getJSON, () => {
-  const blackJson = { color: BLACK, name };
-  it(`should return ${JSON.stringify(blackJson)}`, () => {
-    expect(playerBlackBottom.getJSON()).toStrictEqual(blackJson);
   });
 });

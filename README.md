@@ -15,10 +15,10 @@ the purpose of this package is to offer a simple api to be able to play to the c
 To start a party you only need to create a new instance of **CheckersParty**
 
 ```js
-const party = new CheckersParty("whitePlayerName", "blackPlayerName");
+const party = new CheckersParty();
 ```
 
-### party.getBoard()
+### party.getState()
 
 To access the state of the party you can use the method `getState()`
 this returns an object of this format :
@@ -40,14 +40,6 @@ this returns an object of this format :
     ] /* here only the first line is shown */
   ],
   "playerTurn": "white",
-  "players": {
-    "white": {
-      "name": "whitePlayerName"
-    },
-    "black": {
-      "name": "blackPlayerName"
-    }
-  },
   "plays": [
     { "from": "B4", "to": "A5" },
     { "from": "B4", "to": "C5" },
@@ -67,4 +59,4 @@ this returns an object of this format :
 ### party.play(move: Movement)
 
 Take in argument the move you want to play like `{ "from": "B4", "to": "A5" }`.
-Return the state of the party (the new result for `party.getBoard()`).
+Return the state of the party (the new result for `party.getState()`).

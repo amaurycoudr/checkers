@@ -89,11 +89,3 @@ methodTest(startParty.playTurn, () => {
     expect(twoEatenPlayParty.getCurrentPlayer().getColor()).toBe(WHITE);
   });
 });
-methodTest(startParty.getPlayersJson, () => {
-  it(`should return {white:${playerWhite.getJSON()},black:${playerBlack.getJSON()}}`, () => {
-    expect(startParty.getPlayersJson()).toStrictEqual({
-      white: playerWhite.getJSON(),
-      black: playerBlack.getJSON(),
-    });
-  });
-});
