@@ -4,7 +4,7 @@ import { Utils } from "../genericInterface";
 import { MoveStr } from "../utils/type";
 
 export type PieceSituationType = { [key in MoveStr[number]]?: EmptyBox };
-class PieceSituation implements Utils {
+class PieceSituation {
   private situation: PieceSituationType;
   constructor(situation: PieceSituationType) {
     this.situation = situation;
@@ -17,9 +17,6 @@ class PieceSituation implements Utils {
       this.situation,
       (BoxContent, move) => ` (${move}) : ${BoxContent?.toStr()} `
     )}}`;
-  }
-  equals(o: PieceSituation): boolean {
-    return isEqual(o.situation, this.situation);
   }
 }
 export default PieceSituation;
