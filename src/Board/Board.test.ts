@@ -32,7 +32,7 @@ const eatBoard = new Board(EAT_BOARD);
 methodTest(emptyBoard.getBox, () => {
   it("should be equal boardState[y][x] for Position(x,y)", () => {
     forBoard((position, x, y) => {
-      expect(emptyBoard.getBox(position)).toBe(EMPTY_BOARD[y][x]);
+      expect(startBoard.getBox(position)).toStrictEqual(CLASSIC_BOARD[y][x]);
     });
   });
   it("should throw an error if out of bound", () => {

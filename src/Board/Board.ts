@@ -51,7 +51,7 @@ class Board implements Utils {
   private board: BoardState;
 
   constructor(initBoard: BoardState) {
-    this.board = initBoard;
+    this.board = cloneDeep(initBoard);
   }
 
   getBox(position: Position) {

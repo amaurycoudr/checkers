@@ -1,4 +1,3 @@
-import { cloneDeep } from "lodash";
 import Board from "../Board/Board";
 import { BoardState } from "../Board/BoardState";
 import EatenPlay from "../EatenPlay/EatenPlay";
@@ -24,7 +23,7 @@ class Party {
   ) {
     this.playerWhite = playerWhite;
     this.playerBlack = playerBlack;
-    this.turns = [new Board(cloneDeep(initBoard))];
+    this.turns = [new Board(initBoard)];
     this.playerTurn = playerWhite;
   }
 
@@ -39,8 +38,6 @@ class Party {
   getCurrentPlayer(): Player {
     return this.playerTurn;
   }
-
-  
 
   playTurn(play: TravelPlay) {
     const realPlay = this.findPlayInPossible(play);
