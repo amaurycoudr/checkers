@@ -1,5 +1,6 @@
 import { Utils } from "../genericInterface";
 import Position from "../Position/Position";
+import { INDEX_MAX, INDEX_MIN } from "../utils/board";
 import { MoveStr, PlayJSON } from "../utils/type";
 
 class TravelPlay implements Utils {
@@ -21,6 +22,10 @@ class TravelPlay implements Utils {
 
   getJSON(): PlayJSON {
     return { from: this.from.getJSON(), to: this.to.getJSON() };
+  }
+
+  shouldTransformInQueen(): boolean {
+    return this.to.getY() === INDEX_MAX || this.to.getY() === INDEX_MIN;
   }
 
   static fromJson(json: PlayJSON): TravelPlay {

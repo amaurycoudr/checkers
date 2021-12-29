@@ -7,6 +7,7 @@ import PieceSituation, {
   PieceSituationType,
 } from "../PieceSituation/PieceSituation";
 import Position from "../Position/Position";
+import Queen from "../Queen/Queen";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { INDEX_MAX, INDEX_MIN } from "../utils/board";
 import { ERROR_NOT_PIECE, ERROR_OUT_OF_BOUND } from "../utils/error";
@@ -182,11 +183,19 @@ class Board implements Utils {
   getNewBoardFromPlay(play: TravelPlay | EatenPlay) {
     const newBoardState = cloneDeep(this.board);
     const newBoard = new Board(newBoardState);
-    newBoard.setBox(play.to, newBoard.getBox(play.from));
+    const piece = newBoard.getPiece(play.from);
+    if (play.shouldTransformInQueen()) {
+      newBoard.setBox(play.to, new Queen(piece.color));
+    } else {
+      newBoard.setBox(play.to, piece);
+    }
+
     newBoard.setBox(play.from, new EmptyBox());
+    
     if (play instanceof EatenPlay) {
       newBoard.setBox(play.eaten, new EmptyBox());
     }
+
     return newBoard;
   }
 

@@ -5,6 +5,8 @@ import { pawnBlack, pawnWhite } from "../Pawn/pawns";
 import Piece from "../Piece/Piece";
 import { PieceSituationType } from "../PieceSituation/PieceSituation";
 import Position from "../Position/Position";
+import { A9, B10 } from "../Position/positions";
+import Queen from "../Queen/Queen";
 import { methodTest } from "../test/utils";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { ERROR_OUT_OF_BOUND } from "../utils/error";
@@ -17,6 +19,7 @@ import {
   EAT_BOARD,
   EMPTY_BOARD,
   ONE_WHITE_PAWN_BOARD,
+  QUEEN_TEST,
   START_BOARD_JSON,
 } from "./BoardState";
 
@@ -313,7 +316,7 @@ methodTest(eatBoard.getPlayerPlays, () => {
 });
 
 methodTest(eatBoard.getNewBoardFromPlay, () => {
-  it("should return a board where from is a Box and to is Equal to from previous value", () => {
+  it("should return a board where FROM is a Box and TO is Equal to FROM previous value", () => {
     const A1 = new Position(0, 0);
     const B2 = new Position(1, 1);
     const play = new TravelPlay(A1, B2);
@@ -323,7 +326,7 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
     expect(newBoard.getBox(A1)).toStrictEqual(box);
     expect(newBoard.getBox(B2)).toStrictEqual(onePawnBoard.getBox(A1));
   });
-  it("should return a board where from and eaten is a Box and to is Equal to from previous value", () => {
+  it("should return a board where FROM and EATEN is a Box and TO is Equal to FROM previous value", () => {
     const A1 = new Position(0, 0);
     const B2 = new Position(1, 1);
     const C3 = new Position(2, 2);
@@ -334,5 +337,13 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
     expect(newBoard.getBox(A1)).toStrictEqual(box);
     expect(newBoard.getBox(B2)).toStrictEqual(box);
     expect(newBoard.getBox(C3)).toStrictEqual(eatBoard.getBox(A1));
+  });
+
+  const previousQueenBoard = new Board(QUEEN_TEST);
+  const queenBoard = previousQueenBoard.getNewBoardFromPlay(
+    new TravelPlay(A9, B10)
+  );
+  it("should return a board white a queen", () => {
+    expect(queenBoard.getBox(B10) instanceof Queen).toBeTrue();
   });
 });

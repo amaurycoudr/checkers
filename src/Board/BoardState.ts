@@ -109,6 +109,19 @@ export const TWO_PLAY_BOARD: BoardState = [
   emptyLine(),
 ];
 
+export const QUEEN_TEST: BoardState = [
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  playerLine(WHITE, true),
+  emptyLine(),
+];
+
 export const a1PawnBoard = (player: Color): BoardState => [
   onePawnLine(player),
   emptyLine(),

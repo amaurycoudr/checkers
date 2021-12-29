@@ -6,7 +6,7 @@ import TravelPlay from "../TravelPlay/TravelPlay";
 import { Color, MoveStr, PieceJSON } from "../utils/type";
 
 export default abstract class Piece implements Utils {
-  protected color: Color;
+  color: Color;
   abstract travelMoves: MoveStr[];
   abstract eatenMoves: MoveStr[];
   abstract type: string;
