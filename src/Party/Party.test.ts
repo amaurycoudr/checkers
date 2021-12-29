@@ -31,7 +31,7 @@ import {
   I7,
   J4,
   J6,
-} from "../Position/coordinates";
+} from "../Position/Coordinate/coordinates";
 import { methodTest } from "../test/utils";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { ERROR_PLAY_NOT_POSSIBLE } from "../utils/error";

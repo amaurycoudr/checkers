@@ -5,7 +5,7 @@ import {
   START_BOARD_ARRAY,
   START_BOARD_JSON,
 } from "../Board/BoardState";
-import { B4, A5, C5, D4, E5, F4, G5, H4, I5, J4 } from "../Position/coordinates";
+import { B4, A5, C5, D4, E5, F4, G5, H4, I5, J4 } from "../Position/Coordinate/coordinates";
 import { methodTest } from "../test/utils";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import PublicApi from "./PublicApi";

@@ -1,7 +1,7 @@
 import EatenPlay from "../../EatenPlay/EatenPlay";
 import { box } from "../../EmptyBox/emptyBoxes";
 import PieceSituation from "../../PieceSituation/PieceSituation";
-import { D4 } from "../../Position/coordinates";
+import { D4 } from "../../Position/Coordinate/coordinates";
 import { methodTest, methodTestMap } from "../../test/utils";
 import TravelPlay from "../../TravelPlay/TravelPlay";
 import { WHITE } from "../../utils/type";

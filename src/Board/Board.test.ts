@@ -26,7 +26,7 @@ import {
   E7,
   F2,
   G3,
-} from "../Position/coordinates";
+} from "../Position/Coordinate/coordinates";
 import Queen from "../Queen/Queen";
 import { methodTest } from "../test/utils";
 import TravelPlay from "../TravelPlay/TravelPlay";

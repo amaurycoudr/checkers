@@ -1,6 +1,6 @@
 import { methodTest, methodTestForMove, methodTestMap } from "../test/utils";
 import { MoveNumber, MoveStr } from "../utils/type";
-import { A1, A10, B3, J1, J10 } from "./coordinates";
+import { A1, A10, B3, J1, J10 } from "./Coordinate/coordinates";
 import Position from "./Position";
 
 const position = new Position(0, 0);

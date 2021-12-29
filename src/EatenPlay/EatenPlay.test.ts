@@ -1,7 +1,6 @@
-import EatenPlay from "./EatenPlay";
-import Position from "../Position/Position";
+import { A1, A2, B2 } from "../Position/Coordinate/coordinates";
 import { methodTest } from "../test/utils";
-import { A2, B2, A1 } from "../Position/coordinates";
+import EatenPlay from "./EatenPlay";
 
 const eatenPlay = new EatenPlay(A2, B2, A1);
 methodTest(eatenPlay.toStr, () => {

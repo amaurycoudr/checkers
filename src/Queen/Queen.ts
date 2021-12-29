@@ -1,7 +1,7 @@
 import { flatten } from "lodash";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import PieceSituation from "../PieceSituation/PieceSituation";
-import Coordinates from "../Position/coordinates";
+import Coordinate from "../Position/Coordinate/Coordinate";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { Color, moveCoordinate, MoveNumber, MoveStr } from "../utils/type";
 import Pawn from "../Piece/Pawn/Pawn";
@@ -15,7 +15,7 @@ class Queen extends Pawn {
   }
   getTravelPlays(
     situation: PieceSituation,
-    position: Coordinates
+    position: Coordinate
   ): TravelPlay[] {
     const result: TravelPlay[] = [];
 
@@ -29,7 +29,7 @@ class Queen extends Pawn {
     return result;
   }
 
-  getEatenPlays(situation: PieceSituation, position: Coordinates): EatenPlay[] {
+  getEatenPlays(situation: PieceSituation, position: Coordinate): EatenPlay[] {
     const result: EatenPlay[] = [];
     EATEN_MOVES_COMBINATION.forEach(({ eat, arrived, travel }) => {
       if (

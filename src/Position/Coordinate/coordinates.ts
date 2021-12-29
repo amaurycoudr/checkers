@@ -1,4 +1,4 @@
-import Coordinate from "./Coordinate/Coordinate";
+import Coordinate from "./Coordinate";
 
 const A1 = Coordinate.create("A1");
 const A2 = Coordinate.create("A2");

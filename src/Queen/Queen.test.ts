@@ -3,12 +3,12 @@ import EatenPlay from "../EatenPlay/EatenPlay";
 import { box } from "../EmptyBox/emptyBoxes";
 import { pawnBlack } from "../Piece/Pawn/pawns";
 import PieceSituation from "../PieceSituation/PieceSituation";
-import { A1, A10, B3, E4, J1, J10 } from "../Position/coordinates";
+import { A1, A10, B3, E4, J1, J10 } from "../Position/Coordinate/coordinates";
 import { methodTest, methodTestMap } from "../test/utils";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { WHITE } from "../utils/type";
 import Queen from "./Queen";
-import Coordinates from "../Position/coordinates";
+import Coordinates from "../Position/Coordinate/coordinates";
 const queen = new Queen(WHITE);
 methodTest(queen.getEatenPlays, () => {});
 type DataTravelPlay = {
