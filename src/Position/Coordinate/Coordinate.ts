@@ -60,5 +60,7 @@ class Coordinate extends Position {
     return new Coordinate(this.x + move.getX(), this.y + move.getY());
   }
 }
+export const getCoordinate = (x: number, y: number): CoordinatesStr =>
+  Coordinate.getCoordinate(x, y);
 
 export default Coordinate;

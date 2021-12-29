@@ -1,6 +1,6 @@
 {
   "name": "amaurycoudr-checkers",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "checkers game",
   "source": "scr/index.ts",
   "main": "lib/index.js",
@@ -12,8 +12,9 @@
     "type": "git"
   },
   "scripts": {
-    "test": "yarn test:ts && yarn test:jest && yarn test:makeBadge",
+    "test": "yarn test:ts && yarn test:es && yarn test:jest && yarn test:makeBadge",
     "test:ts": "tsc --noEmit",
+    "test:es": "eslint . --ext .ts --max-warnings=0",
     "test:jest": "jest --coverage",
     "test:makeBadge": "node_modules/.bin/jest-badges-readme",
     "watch": "jest --watch",

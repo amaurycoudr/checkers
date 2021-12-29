@@ -1,13 +1,15 @@
 import { CLASSIC_BOARD } from '../Board/BoardState';
 import Party from '../Party/Party';
 import TravelPlay from '../TravelPlay/TravelPlay';
-import { BoardArray, Color, PlayJSON } from '../utils/type';
+import { BoardArray, BoardJSON, Color, PlayJSON } from '../utils/type';
 
 export type PartyState = {
   playerTurn: Color;
-  board: BoardArray;
+  board: BoardJSON | BoardArray;
+
   plays: PlayJSON[];
 };
+
 class PublicApi {
   private party: Party;
 
@@ -15,9 +17,9 @@ class PublicApi {
     this.party = new Party(CLASSIC_BOARD);
   }
 
-  getState(): PartyState {
+  getState() {
     return {
-      board: this.party.getCurrentBoard().getArray(),
+      board: this.party.getCurrentBoard().getJSON(),
       playerTurn: this.party.getCurrentPlayer(),
       plays: this.party.getCurrentPlays().map((play) => play.getJSON()),
     };
@@ -28,4 +30,5 @@ class PublicApi {
     return this.getState();
   }
 }
+
 export default PublicApi;
