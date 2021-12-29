@@ -50,13 +50,9 @@ const TRAVEL_MOVES_COMBINATION: MoveStr[][] = flatten(
 );
 
 const getNewMove = (travel: MoveStr, n: number) =>
-  `
-${travel[travel.length - 1][0]}${
-    parseInt(travel[travel.length - 1][1], 10) + n
-  }.${travel[travel.length - 1][3]}${
-    parseInt(travel[travel.length - 1][4], 10) + n
-  }
-` as MoveStr;
+  `${travel[0]}${parseInt(travel[1], 10) + n}.${travel[3]}${
+    parseInt(travel[4], 10) + n
+  }` as MoveStr;
 const TRAVEL_EATEN_MOVES_COMBINATION: EatenCombination[] =
   TRAVEL_MOVES_COMBINATION.filter((travel) => travel.length < 8).map(
     (travel): EatenCombination => ({
@@ -70,6 +66,7 @@ const EATEN_MOVES_COMBINATION: EatenCombination[] = [
   ...TRAVEL_EATEN_MOVES_COMBINATION,
   ...NO_TRAVEL_EATEN_COMBINATION,
 ];
+
 class Queen extends Pawn {
   type = 'Queen';
 
