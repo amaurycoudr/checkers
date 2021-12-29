@@ -1,4 +1,8 @@
-import { ONE_PLAY_BOARD_ARRAY, START_BOARD_ARRAY } from '../Board/BoardState';
+import {
+  ONE_PLAY_BOARD_ARRAY,
+  START_BOARD_ARRAY,
+  START_BOARD_JSON,
+} from '../Board/BoardState';
 import {
   A5,
   B4,
@@ -30,8 +34,8 @@ const whiteFirstTurnPlays = [
 ].map((play) => play.getJSON());
 
 methodTest(party.getState, () => {
-  it('should return board === START_BOARD_ARRAY at the start', () => {
-    expect(party.getState().board).toStrictEqual(START_BOARD_ARRAY);
+  it('should return board === START_BOARD_JSON at the start', () => {
+    expect(party.getState().board).toStrictEqual(START_BOARD_JSON);
   });
 
   it('should return plays === startPlayPossible at the start', () => {
