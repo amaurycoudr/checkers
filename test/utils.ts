@@ -1,4 +1,4 @@
-import { Position } from '../src';
+import Position from '../src/Position/Position';
 import { forBoard, forMove } from '../src/utils/fn';
 
 export const methodTest = (
