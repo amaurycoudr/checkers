@@ -121,6 +121,7 @@ export const a1PawnBoard = (player: Color): BoardState => [
   emptyLine(),
   emptyLine(),
 ];
+
 export const START_BOARD_JSON = {
   A1: { type: "Pawn", player: "white" },
   C1: { type: "Pawn", player: "white" },

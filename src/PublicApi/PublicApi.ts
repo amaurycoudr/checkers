@@ -19,7 +19,7 @@ class PublicApi {
     return {
       board: this.party.getCurrentBoard().getArray(),
       playerTurn: this.party.getCurrentPlayer(),
-      plays: this.party.getPlaysPossible().map((play) => play.getJSON()),
+      plays: this.party.getCurrentPlays().map((play) => play.getJSON()),
     };
   }
 

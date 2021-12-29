@@ -14,7 +14,7 @@
   "scripts": {
     "test": "yarn test:ts && yarn test:jest && yarn test:makeBadge",
     "test:ts": "tsc --noEmit",
-    "test:jest": "jest --silent --coverage",
+    "test:jest": "jest --coverage",
     "test:makeBadge": "node_modules/.bin/jest-badges-readme",
     "watch": "jest --watch",
     "build": "yarn clean && yarn rollup",
