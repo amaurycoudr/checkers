@@ -1,5 +1,5 @@
-import { playerBlack, playerWhite } from "../Player/players";
+import { BLACK, WHITE } from "../utils/type";
 import Pawn from "./Pawn";
 
-export const pawnBlack = new Pawn(playerBlack);
-export const pawnWhite = new Pawn(playerWhite);
+export const pawnBlack = new Pawn(BLACK);
+export const pawnWhite = new Pawn(WHITE);

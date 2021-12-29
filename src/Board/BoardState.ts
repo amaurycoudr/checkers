@@ -1,14 +1,10 @@
 import EmptyBox from "../EmptyBox/EmptyBox";
 import Pawn from "../Pawn/Pawn";
 import Piece from "../Piece/Piece";
-import Player from "../Player/Player";
-import { BLACK, LengthType, WHITE } from "../utils/type";
-
-
+import { BLACK, Color, LengthType, WHITE } from "../utils/type";
 
 export type BoardState = LengthType<LengthType<EmptyBox | Piece>>;
-const playerWhite = new Player(WHITE);
-const playerBlack = new Player(BLACK);
+
 export const emptyLine = (): LengthType<EmptyBox> => [
   new EmptyBox(),
   new EmptyBox(),
@@ -22,22 +18,22 @@ export const emptyLine = (): LengthType<EmptyBox> => [
   new EmptyBox(),
 ];
 export const playerLine = (
-  player: Player,
+  color: Color,
   isEven: boolean
 ): LengthType<EmptyBox> => [
-  isEven ? new Pawn(player) : new EmptyBox(),
-  isEven ? new EmptyBox() : new Pawn(player),
-  isEven ? new Pawn(player) : new EmptyBox(),
-  isEven ? new EmptyBox() : new Pawn(player),
-  isEven ? new Pawn(player) : new EmptyBox(),
-  isEven ? new EmptyBox() : new Pawn(player),
-  isEven ? new Pawn(player) : new EmptyBox(),
-  isEven ? new EmptyBox() : new Pawn(player),
-  isEven ? new Pawn(player) : new EmptyBox(),
-  isEven ? new EmptyBox() : new Pawn(player),
+  isEven ? new Pawn(color) : new EmptyBox(),
+  isEven ? new EmptyBox() : new Pawn(color),
+  isEven ? new Pawn(color) : new EmptyBox(),
+  isEven ? new EmptyBox() : new Pawn(color),
+  isEven ? new Pawn(color) : new EmptyBox(),
+  isEven ? new EmptyBox() : new Pawn(color),
+  isEven ? new Pawn(color) : new EmptyBox(),
+  isEven ? new EmptyBox() : new Pawn(color),
+  isEven ? new Pawn(color) : new EmptyBox(),
+  isEven ? new EmptyBox() : new Pawn(color),
 ];
-export const onePawnLine = (player: Player): LengthType<EmptyBox> => [
-  new Pawn(player),
+export const onePawnLine = (color: Color): LengthType<EmptyBox> => [
+  new Pawn(color),
   new EmptyBox(),
   new EmptyBox(),
   new EmptyBox(),
@@ -63,7 +59,7 @@ export const EMPTY_BOARD: BoardState = [
 ];
 
 export const ONE_WHITE_PAWN_BOARD: BoardState = [
-  onePawnLine(playerWhite),
+  onePawnLine(WHITE),
   emptyLine(),
   emptyLine(),
   emptyLine(),
@@ -75,38 +71,25 @@ export const ONE_WHITE_PAWN_BOARD: BoardState = [
   emptyLine(),
 ];
 export const CLASSIC_BOARD: BoardState = [
-  playerLine(playerWhite, true),
-  playerLine(playerWhite, false),
-  playerLine(playerWhite, true),
-  playerLine(playerWhite, false),
+  playerLine(WHITE, true),
+  playerLine(WHITE, false),
+  playerLine(WHITE, true),
+  playerLine(WHITE, false),
   emptyLine(),
   emptyLine(),
-  playerLine(playerBlack, true),
-  playerLine(playerBlack, false),
-  playerLine(playerBlack, true),
-  playerLine(playerBlack, false),
+  playerLine(BLACK, true),
+  playerLine(BLACK, false),
+  playerLine(BLACK, true),
+  playerLine(BLACK, false),
 ];
-export const classicBoard = (player1: Player, player2: Player): BoardState => {
-  return [
-    playerLine(player1, true),
-    playerLine(player1, false),
-    playerLine(player1, true),
-    playerLine(player1, false),
-    emptyLine(),
-    emptyLine(),
-    playerLine(player2, true),
-    playerLine(player2, false),
-    playerLine(player2, true),
-    playerLine(player2, false),
-  ];
-};
+
 export const EAT_BOARD: BoardState = [
-  playerLine(playerWhite, true),
-  playerLine(playerBlack, false),
+  playerLine(WHITE, true),
+  playerLine(BLACK, false),
   emptyLine(),
-  playerLine(playerWhite, false),
-  playerLine(playerBlack, true),
-  playerLine(playerWhite, false),
+  playerLine(WHITE, false),
+  playerLine(BLACK, true),
+  playerLine(WHITE, false),
   emptyLine(),
   emptyLine(),
   emptyLine(),
@@ -114,10 +97,10 @@ export const EAT_BOARD: BoardState = [
 ];
 
 export const TWO_PLAY_BOARD: BoardState = [
-  playerLine(playerWhite, true),
-  playerLine(playerBlack, false),
+  playerLine(WHITE, true),
+  playerLine(BLACK, false),
   emptyLine(),
-  playerLine(playerBlack, false),
+  playerLine(BLACK, false),
   emptyLine(),
   emptyLine(),
   emptyLine(),
@@ -126,7 +109,7 @@ export const TWO_PLAY_BOARD: BoardState = [
   emptyLine(),
 ];
 
-export const a1PawnBoard = (player: Player): BoardState => [
+export const a1PawnBoard = (player: Color): BoardState => [
   onePawnLine(player),
   emptyLine(),
   emptyLine(),

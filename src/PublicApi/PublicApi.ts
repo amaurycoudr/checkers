@@ -1,6 +1,5 @@
-import { classicBoard } from "../Board/BoardState";
+import { CLASSIC_BOARD } from "../Board/BoardState";
 import Party from "../Party/Party";
-import { PlayerBlack, PlayerWhite } from "../Player/Player";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { BoardArray, Color, PlayJSON } from "../utils/type";
 
@@ -13,19 +12,13 @@ class PublicApi {
   private party: Party;
 
   constructor() {
-    const playerWhite = new PlayerWhite();
-    const playerBlack = new PlayerBlack();
-    this.party = new Party(
-      classicBoard(playerWhite, playerBlack),
-      playerWhite,
-      playerBlack
-    );
+    this.party = new Party(CLASSIC_BOARD);
   }
 
   getState(): PartyState {
     return {
       board: this.party.getCurrentBoard().getArray(),
-      playerTurn: this.party.getCurrentPlayer().getColor(),
+      playerTurn: this.party.getCurrentPlayer(),
       plays: this.party.getPlaysPossible().map((play) => play.getJSON()),
     };
   }

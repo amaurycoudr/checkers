@@ -1,31 +1,29 @@
-import EmptyBox from "../EmptyBox/EmptyBox";
-import TravelPlay from "../TravelPlay/TravelPlay";
-import Player from "../Player/Player";
-import Position from "../Position/Position";
-import { MoveStr, PieceJSON } from "../utils/type";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import { Utils } from "../genericInterface";
 import PieceSituation from "../PieceSituation/PieceSituation";
+import Position from "../Position/Position";
+import TravelPlay from "../TravelPlay/TravelPlay";
+import { Color, MoveStr, PieceJSON } from "../utils/type";
 
 export default abstract class Piece implements Utils {
-  protected player: Player;
+  protected color: Color;
   abstract travelMoves: MoveStr[];
   abstract eatenMoves: MoveStr[];
   abstract type: string;
   abstract secondEatenMoves: MoveStr[];
   hasBeenEaten: boolean;
 
-  constructor(player: Player) {
-    this.player = player;
+  constructor(color: Color) {
+    this.color = color;
     this.hasBeenEaten = false;
   }
 
-  isOpponent(otherPlayer: Player) {
-    return !otherPlayer.equals(this.player);
+  isOpponent(color: Color) {
+    return color !== this.color;
   }
 
   equals(o: Piece): boolean {
-    return o.player.equals(this.player) && o.type === this.type;
+    return !this.isOpponent(o.color) && o.type === this.type;
   }
 
   abstract toStr(): string;

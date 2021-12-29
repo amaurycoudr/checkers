@@ -2,29 +2,22 @@ import Board from "../Board/Board";
 import { BoardState } from "../Board/BoardState";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import Piece from "../Piece/Piece";
-import Player, { PlayerBlack, PlayerJSON, PlayerWhite } from "../Player/Player";
+import { PlayerJSON } from "../Player/Player";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { ERROR_PLAY_NOT_POSSIBLE } from "../utils/error";
+import { BLACK, Color, WHITE } from "../utils/type";
 
 export type PlayersJSON = {
   white: PlayerJSON;
   black: PlayerJSON;
 };
 class Party {
-  private playerWhite: Player;
-  private playerBlack: Player;
   private turns: Board[];
-  private playerTurn: Player;
+  private playerTurn: Color;
 
-  constructor(
-    initBoard: BoardState,
-    playerWhite: PlayerWhite,
-    playerBlack: PlayerBlack
-  ) {
-    this.playerWhite = playerWhite;
-    this.playerBlack = playerBlack;
+  constructor(initBoard: BoardState) {
     this.turns = [new Board(initBoard)];
-    this.playerTurn = playerWhite;
+    this.playerTurn = WHITE;
   }
 
   getPlaysPossible(): TravelPlay[] {
@@ -35,7 +28,7 @@ class Party {
     return this.turns[this.turns.length - 1];
   }
 
-  getCurrentPlayer(): Player {
+  getCurrentPlayer(): Color {
     return this.playerTurn;
   }
 
@@ -76,9 +69,9 @@ class Party {
   }
 
   private updateCurrentPlayer() {
-    const isBlackTurn = this.playerTurn.equals(this.playerBlack);
+    const isBlackTurn = this.playerTurn === BLACK;
 
-    this.playerTurn = isBlackTurn ? this.playerWhite : this.playerBlack;
+    this.playerTurn = isBlackTurn ? WHITE : BLACK;
   }
 }
 export default Party;

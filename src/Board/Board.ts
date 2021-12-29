@@ -1,8 +1,11 @@
 import { cloneDeep, isEqual, map } from "lodash";
-import { BoardState } from "./BoardState";
 import EatenPlay from "../EatenPlay/EatenPlay";
+import EmptyBox from "../EmptyBox/EmptyBox";
+import { Utils } from "../genericInterface";
 import Piece from "../Piece/Piece";
-import Player from "../Player/Player";
+import PieceSituation, {
+  PieceSituationType,
+} from "../PieceSituation/PieceSituation";
 import Position from "../Position/Position";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { INDEX_MAX, INDEX_MIN } from "../utils/board";
@@ -11,42 +14,15 @@ import { forBoard } from "../utils/fn";
 import {
   BoardArray,
   BoardJSON,
+  Color,
   Coordinates,
   LineArray,
   PieceJSON,
   PieceMoves,
 } from "../utils/type";
-import EmptyBox from "../EmptyBox/EmptyBox";
-import { Utils } from "../genericInterface";
-import PieceSituation, {
-  PieceSituationType,
-} from "../PieceSituation/PieceSituation";
+import { BoardState } from "./BoardState";
 export type PlayerPieces = { [key in Coordinates]?: Piece };
 
-const emptyLine = (): LineArray => [
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-];
-const emptyArray = (): BoardArray => [
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-];
 class Board implements Utils {
   private board: BoardState;
 
@@ -132,12 +108,12 @@ class Board implements Utils {
     return new PieceSituation(situation);
   }
 
-  getPlayerPieces(player: Player): PlayerPieces {
+  getPlayerPieces(color: Color): PlayerPieces {
     const result: PlayerPieces = {};
     forBoard((position) => {
       try {
         const piece = this.getPiece(position);
-        if (!piece.isOpponent(player)) {
+        if (!piece.isOpponent(color)) {
           result[position.getCoordinate()] = piece;
         }
       } catch {}
@@ -145,17 +121,17 @@ class Board implements Utils {
     return result;
   }
 
-  getPlayerPlays(player: Player): TravelPlay[] {
-    const eatenPlays = this.getPlayerEatenPlays(player);
+  getPlayerPlays(color: Color): TravelPlay[] {
+    const eatenPlays = this.getPlayerEatenPlays(color);
     if (eatenPlays.length > 0) {
       return eatenPlays;
     }
-    const travelMoves: TravelPlay[] = this.getPlayerTravelPlays(player);
+    const travelMoves: TravelPlay[] = this.getPlayerTravelPlays(color);
     return travelMoves;
   }
 
-  private getPlayerEatenPlays(player: Player) {
-    const pieces = this.getPlayerPieces(player);
+  private getPlayerEatenPlays(color: Color) {
+    const pieces = this.getPlayerPieces(color);
     const eatenPlays: EatenPlay[] = [];
     map(pieces, (piece, coordinate) => {
       eatenPlays.push(
@@ -168,8 +144,8 @@ class Board implements Utils {
     return eatenPlays;
   }
 
-  private getPlayerTravelPlays(player: Player) {
-    const pieces = this.getPlayerPieces(player);
+  private getPlayerTravelPlays(color: Color) {
+    const pieces = this.getPlayerPieces(color);
     const travelPlays: TravelPlay[] = [];
     map(pieces, (piece, coordinate) => {
       travelPlays.push(
@@ -222,3 +198,27 @@ class Board implements Utils {
   }
 }
 export default Board;
+const emptyLine = (): LineArray => [
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+];
+const emptyArray = (): BoardArray => [
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+];
