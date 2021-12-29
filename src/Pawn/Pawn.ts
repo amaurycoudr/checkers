@@ -53,12 +53,7 @@ class Pawn extends Piece {
     });
     return result;
   }
-  getJSON(): PieceJSON {
-    return { type: this.type, player: this.color };
-  }
-  toStr(): string {
-    return `${this.type} ${this.color}`;
-  }
+  
 }
 
 const EATEN_MOVES_SITUATION: MoveStr[] = [

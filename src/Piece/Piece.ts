@@ -26,8 +26,6 @@ export default abstract class Piece implements Utils {
     return !this.isOpponent(o.color) && o.type === this.type;
   }
 
-  abstract toStr(): string;
-
   abstract getEatenPlays(
     situation: PieceSituation,
     position: Position
@@ -38,5 +36,10 @@ export default abstract class Piece implements Utils {
     position: Position
   ): TravelPlay[];
 
-  abstract getJSON(): PieceJSON;
+  getJSON(): PieceJSON {
+    return { type: this.type, player: this.color };
+  }
+  toStr(): string {
+    return `${this.type} ${this.color}`;
+  }
 }
