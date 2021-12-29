@@ -5,7 +5,7 @@ import { pawnBlack, pawnWhite } from "../Pawn/pawns";
 import Piece from "../Piece/Piece";
 import { PieceSituationType } from "../PieceSituation/PieceSituation";
 import Position from "../Position/Position";
-import { A9, B10 } from "../Position/positions";
+import { A2, A9, B1, B10 } from "../Position/positions";
 import Queen from "../Queen/Queen";
 import { methodTest } from "../test/utils";
 import TravelPlay from "../TravelPlay/TravelPlay";
@@ -19,7 +19,8 @@ import {
   EAT_BOARD,
   EMPTY_BOARD,
   ONE_WHITE_PAWN_BOARD,
-  QUEEN_TEST,
+  QUEEN_BLACK_TEST,
+  QUEEN_WHITE_TEST,
   START_BOARD_JSON,
 } from "./BoardState";
 
@@ -339,11 +340,16 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
     expect(newBoard.getBox(C3)).toStrictEqual(eatBoard.getBox(A1));
   });
 
-  const previousQueenBoard = new Board(QUEEN_TEST);
-  const queenBoard = previousQueenBoard.getNewBoardFromPlay(
+  const previousWhiteQueenBoard = new Board(QUEEN_WHITE_TEST);
+  const queenWhiteBoard = previousWhiteQueenBoard.getNewBoardFromPlay(
     new TravelPlay(A9, B10)
   );
+  const previousBlackQueenBoard = new Board(QUEEN_BLACK_TEST);
+  const queenBlackBoard = previousBlackQueenBoard.getNewBoardFromPlay(
+    new TravelPlay(A2, B1)
+  );
   it("should return a board white a queen", () => {
-    expect(queenBoard.getBox(B10) instanceof Queen).toBeTrue();
+    expect(queenBlackBoard.getBox(B1) instanceof Queen).toBeTrue();
+    expect(queenWhiteBoard.getBox(B10) instanceof Queen).toBeTrue();
   });
 });

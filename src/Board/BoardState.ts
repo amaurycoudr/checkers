@@ -109,7 +109,7 @@ export const TWO_PLAY_BOARD: BoardState = [
   emptyLine(),
 ];
 
-export const QUEEN_TEST: BoardState = [
+export const QUEEN_WHITE_TEST: BoardState = [
   emptyLine(),
   emptyLine(),
   emptyLine(),
@@ -119,6 +119,18 @@ export const QUEEN_TEST: BoardState = [
   emptyLine(),
   emptyLine(),
   playerLine(WHITE, true),
+  emptyLine(),
+];
+export const QUEEN_BLACK_TEST: BoardState = [
+  emptyLine(),
+  playerLine(BLACK, true),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
   emptyLine(),
 ];
 

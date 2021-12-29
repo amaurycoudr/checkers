@@ -41,7 +41,6 @@ class Party {
       );
     }
   }
-  private setSecondPlay(play: TravelPlay) {}
 
   playTurn(play: TravelPlay) {
     const realPlay = this.findPlayInPossible(play);

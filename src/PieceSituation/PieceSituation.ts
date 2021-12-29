@@ -3,7 +3,9 @@ import EmptyBox from "../EmptyBox/EmptyBox";
 import { Utils } from "../genericInterface";
 import { MoveStr } from "../utils/type";
 
-export type PieceSituationType = { [key in MoveStr[number]]?: EmptyBox };
+export type PieceSituationType = {
+  [key in MoveStr]?: EmptyBox;
+};
 class PieceSituation {
   private situation: PieceSituationType;
   constructor(situation: PieceSituationType) {
