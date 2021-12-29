@@ -1,8 +1,5 @@
-import {
-  ONE_PLAY_BOARD_ARRAY,
-  START_BOARD_ARRAY,
-  START_BOARD_JSON,
-} from '../Board/BoardState';
+import { methodTest } from '../../test/utils';
+import { ONE_PLAY_BOARD_ARRAY, START_BOARD_JSON } from '../Board/BoardState';
 import {
   A5,
   B4,
@@ -15,7 +12,6 @@ import {
   I5,
   J4,
 } from '../Position/Coordinate/coordinates';
-import { methodTest } from '../../test/utils';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import PublicApi from './PublicApi';
 
