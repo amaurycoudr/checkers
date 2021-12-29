@@ -2,15 +2,11 @@ import Board from "../Board/Board";
 import { BoardState } from "../Board/BoardState";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import Piece from "../Piece/Piece";
-import { PlayerJSON } from "../Player/Player";
+
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { ERROR_PLAY_NOT_POSSIBLE } from "../utils/error";
 import { BLACK, Color, WHITE } from "../utils/type";
 
-export type PlayersJSON = {
-  white: PlayerJSON;
-  black: PlayerJSON;
-};
 class Party {
   private turns: Board[];
   private playerTurn: Color;
