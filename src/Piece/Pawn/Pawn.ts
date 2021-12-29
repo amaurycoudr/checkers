@@ -1,9 +1,9 @@
-import EatenPlay from "../EatenPlay/EatenPlay";
-import Piece from "../Piece/Piece";
-import PieceSituation from "../PieceSituation/PieceSituation";
-import Position from "../Position/Position";
-import TravelPlay from "../TravelPlay/TravelPlay";
-import { BoardContent, Color, MoveStr, PieceJSON, WHITE } from "../utils/type";
+import EatenPlay from "../../EatenPlay/EatenPlay";
+import PieceSituation from "../../PieceSituation/PieceSituation";
+import Coordinate from "../../Position/Coordinate/Coordinate";
+import TravelPlay from "../../TravelPlay/TravelPlay";
+import { Color, MoveStr, WHITE } from "../../utils/type";
+import Piece from "../Piece";
 
 class Pawn extends Piece {
   type = "Pawn";
@@ -19,7 +19,7 @@ class Pawn extends Piece {
       this.travelMoves = BOTTOM_TRAVEL_MOVES;
     }
   }
-  getEatenPlays(situation: PieceSituation, position: Position): EatenPlay[] {
+  getEatenPlays(situation: PieceSituation, position: Coordinate): EatenPlay[] {
     const result: EatenPlay[] = [];
 
     EATEN_MOVES_COMBINATION.forEach((combination) => {
@@ -40,20 +40,22 @@ class Pawn extends Piece {
     return result;
   }
 
-  getTravelPlays(situation: PieceSituation, position: Position): TravelPlay[] {
+  getTravelPlays(
+    situation: PieceSituation,
+    position: Coordinate
+  ): TravelPlay[] {
     const result: TravelPlay[] = [];
     this.travelMoves.forEach((move) => {
       const box = situation.get()[move];
 
       if (situation.isEmptyBox(move)) {
         result.push(
-          new TravelPlay(position, position.getArrivalPosition(move))
+          new TravelPlay(position, position.getArrivalCoordinates(move))
         );
       }
     });
     return result;
   }
-  
 }
 
 const EATEN_MOVES_SITUATION: MoveStr[] = [

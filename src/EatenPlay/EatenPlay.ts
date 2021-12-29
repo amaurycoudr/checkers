@@ -1,10 +1,10 @@
-import Position from "../Position/Position";
+import Coordinates from "../Position/Coordinate/Coordinate";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { MoveStr } from "../utils/type";
 
 class EatenPlay extends TravelPlay {
-  eaten: Position;
-  constructor(from: Position, to: Position, eaten: Position) {
+  eaten: Coordinates;
+  constructor(from: Coordinates, to: Coordinates, eaten: Coordinates) {
     super(from, to);
     this.eaten = eaten;
   }
@@ -12,11 +12,11 @@ class EatenPlay extends TravelPlay {
     return `{from: ${this.from.toStr()}, to: ${this.to.toStr()}, eaten: ${this.eaten.toStr()}}`;
   }
 
-  static eatenPlayFromMove(from: Position, to: MoveStr, eaten: MoveStr) {
+  static eatenPlayFromMove(from: Coordinates, to: MoveStr, eaten: MoveStr) {
     return new EatenPlay(
       from,
-      from.getArrivalPosition(to),
-      from.getArrivalPosition(eaten)
+      from.getArrivalCoordinates(to),
+      from.getArrivalCoordinates(eaten)
     );
   }
 }

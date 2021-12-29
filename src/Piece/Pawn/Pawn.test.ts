@@ -1,13 +1,10 @@
-import { box } from "../EmptyBox/emptyBoxes";
-import EatenPlay from "../EatenPlay/EatenPlay";
-import { eatenPlay } from "../EatenPlay/eatenPlays";
-import PieceSituation, {
-  PieceSituationType,
-} from "../PieceSituation/PieceSituation";
-import { D4 } from "../Position/positions";
-import { methodTest, methodTestMap } from "../test/utils";
-import TravelPlay from "../TravelPlay/TravelPlay";
-import { WHITE } from "../utils/type";
+import EatenPlay from "../../EatenPlay/EatenPlay";
+import { box } from "../../EmptyBox/emptyBoxes";
+import PieceSituation from "../../PieceSituation/PieceSituation";
+import { D4 } from "../../Position/coordinates";
+import { methodTest, methodTestMap } from "../../test/utils";
+import TravelPlay from "../../TravelPlay/TravelPlay";
+import { WHITE } from "../../utils/type";
 import Pawn from "./Pawn";
 import { pawnBlack, pawnWhite } from "./pawns";
 
@@ -41,12 +38,12 @@ methodTestMap<DataPlay>(
   [
     {
       situation: new PieceSituation({ "+1.+1": pawnBlack, "+2.+2": box }),
-      plays: [eatenPlay(D4, "+2.+2", "+1.+1")],
+      plays: [EatenPlay.eatenPlayFromMove(D4, "+2.+2", "+1.+1")],
       pawn: pawnWhite,
     },
     {
       situation: new PieceSituation({ "+1.+1": pawnWhite, "+2.+2": box }),
-      plays: [eatenPlay(D4, "+2.+2", "+1.+1")],
+      plays: [EatenPlay.eatenPlayFromMove(D4, "+2.+2", "+1.+1")],
       pawn: pawnBlack,
     },
     {
@@ -61,17 +58,17 @@ methodTestMap<DataPlay>(
     },
     {
       situation: new PieceSituation({ "+1.-1": pawnBlack, "+2.-2": box }),
-      plays: [eatenPlay(D4, "+2.-2", "+1.-1")],
+      plays: [EatenPlay.eatenPlayFromMove(D4, "+2.-2", "+1.-1")],
       pawn: pawnWhite,
     },
     {
       situation: new PieceSituation({ "-1.+1": pawnBlack, "-2.+2": box }),
-      plays: [eatenPlay(D4, "-2.+2", "-1.+1")],
+      plays: [EatenPlay.eatenPlayFromMove(D4, "-2.+2", "-1.+1")],
       pawn: pawnWhite,
     },
     {
       situation: new PieceSituation({ "-1.-1": pawnBlack, "-2.-2": box }),
-      plays: [eatenPlay(D4, "-2.-2", "-1.-1")],
+      plays: [EatenPlay.eatenPlayFromMove(D4, "-2.-2", "-1.-1")],
       pawn: pawnWhite,
     },
     {
@@ -87,7 +84,10 @@ methodTestMap<DataPlay>(
         "+2.-2": box,
       }),
       pawn: pawnWhite,
-      plays: [eatenPlay(D4, "+2.-2", "+1.-1"), eatenPlay(D4, "-2.-2", "-1.-1")],
+      plays: [
+        EatenPlay.eatenPlayFromMove(D4, "+2.-2", "+1.-1"),
+        EatenPlay.eatenPlayFromMove(D4, "-2.-2", "-1.-1"),
+      ],
     },
   ],
   descriptionPlay,

@@ -1,4 +1,4 @@
-import { pawnBlack, pawnWhite } from "../Pawn/pawns";
+import { pawnBlack, pawnWhite } from "./Pawn/pawns";
 import { methodTest } from "../test/utils";
 import { BLACK, WHITE } from "../utils/type";
 

@@ -1,13 +1,15 @@
 import { Utils } from "../genericInterface";
+import Coordinate from "../Position/Coordinate/Coordinate";
+
 import Position from "../Position/Position";
 import { INDEX_MAX, INDEX_MIN } from "../utils/board";
 import { MoveStr, PlayJSON } from "../utils/type";
 
 class TravelPlay implements Utils {
-  from: Position;
-  to: Position;
+  from: Coordinate;
+  to: Coordinate;
 
-  constructor(from: Position, to: Position) {
+  constructor(from: Coordinate, to: Coordinate) {
     this.from = from;
     this.to = to;
   }
@@ -21,7 +23,7 @@ class TravelPlay implements Utils {
   }
 
   getJSON(): PlayJSON {
-    return { from: this.from.getJSON(), to: this.to.getJSON() };
+    return { from: this.from.toStr(), to: this.to.toStr() };
   }
 
   shouldTransformInQueen(): boolean {
@@ -30,12 +32,12 @@ class TravelPlay implements Utils {
 
   static fromJson(json: PlayJSON): TravelPlay {
     return new TravelPlay(
-      Position.fromCoordinate(json.from),
-      Position.fromCoordinate(json.to)
+      Coordinate.create(json.from),
+      Coordinate.create(json.to)
     );
   }
-  static fromMove(from: Position, to: MoveStr) {
-    return new TravelPlay(from, from.getArrivalPosition(to));
+  static fromMove(from: Coordinate, to: MoveStr) {
+    return new TravelPlay(from, from.getArrivalCoordinates(to));
   }
 }
 export default TravelPlay;

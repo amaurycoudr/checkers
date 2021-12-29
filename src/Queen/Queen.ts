@@ -1,18 +1,10 @@
 import { flatten } from "lodash";
 import EatenPlay from "../EatenPlay/EatenPlay";
-import EmptyBox from "../EmptyBox/EmptyBox";
-import Pawn from "../Pawn/Pawn";
 import PieceSituation from "../PieceSituation/PieceSituation";
-import Position from "../Position/Position";
+import Coordinates from "../Position/coordinates";
 import TravelPlay from "../TravelPlay/TravelPlay";
-import {
-  Color,
-  MoveCoordinate,
-  moveCoordinate,
-  MoveDirection,
-  MoveNumber,
-  MoveStr,
-} from "../utils/type";
+import { Color, moveCoordinate, MoveNumber, MoveStr } from "../utils/type";
+import Pawn from "../Piece/Pawn/Pawn";
 
 class Queen extends Pawn {
   type: string = "Queen";
@@ -21,7 +13,10 @@ class Queen extends Pawn {
   constructor(color: Color) {
     super(color);
   }
-  getTravelPlays(situation: PieceSituation, position: Position): TravelPlay[] {
+  getTravelPlays(
+    situation: PieceSituation,
+    position: Coordinates
+  ): TravelPlay[] {
     const result: TravelPlay[] = [];
 
     TRAVEL_MOVES_COMBINATION.forEach((combination) => {
@@ -34,7 +29,7 @@ class Queen extends Pawn {
     return result;
   }
 
-  getEatenPlays(situation: PieceSituation, position: Position): EatenPlay[] {
+  getEatenPlays(situation: PieceSituation, position: Coordinates): EatenPlay[] {
     const result: EatenPlay[] = [];
     EATEN_MOVES_COMBINATION.forEach(({ eat, arrived, travel }) => {
       if (

@@ -8,7 +8,6 @@ import {
 } from "../Board/BoardState";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import EmptyBox from "../EmptyBox/EmptyBox";
-import Position from "../Position/Position";
 import {
   A1,
   A5,
@@ -32,7 +31,7 @@ import {
   I7,
   J4,
   J6,
-} from "../Position/positions";
+} from "../Position/coordinates";
 import { methodTest } from "../test/utils";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { ERROR_PLAY_NOT_POSSIBLE } from "../utils/error";
@@ -91,7 +90,7 @@ methodTest(startParty.playTurn, () => {
     }).toThrowError(ERROR_PLAY_NOT_POSSIBLE);
   });
 
-  const playOne = new TravelPlay(new Position(1, 3), new Position(0, 4));
+  const playOne = new TravelPlay(B4, A5);
 
   const onePlayParty = new Party(CLASSIC_BOARD);
 
@@ -109,7 +108,7 @@ methodTest(startParty.playTurn, () => {
     );
   });
 
-  const playTwo = new TravelPlay(new Position(0, 6), new Position(1, 5));
+  const playTwo = new TravelPlay(A7, B6);
   const twoPlayParty = new Party(CLASSIC_BOARD);
   twoPlayParty.playTurn(playOne);
   twoPlayParty.playTurn(playTwo);
@@ -118,7 +117,7 @@ methodTest(startParty.playTurn, () => {
   });
 
   const twoEatenPlayParty = new Party(TWO_PLAY_BOARD);
-  const playTwoEaten = new TravelPlay(new Position(0, 0), new Position(2, 2));
+  const playTwoEaten = new TravelPlay(A1, C3);
   twoEatenPlayParty.playTurn(playTwoEaten);
   const eatenPlays = [new EatenPlay(C3, E5, D4), new EatenPlay(C3, A5, B4)];
   it("should return the same color if the player can play again", () => {

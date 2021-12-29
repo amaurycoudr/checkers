@@ -1,4 +1,4 @@
-import { pawnBlack } from "../Pawn/pawns";
+import { pawnBlack } from "../Piece/Pawn/pawns";
 import { methodTest } from "../test/utils";
 import EmptyBox from "./EmptyBox";
 

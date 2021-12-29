@@ -1,7 +1,7 @@
 import EatenPlay from "../EatenPlay/EatenPlay";
 import { Utils } from "../genericInterface";
 import PieceSituation from "../PieceSituation/PieceSituation";
-import Position from "../Position/Position";
+import Coordinates from "../Position/Position";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { Color, MoveStr, PieceJSON } from "../utils/type";
 
@@ -28,15 +28,15 @@ export default abstract class Piece implements Utils {
 
   abstract getEatenPlays(
     situation: PieceSituation,
-    position: Position
+    position: Coordinates
   ): EatenPlay[];
 
   abstract getTravelPlays(
     situation: PieceSituation,
-    position: Position
+    position: Coordinates
   ): TravelPlay[];
 
-  getJSON(): PieceJSON {
+    getJSON(): PieceJSON {
     return { type: this.type, player: this.color };
   }
   toStr(): string {

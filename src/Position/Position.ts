@@ -2,7 +2,7 @@ import { Utils } from "../genericInterface";
 import { INDEX_MAX, INDEX_MIN } from "../utils/board";
 import { ERROR_COORDINATE_OUT } from "../utils/error";
 import {
-  Coordinates,
+  CoordinatesStr,
   coordinatesX,
   coordinatesY,
   CoordinateX,
@@ -11,8 +11,8 @@ import {
   MoveStr,
 } from "../utils/type";
 class Position implements Utils {
-  private x: number;
-  private y: number;
+  protected x: number;
+  protected y: number;
 
   constructor(x: number, y: number) {
     this.x = x;
@@ -34,17 +34,7 @@ class Position implements Utils {
     return this.x === position.x && this.y === position.y;
   }
 
-  getJSON(): Coordinates {
-    return this.getCoordinate();
-  }
 
-  getArrivalPosition(move: MoveStr) {
-    return this.addMove(Position.fromMove(move));
-  }
-
-  private addMove(move: Position): Position {
-    return new Position(this.x + move.x, this.y + move.y);
-  }
 
   getX(): number {
     return this.x;
@@ -53,25 +43,7 @@ class Position implements Utils {
     return this.y;
   }
 
-  static fromCoordinate(coordinates: Coordinates): Position {
-    const yCoordinate = parseInt(
-      coordinates.slice(1, coordinates.length),
-      10
-    ) as CoordinateY;
-    const y = coordinatesY.indexOf(yCoordinate);
-    const xCoordinate = coordinates[0] as CoordinateX;
-    const x = coordinatesX.indexOf(xCoordinate);
-    return new Position(x, y);
-  }
 
-  getCoordinate(): Coordinates {
-    const x = coordinatesX[this.x];
-    const y = coordinatesY[this.y];
-    if (!x || !y) {
-      throw new Error(ERROR_COORDINATE_OUT);
-    }
-    return `${x}${y}`;
-  }
 
   static fromMove(moveDescription: MoveStr): Position {
     const x = this.getXorYFromMoveCoordinate(

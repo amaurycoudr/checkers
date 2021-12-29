@@ -1,20 +1,21 @@
 import { Position } from "..";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import { box } from "../EmptyBox/emptyBoxes";
-import { pawnBlack } from "../Pawn/pawns";
+import { pawnBlack } from "../Piece/Pawn/pawns";
 import PieceSituation from "../PieceSituation/PieceSituation";
-import { A1, A10, B3, E4, J1, J10 } from "../Position/positions";
+import { A1, A10, B3, E4, J1, J10 } from "../Position/coordinates";
 import { methodTest, methodTestMap } from "../test/utils";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { WHITE } from "../utils/type";
 import Queen from "./Queen";
+import Coordinates from "../Position/coordinates";
 const queen = new Queen(WHITE);
 methodTest(queen.getEatenPlays, () => {});
 type DataTravelPlay = {
   queen: Queen;
   situation: PieceSituation;
   plays: TravelPlay[];
-  position: Position;
+  position: Coordinates;
 };
 const descriptionPlay = (data: DataTravelPlay) => {
   return `should return [${data.plays.map((play) =>

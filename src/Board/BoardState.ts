@@ -1,5 +1,5 @@
 import EmptyBox from "../EmptyBox/EmptyBox";
-import Pawn from "../Pawn/Pawn";
+import Pawn from "../Piece/Pawn/Pawn";
 import Piece from "../Piece/Piece";
 import { BLACK, Color, LengthType, WHITE } from "../utils/type";
 

@@ -1,34 +1,15 @@
+import { methodTest, methodTestForMove, methodTestMap } from "../test/utils";
+import { MoveNumber, MoveStr } from "../utils/type";
+import { A1, A10, B3, J1, J10 } from "./coordinates";
 import Position from "./Position";
-import { INDEX_MAX, INDEX_MIN } from "../utils/board";
-import { ERROR_COORDINATE_OUT } from "../utils/error";
-import { forBoard, forMove } from "../utils/fn";
-import {
-  Coordinates,
-  coordinatesX,
-  coordinatesY,
-  MoveNumber,
-  MoveStr,
-} from "../utils/type";
-import {
-  methodTest,
-  methodTestFordBoard,
-  methodTestForMove,
-  methodTestMap,
-} from "../test/utils";
-import { A1, A10, B10, B3, J1, J10 } from "./positions";
 
-const X = 1;
-const Y = 2;
-const infMin = INDEX_MIN - 3;
-
-const positionYInfMin = new Position(X, infMin);
-
+const position = new Position(0, 0);
 type InBoardData = {
   position: Position;
   isInBoardShouldReturn: boolean;
 };
 methodTestMap<InBoardData>(
-  A1.isInBoard,
+  position.isInBoard,
   [
     { position: A1, isInBoardShouldReturn: true },
     { position: A10, isInBoardShouldReturn: true },
@@ -48,16 +29,16 @@ methodTestMap<InBoardData>(
   }
 );
 
-methodTest(A1.toStr, () => {
+methodTest(position.toStr, () => {
   it("for A1 should it return '(0,0)'", () => {
-    expect(A1.toStr()).toBe(`(${A1.getX()},${A1.getY()})`);
+    expect(position.toStr()).toBe(`(${position.getX()},${position.getY()})`);
   });
 });
 
-methodTest(A1.equals, () => {
+methodTest(position.equals, () => {
   it("return true if x1,y1===x2,y2", () => {
-    expect(A1.equals(A1)).toBe(true);
-    expect(A1.equals(A10)).toBe(false);
+    expect(position.equals(position)).toBe(true);
+    expect(position.equals(A10)).toBe(false);
   });
 });
 
@@ -81,13 +62,13 @@ const testForMove =
     test(positionMM, moveMM);
   };
 
-methodTestForMove(A1.getArrivalPosition, (xMove, yMove) => {
+/* methodTestForMove(position.getArrivalCoordinates, (xMove, yMove) => {
   testForMove((positionArrived: Position, move: MoveStr) => {
     it(`should return ${positionArrived.toStr()} for MOVE: ${move} (from A1) `, () => {
-      expect(A1.getArrivalPosition(move)).toStrictEqual(positionArrived);
+      expect(position.getArrivalCoordinates(move)).toStrictEqual(positionArrived);
     });
   })(xMove as MoveNumber, yMove as MoveNumber);
-});
+}); */
 
 methodTestForMove(Position.fromMove, (xMove, yMove) => {
   testForMove((positionArrived: Position, move: MoveStr) => {
@@ -96,25 +77,26 @@ methodTestForMove(Position.fromMove, (xMove, yMove) => {
     });
   })(xMove as MoveNumber, yMove as MoveNumber);
 });
-
+/* 
 methodTestFordBoard(Position.fromCoordinate, (position, x, y) => {
-  const coordinates: Coordinates = `${coordinatesX[x]}${coordinatesY[y]}`;
+  const coordinates: CoordinatesStr = `${coordinatesX[x]}${coordinatesY[y]}`;
   it(`should return ${position.toStr()} for ${coordinates} `, () => {
     expect(Position.fromCoordinate(coordinates).equals(position)).toBe(true);
   });
-});
+}); */
 
-methodTestFordBoard(A1.getCoordinate, (position, x, y) => {
-  const coordinates: Coordinates = `${coordinatesX[x]}${coordinatesY[y]}`;
+/* methodTestFordBoard(position.getCoordinate, (position, x, y) => {
+  const coordinates: CoordinatesStr = `${coordinatesX[x]}${coordinatesY[y]}`;
   it(`should return ${coordinates} for ${position.toStr()} `, () => {
     expect(position.getCoordinate()).toBe(coordinates);
   });
 });
 
-methodTest(A1.getCoordinate, () => {
+methodTest(position.getCoordinate, () => {
   it(`should throw en error if the position is out of bond`, () => {
     expect(() => new Position(-1, 0).getCoordinate()).toThrow(
       ERROR_COORDINATE_OUT
     );
   });
 });
+ */

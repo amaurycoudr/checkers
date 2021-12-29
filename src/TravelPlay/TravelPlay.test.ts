@@ -1,12 +1,12 @@
-import TravelPlay from "./TravelPlay";
-import Position from "../Position/Position";
+import Coordinates from "../Position/Coordinate/Coordinate";
 import { methodTest } from "../test/utils";
-const from = new Position(0, 1);
-const to = new Position(1, 1);
+import TravelPlay from "./TravelPlay";
+const from = new Coordinates(0, 1);
+const to = new Coordinates(1, 1);
 const play1 = new TravelPlay(from, to);
 const play1Bis = new TravelPlay(from, to);
 const play2 = new TravelPlay(to, from);
-const play1JSON = { from: from.getCoordinate(), to: to.getCoordinate() };
+const play1JSON = { from: from.toStr(), to: to.toStr() };
 methodTest(play1.toStr, () => {
   it(`should return {from: ${from.toStr()}, to: ${to.toStr()}} for Move(${from.toStr()}, ${to.toStr()})`, () => {
     expect(play1.toStr()).toBe(`{from: ${from.toStr()}, to: ${to.toStr()}}`);

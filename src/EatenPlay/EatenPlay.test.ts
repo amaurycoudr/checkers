@@ -1,15 +1,13 @@
 import EatenPlay from "./EatenPlay";
 import Position from "../Position/Position";
 import { methodTest } from "../test/utils";
+import { A2, B2, A1 } from "../Position/coordinates";
 
-const FROM = new Position(0, 1);
-const TO = new Position(1, 1);
-const EATEN = new Position(0, 0);
-const eatenPlay = new EatenPlay(FROM, TO, EATEN);
+const eatenPlay = new EatenPlay(A2, B2, A1);
 methodTest(eatenPlay.toStr, () => {
-  it(`should return {from: ${FROM.toStr()}, to: ${TO.toStr()}, eaten: ${EATEN.toStr()}} for new EatenPlay(${FROM.toStr()}, ${TO.toStr()}, ${EATEN.toStr()})`, () => {
+  it(`should return {from: ${A2.toStr()}, to: ${B2.toStr()}, eaten: ${A1.toStr()}} for new EatenPlay(${A2.toStr()}, ${B2.toStr()}, ${A1.toStr()})`, () => {
     expect(eatenPlay.toStr()).toBe(
-      `{from: ${FROM.toStr()}, to: ${TO.toStr()}, eaten: ${EATEN.toStr()}}`
+      `{from: ${A2.toStr()}, to: ${B2.toStr()}, eaten: ${A1.toStr()}}`
     );
   });
 });

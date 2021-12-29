@@ -1,15 +1,36 @@
 import { map } from "lodash";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import EmptyBox from "../EmptyBox/EmptyBox";
-import { pawnBlack, pawnWhite } from "../Pawn/pawns";
+import { pawnBlack, pawnWhite } from "../Piece/Pawn/pawns";
 import Piece from "../Piece/Piece";
 import { PieceSituationType } from "../PieceSituation/PieceSituation";
-import Position from "../Position/Position";
-import { A2, A9, B1, B10 } from "../Position/positions";
+import Coordinates from "../Position/Coordinate/Coordinate";
+import {
+  A1,
+  A2,
+  A3,
+  A7,
+  A9,
+  B1,
+  B10,
+  B2,
+  B4,
+  B6,
+  C1,
+  C3,
+  C5,
+  D2,
+  D4,
+  D6,
+  E3,
+  E7,
+  F2,
+  G3,
+} from "../Position/coordinates";
 import Queen from "../Queen/Queen";
 import { methodTest } from "../test/utils";
 import TravelPlay from "../TravelPlay/TravelPlay";
-import { ERROR_OUT_OF_BOUND } from "../utils/error";
+import { ERROR_COORDINATE_OUT } from "../utils/error";
 import { forBoard } from "../utils/fn";
 import { BLACK, MoveStr, WHITE } from "../utils/type";
 import Board from "./Board";
@@ -37,8 +58,8 @@ methodTest(emptyBoard.getBox, () => {
     });
   });
   it("should throw an error if out of bound", () => {
-    expect(() => emptyBoard.getBox(new Position(-1, -1))).toThrowError(
-      ERROR_OUT_OF_BOUND
+    expect(() => emptyBoard.getBox(new Coordinates(-1, -1))).toThrowError(
+      ERROR_COORDINATE_OUT
     );
   });
 });
@@ -46,8 +67,8 @@ methodTest(emptyBoard.getBox, () => {
 methodTest(emptyBoard.setBox, () => {
   it("should throw an error if out of bound", () => {
     expect(() =>
-      emptyBoard.setBox(new Position(-1, -1), new EmptyBox())
-    ).toThrowError(ERROR_OUT_OF_BOUND);
+      emptyBoard.setBox(new Coordinates(-1, -1), new EmptyBox())
+    ).toThrowError(ERROR_COORDINATE_OUT);
   });
 });
 
@@ -86,14 +107,10 @@ methodTest(emptyBoard.getJSON, () => {
 
 methodTest(startBoard.getAroundSituation, () => {
   type DataGetAroundSituation = {
-    position: Position;
+    position: Coordinates;
     moves: MoveStr[];
     expected: PieceSituationType;
   };
-
-  const A1 = new Position(0, 0);
-  const B1 = new Position(1, 0);
-  const B2 = new Position(1, 1);
 
   const dataGetAroundSituation: DataGetAroundSituation[] = [
     {
@@ -154,67 +171,37 @@ methodTest(startBoard.getAroundSituation, () => {
 
 methodTest(eatBoard.getPieceEatenPlays, () => {
   type testEatenPlay = {
-    position: Position;
+    position: Coordinates;
     piece: Piece;
     eatenPlaysExpected: EatenPlay[];
   };
   const testGetEatenPlay: testEatenPlay[] = [
     {
-      position: new Position(0, 0),
+      position: A1,
+      piece: pawnWhite,
+      eatenPlaysExpected: [new EatenPlay(A1, C3, B2)],
+    },
+    {
+      position: C1,
       piece: pawnWhite,
       eatenPlaysExpected: [
-        new EatenPlay(
-          new Position(0, 0),
-          new Position(2, 2),
-          new Position(1, 1)
-        ),
+        new EatenPlay(C1, A3, B2),
+        new EatenPlay(C1, E3, D2),
       ],
     },
     {
-      position: new Position(2, 0),
-      piece: pawnWhite,
-      eatenPlaysExpected: [
-        new EatenPlay(
-          new Position(2, 0),
-          new Position(0, 2),
-          new Position(1, 1)
-        ),
-        new EatenPlay(
-          new Position(2, 0),
-          new Position(4, 2),
-          new Position(3, 1)
-        ),
-      ],
-    },
-    {
-      position: new Position(1, 1),
+      position: B2,
       piece: pawnBlack,
       eatenPlaysExpected: [],
     },
     {
-      position: new Position(2, 4),
+      position: C5,
       piece: pawnBlack,
       eatenPlaysExpected: [
-        new EatenPlay(
-          new Position(2, 4),
-          new Position(0, 2),
-          new Position(1, 3)
-        ),
-        new EatenPlay(
-          new Position(2, 4),
-          new Position(4, 2),
-          new Position(3, 3)
-        ),
-        new EatenPlay(
-          new Position(2, 4),
-          new Position(4, 6),
-          new Position(3, 5)
-        ),
-        new EatenPlay(
-          new Position(2, 4),
-          new Position(0, 6),
-          new Position(1, 5)
-        ),
+        new EatenPlay(C5, A3, B4),
+        new EatenPlay(C5, E3, D4),
+        new EatenPlay(C5, E7, D6),
+        new EatenPlay(C5, A7, B6),
       ],
     },
   ];
@@ -223,7 +210,7 @@ methodTest(eatBoard.getPieceEatenPlays, () => {
     piece,
     eatenPlaysExpected,
   }: {
-    position: Position;
+    position: Coordinates;
     piece: Piece;
     eatenPlaysExpected: EatenPlay[];
   }) => {
@@ -255,33 +242,30 @@ methodTest(emptyBoard.getPlayerPieces, () => {
 
 methodTest(emptyBoard.getPieceTravelPlays, () => {
   type testTravelPlay = {
-    position: Position;
+    position: Coordinates;
     piece: Piece;
     travelPlaysExpected: TravelPlay[];
   };
   const dataGetEatenPlay: testTravelPlay[] = [
     {
-      position: new Position(0, 0),
+      position: A1,
       piece: pawnWhite,
       travelPlaysExpected: [],
     },
     {
-      position: new Position(2, 0),
+      position: C1,
       piece: pawnWhite,
       travelPlaysExpected: [],
     },
     {
-      position: new Position(1, 1),
+      position: B2,
       piece: pawnBlack,
       travelPlaysExpected: [],
     },
     {
-      position: new Position(5, 1),
+      position: F2,
       piece: pawnWhite,
-      travelPlaysExpected: [
-        new TravelPlay(new Position(5, 1), new Position(6, 2)),
-        new TravelPlay(new Position(5, 1), new Position(4, 2)),
-      ],
+      travelPlaysExpected: [new TravelPlay(F2, G3), new TravelPlay(F2, E3)],
     },
   ];
   const unitTestEatenPlay = ({
@@ -310,7 +294,7 @@ methodTest(eatBoard.getPlayerPlays, () => {
       .forEach((play) => expect(play instanceof EatenPlay).toBe(false));
   });
 
-  const move = new TravelPlay(new Position(0, 0), new Position(1, 1));
+  const move = new TravelPlay(A1, B2);
   it(`should return ${move.toStr()} for the onePawnBoard`, () => {
     expect(onePawnBoard.getPlayerPlays(WHITE)[0]).toStrictEqual(move);
   });
@@ -318,8 +302,6 @@ methodTest(eatBoard.getPlayerPlays, () => {
 
 methodTest(eatBoard.getNewBoardFromPlay, () => {
   it("should return a board where FROM is a Box and TO is Equal to FROM previous value", () => {
-    const A1 = new Position(0, 0);
-    const B2 = new Position(1, 1);
     const play = new TravelPlay(A1, B2);
     const newBoard = onePawnBoard.getNewBoardFromPlay(play);
     const box = new EmptyBox();
@@ -328,9 +310,6 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
     expect(newBoard.getBox(B2)).toStrictEqual(onePawnBoard.getBox(A1));
   });
   it("should return a board where FROM and EATEN is a Box and TO is Equal to FROM previous value", () => {
-    const A1 = new Position(0, 0);
-    const B2 = new Position(1, 1);
-    const C3 = new Position(2, 2);
     const play = new EatenPlay(A1, C3, B2);
     const newBoard = eatBoard.getNewBoardFromPlay(play);
     const box = new EmptyBox();

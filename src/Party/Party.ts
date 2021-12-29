@@ -1,9 +1,8 @@
-import { Position } from "..";
 import Board from "../Board/Board";
 import { BoardState } from "../Board/BoardState";
 import EatenPlay from "../EatenPlay/EatenPlay";
 import Piece from "../Piece/Piece";
-
+import Coordinates from "../Position/Coordinate/Coordinate";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import { ERROR_PLAY_NOT_POSSIBLE } from "../utils/error";
 import { BLACK, Color, WHITE } from "../utils/type";
@@ -75,7 +74,7 @@ class Party {
 
     return isEatenPlay && canEatFromNewPosition;
   }
-  private getPieceSecondPlays(position: Position) {
+  private getPieceSecondPlays(position: Coordinates) {
     return this.getCurrentBoard().getPieceSecondEatenPlays(
       this.getCurrentBoard().getBox(position) as Piece,
       position

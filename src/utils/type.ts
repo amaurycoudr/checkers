@@ -24,7 +24,7 @@ export const coordinatesX = [
 ] as const;
 export type CoordinateX = typeof coordinatesX[number];
 
-export type Coordinates = `${CoordinateX}${CoordinateY}`;
+export type CoordinatesStr = `${CoordinateX}${CoordinateY}`;
 
 export const moveCoordinate = [1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
 
@@ -42,10 +42,10 @@ export type PieceJSON = {
 };
 export type PieceMoves = MoveStr[];
 
-export type BoardJSON = { [key in Coordinates]?: PieceJSON };
+export type BoardJSON = { [key in CoordinatesStr]?: PieceJSON };
 export type LineArray = LengthType<PieceJSON | undefined>;
 export type BoardArray = LengthType<LineArray>;
 
-export type PlayJSON = { from: Coordinates; to: Coordinates };
+export type PlayJSON = { from: CoordinatesStr; to: CoordinatesStr };
 
 export type BoardContent = EmptyBox | Piece;

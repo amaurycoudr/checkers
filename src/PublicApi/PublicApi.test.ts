@@ -1,24 +1,26 @@
+import { map } from "lodash";
 import { Position } from "..";
 import {
   ONE_PLAY_BOARD_ARRAY,
   START_BOARD_ARRAY,
   START_BOARD_JSON,
 } from "../Board/BoardState";
+import { B4, A5, C5, D4, E5, F4, G5, H4, I5, J4 } from "../Position/coordinates";
 import { methodTest } from "../test/utils";
 import TravelPlay from "../TravelPlay/TravelPlay";
 import PublicApi from "./PublicApi";
 const party = new PublicApi();
 
-const startPlaysPossible = [
-  new TravelPlay(new Position(1, 3), new Position(0, 4)),
-  new TravelPlay(new Position(1, 3), new Position(2, 4)),
-  new TravelPlay(new Position(3, 3), new Position(2, 4)),
-  new TravelPlay(new Position(3, 3), new Position(4, 4)),
-  new TravelPlay(new Position(5, 3), new Position(4, 4)),
-  new TravelPlay(new Position(5, 3), new Position(6, 4)),
-  new TravelPlay(new Position(7, 3), new Position(6, 4)),
-  new TravelPlay(new Position(7, 3), new Position(8, 4)),
-  new TravelPlay(new Position(9, 3), new Position(8, 4)),
+const whiteFirstTurnPlays = [
+  new TravelPlay(B4, A5),
+  new TravelPlay(B4, C5),
+  new TravelPlay(D4, C5),
+  new TravelPlay(D4, E5),
+  new TravelPlay(F4, E5),
+  new TravelPlay(F4, G5),
+  new TravelPlay(H4, G5),
+  new TravelPlay(H4, I5),
+  new TravelPlay(J4, I5),
 ].map((play) => play.getJSON());
 
 methodTest(party.getState, () => {
@@ -27,7 +29,7 @@ methodTest(party.getState, () => {
   });
 
   it("should return plays === startPlayPossible at the start", () => {
-    expect(party.getState().plays).toIncludeSameMembers(startPlaysPossible);
+    expect(party.getState().plays).toIncludeSameMembers(whiteFirstTurnPlays);
   });
 
   it("should return  board === ONE_PLAY_BOARD_ARRAY after play({ from: 'B4', to: 'A5' })", () => {
