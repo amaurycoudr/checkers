@@ -24,10 +24,8 @@ class Pawn extends Piece {
 
     EATEN_MOVES_COMBINATION.forEach((combination) => {
       if (
-        this.canBeEatenPlay(
-          situation.get()[combination.eaten],
-          situation.get()[combination.to]
-        )
+        situation.isOpponentPiece(combination.eaten, this.color) &&
+        situation.isEmptyBox(combination.to)
       ) {
         result.push(
           EatenPlay.eatenPlayFromMove(
@@ -42,22 +40,12 @@ class Pawn extends Piece {
     return result;
   }
 
-  private canBeEatenPlay(
-    eaten: BoardContent | undefined,
-    to: BoardContent | undefined
-  ): boolean {
-    const isArrivedEmpty = to && !(to instanceof Piece);
-    const isNearOpponent =
-      eaten && eaten instanceof Piece && eaten.isOpponent(this.color);
-    return !!isArrivedEmpty && !!isNearOpponent;
-  }
-
   getTravelPlays(situation: PieceSituation, position: Position): TravelPlay[] {
     const result: TravelPlay[] = [];
     this.travelMoves.forEach((move) => {
       const box = situation.get()[move];
 
-      if (box && !(box instanceof Piece)) {
+      if (situation.isEmptyBox(move)) {
         result.push(
           new TravelPlay(position, position.getArrivalPosition(move))
         );
