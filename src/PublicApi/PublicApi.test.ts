@@ -1,14 +1,20 @@
-import { map } from "lodash";
-import { Position } from "..";
+import { ONE_PLAY_BOARD_ARRAY, START_BOARD_ARRAY } from '../Board/BoardState';
 import {
-  ONE_PLAY_BOARD_ARRAY,
-  START_BOARD_ARRAY,
-  START_BOARD_JSON,
-} from "../Board/BoardState";
-import { B4, A5, C5, D4, E5, F4, G5, H4, I5, J4 } from "../Position/Coordinate/coordinates";
-import { methodTest } from "../test/utils";
-import TravelPlay from "../TravelPlay/TravelPlay";
-import PublicApi from "./PublicApi";
+  A5,
+  B4,
+  C5,
+  D4,
+  E5,
+  F4,
+  G5,
+  H4,
+  I5,
+  J4,
+} from '../Position/Coordinate/coordinates';
+import { methodTest } from '../test/utils';
+import TravelPlay from '../TravelPlay/TravelPlay';
+import PublicApi from './PublicApi';
+
 const party = new PublicApi();
 
 const whiteFirstTurnPlays = [
@@ -24,16 +30,16 @@ const whiteFirstTurnPlays = [
 ].map((play) => play.getJSON());
 
 methodTest(party.getState, () => {
-  it("should return board === START_BOARD_ARRAY at the start", () => {
+  it('should return board === START_BOARD_ARRAY at the start', () => {
     expect(party.getState().board).toStrictEqual(START_BOARD_ARRAY);
   });
 
-  it("should return plays === startPlayPossible at the start", () => {
+  it('should return plays === startPlayPossible at the start', () => {
     expect(party.getState().plays).toIncludeSameMembers(whiteFirstTurnPlays);
   });
 
   it("should return  board === ONE_PLAY_BOARD_ARRAY after play({ from: 'B4', to: 'A5' })", () => {
-    party.play({ from: "B4", to: "A5" });
+    party.play({ from: 'B4', to: 'A5' });
     expect(party.getState().board).toStrictEqual(ONE_PLAY_BOARD_ARRAY);
   });
 });

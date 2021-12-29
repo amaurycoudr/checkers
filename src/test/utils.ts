@@ -1,18 +1,18 @@
-import { Position } from "..";
-import { forBoard, forMove } from "../utils/fn";
+import { Position } from '..';
+import { forBoard, forMove } from '../utils/fn';
 
-export const methodTest = (method: Function, tests: jest.EmptyFunction) => {
-  describe(`--- test ${method.toString().split("{")[0]}`, tests);
+export const methodTest = (method: (...arg: any) => void, tests: jest.EmptyFunction) => {
+  describe(`--- test ${method.toString().split('{')[0]}`, tests);
 };
 
 export function methodTestMap<T>(
-  method: Function,
+  method: (...arg: any) => void,
   data: T[],
   description: (arg: T) => string,
-  expect: (arg: T) => void
+  expect: (arg: T) => void,
 ) {
   methodTest(method, () => {
-    data.map((value) => {
+    data.forEach((value) => {
       it(description(value), () => {
         expect(value);
       });
@@ -20,8 +20,8 @@ export function methodTestMap<T>(
   });
 }
 export function methodTestFordBoard(
-  method: Function,
-  it: (p: Position, x: number, y: number) => void
+  method: (...arg: any) => void,
+  it: (p: Position, x: number, y: number) => void,
 ) {
   methodTest(method, () => {
     forBoard((...arg) => {
@@ -31,8 +31,8 @@ export function methodTestFordBoard(
 }
 
 export function methodTestForMove(
-  method: Function,
-  it: (x: number, y: number) => void
+  method: (...arg: any) => void,
+  it: (x: number, y: number) => void,
 ) {
   methodTest(method, () => {
     forMove((p, ...arg) => {

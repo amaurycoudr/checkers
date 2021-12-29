@@ -1,12 +1,18 @@
-import { isEqual } from "lodash";
-import { Utils } from "../genericInterface";
+import { isEqual } from 'lodash';
+import { Utils } from '../genericInterface';
 
 class EmptyBox implements Utils {
+  type = 'Box';
+
   toStr() {
-    return "Box";
+    return this.type;
   }
-  equals(o: Object): boolean {
+
+  equals(o: unknown): boolean {
     return isEqual(this, o);
   }
 }
+
 export default EmptyBox;
+
+export const box = new EmptyBox();

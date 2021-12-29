@@ -1,7 +1,7 @@
-import { methodTest, methodTestForMove, methodTestMap } from "../test/utils";
-import { MoveNumber, MoveStr } from "../utils/type";
-import { A1, A10, B3, J1, J10 } from "./Coordinate/coordinates";
-import Position from "./Position";
+import { methodTest, methodTestForMove, methodTestMap } from '../test/utils';
+import { MoveNumber, MoveStr } from '../utils/type';
+import { A1, A10, B3, J1, J10 } from './Coordinate/coordinates';
+import Position from './Position';
 
 const position = new Position(0, 0);
 type InBoardData = {
@@ -22,11 +22,10 @@ methodTestMap<InBoardData>(
     { position: new Position(1, -10), isInBoardShouldReturn: false },
     { position: new Position(-10, 1), isInBoardShouldReturn: false },
   ],
-  (data) =>
-    `should return ${data.isInBoardShouldReturn} for ${data.position.toStr()}`,
+  (data) => `should return ${data.isInBoardShouldReturn} for ${data.position.toStr()}`,
   (data) => {
     expect(data.position.isInBoard()).toBe(data.isInBoardShouldReturn);
-  }
+  },
 );
 
 methodTest(position.toStr, () => {
@@ -36,7 +35,7 @@ methodTest(position.toStr, () => {
 });
 
 methodTest(position.equals, () => {
-  it("return true if x1,y1===x2,y2", () => {
+  it('return true if x1,y1===x2,y2', () => {
     expect(position.equals(position)).toBe(true);
     expect(position.equals(A10)).toBe(false);
   });
@@ -77,7 +76,8 @@ methodTestForMove(Position.fromMove, (xMove, yMove) => {
     });
   })(xMove as MoveNumber, yMove as MoveNumber);
 });
-/* 
+
+/*
 methodTestFordBoard(Position.fromCoordinate, (position, x, y) => {
   const coordinates: CoordinatesStr = `${coordinatesX[x]}${coordinatesY[y]}`;
   it(`should return ${position.toStr()} for ${coordinates} `, () => {

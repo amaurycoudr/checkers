@@ -1,12 +1,11 @@
-import { Utils } from "../genericInterface";
-import Coordinate from "../Position/Coordinate/Coordinate";
-
-import Position from "../Position/Position";
-import { INDEX_MAX, INDEX_MIN } from "../utils/board";
-import { MoveStr, PlayJSON } from "../utils/type";
+import { Utils } from '../genericInterface';
+import Coordinate from '../Position/Coordinate/Coordinate';
+import { INDEX_MAX, INDEX_MIN } from '../utils/board';
+import { MoveStr, PlayJSON } from '../utils/type';
 
 class TravelPlay implements Utils {
   from: Coordinate;
+
   to: Coordinate;
 
   constructor(from: Coordinate, to: Coordinate) {
@@ -33,11 +32,12 @@ class TravelPlay implements Utils {
   static fromJson(json: PlayJSON): TravelPlay {
     return new TravelPlay(
       Coordinate.create(json.from),
-      Coordinate.create(json.to)
+      Coordinate.create(json.to),
     );
   }
+
   static fromMove(from: Coordinate, to: MoveStr) {
-    return new TravelPlay(from, from.getArrivalCoordinates(to));
+    return new TravelPlay(from, from.getArrivalCoordinate(to));
   }
 }
 export default TravelPlay;

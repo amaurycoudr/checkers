@@ -1,14 +1,15 @@
-import Board from "../Board/Board";
-import { BoardState } from "../Board/BoardState";
-import EatenPlay from "../EatenPlay/EatenPlay";
-import Piece from "../Piece/Piece";
-import Coordinates from "../Position/Coordinate/Coordinate";
-import TravelPlay from "../TravelPlay/TravelPlay";
-import { ERROR_PLAY_NOT_POSSIBLE } from "../utils/error";
-import { BLACK, Color, WHITE } from "../utils/type";
+import Board from '../Board/Board';
+import { BoardState } from '../Board/BoardState';
+import EatenPlay from '../EatenPlay/EatenPlay';
+import Piece from '../Piece/Piece';
+import Coordinates from '../Position/Coordinate/Coordinate';
+import TravelPlay from '../TravelPlay/TravelPlay';
+import { ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
+import { BLACK, Color, WHITE } from '../utils/type';
 
 class Party {
   private turns: Board[];
+
   private playerTurn: Color;
 
   private playsPossible: TravelPlay[][];
@@ -35,9 +36,7 @@ class Party {
     if (plays) {
       this.playsPossible.push(plays);
     } else {
-      this.playsPossible.push(
-        this.getCurrentBoard().getPlayerPlays(this.playerTurn)
-      );
+      this.playsPossible.push(this.getCurrentBoard().getPlayerPlays(this.playerTurn));
     }
   }
 
@@ -59,9 +58,7 @@ class Party {
   }
 
   private findPlayInPossible(play: TravelPlay) {
-    return this.getCurrentPlays().find((playPossible) => {
-      return playPossible.equals(play);
-    });
+    return this.getCurrentPlays().find((playPossible) => playPossible.equals(play));
   }
 
   private makePlay(play: TravelPlay) {
@@ -74,10 +71,11 @@ class Party {
 
     return isEatenPlay && canEatFromNewPosition;
   }
+
   private getPieceSecondPlays(position: Coordinates) {
     return this.getCurrentBoard().getPieceSecondEatenPlays(
       this.getCurrentBoard().getBox(position) as Piece,
-      position
+      position,
     );
   }
 

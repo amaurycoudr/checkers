@@ -1,13 +1,8 @@
-import { cloneDeep } from "lodash";
-import Board from "../Board/Board";
-import {
-  BoardState,
-  CLASSIC_BOARD,
-  EAT_BOARD,
-  TWO_PLAY_BOARD,
-} from "../Board/BoardState";
-import EatenPlay from "../EatenPlay/EatenPlay";
-import EmptyBox from "../EmptyBox/EmptyBox";
+import { cloneDeep } from 'lodash';
+import Board from '../Board/Board';
+import { BoardState, CLASSIC_BOARD, EAT_BOARD, TWO_PLAY_BOARD } from '../Board/BoardState';
+import EatenPlay from '../EatenPlay/EatenPlay';
+import EmptyBox from '../EmptyBox/EmptyBox';
 import {
   A1,
   A5,
@@ -31,12 +26,12 @@ import {
   I7,
   J4,
   J6,
-} from "../Position/Coordinate/coordinates";
-import { methodTest } from "../test/utils";
-import TravelPlay from "../TravelPlay/TravelPlay";
-import { ERROR_PLAY_NOT_POSSIBLE } from "../utils/error";
-import { BLACK, WHITE } from "../utils/type";
-import Party from "./Party";
+} from '../Position/Coordinate/coordinates';
+import { methodTest } from '../test/utils';
+import TravelPlay from '../TravelPlay/TravelPlay';
+import { ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
+import { BLACK, WHITE } from '../utils/type';
+import Party from './Party';
 
 const startParty = new Party(CLASSIC_BOARD);
 
@@ -67,24 +62,20 @@ const blackFirstTurnPlays = [
 ];
 
 methodTest(startParty.getCurrentBoard, () => {
-  it("should return the start board at turn 0", () => {
-    expect(startParty.getCurrentBoard()).toStrictEqual(
-      new Board(CLASSIC_BOARD)
-    );
+  it('should return the start board at turn 0', () => {
+    expect(startParty.getCurrentBoard()).toStrictEqual(new Board(CLASSIC_BOARD));
     expect(eatParty.getCurrentBoard()).toStrictEqual(new Board(EAT_BOARD));
   });
 });
 
 methodTest(startParty.getCurrentPlays, () => {
-  it("should return whiteFirstTurnPlays at turn 0 white CLASSIC_BOARD", () => {
-    expect(startParty.getCurrentPlays()).toIncludeSameMembers(
-      whiteFirstTurnPlays
-    );
+  it('should return whiteFirstTurnPlays at turn 0 white CLASSIC_BOARD', () => {
+    expect(startParty.getCurrentPlays()).toIncludeSameMembers(whiteFirstTurnPlays);
   });
 });
 
 methodTest(startParty.playTurn, () => {
-  it("should throw playNotPossible if play is not in getCurrentPlays() ", () => {
+  it('should throw playNotPossible if play is not in getCurrentPlays() ', () => {
     expect(() => {
       startParty.playTurn(new TravelPlay(A1, A1));
     }).toThrowError(ERROR_PLAY_NOT_POSSIBLE);
@@ -100,19 +91,17 @@ methodTest(startParty.playTurn, () => {
   const onePlayBoard = new Board(onePlayBoardState);
 
   onePlayParty.playTurn(playOne);
-  it("should return BLACK onePlayBoard blackFirstTurnPlays at black first turn", () => {
+  it('should return BLACK onePlayBoard blackFirstTurnPlays at black first turn', () => {
     expect(onePlayParty.getCurrentBoard()).toStrictEqual(onePlayBoard);
     expect(onePlayParty.getCurrentPlayer()).toBe(BLACK);
-    expect(onePlayParty.getCurrentPlays()).toIncludeSameMembers(
-      blackFirstTurnPlays
-    );
+    expect(onePlayParty.getCurrentPlays()).toIncludeSameMembers(blackFirstTurnPlays);
   });
 
   const playTwo = new TravelPlay(A7, B6);
   const twoPlayParty = new Party(CLASSIC_BOARD);
   twoPlayParty.playTurn(playOne);
   twoPlayParty.playTurn(playTwo);
-  it("should return white after two plays", () => {
+  it('should return white after two plays', () => {
     expect(twoPlayParty.getCurrentPlayer()).toBe(WHITE);
   });
 
@@ -120,12 +109,10 @@ methodTest(startParty.playTurn, () => {
   const playTwoEaten = new TravelPlay(A1, C3);
   twoEatenPlayParty.playTurn(playTwoEaten);
   const eatenPlays = [new EatenPlay(C3, E5, D4), new EatenPlay(C3, A5, B4)];
-  it("should return the same color if the player can play again", () => {
+  it('should return the same color if the player can play again', () => {
     expect(twoEatenPlayParty.getCurrentPlayer()).toBe(WHITE);
   });
-  it("should only return plays for one piece if it is a second play", () => {
-    expect(twoEatenPlayParty.getCurrentPlays()).toIncludeSameMembers(
-      eatenPlays
-    );
+  it('should only return plays for one piece if it is a second play', () => {
+    expect(twoEatenPlayParty.getCurrentPlays()).toIncludeSameMembers(eatenPlays);
   });
 });

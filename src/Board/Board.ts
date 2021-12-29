@@ -1,20 +1,16 @@
-import { cloneDeep, isEqual, map } from "lodash";
-import EatenPlay from "../EatenPlay/EatenPlay";
-import EmptyBox from "../EmptyBox/EmptyBox";
-import { Utils } from "../genericInterface";
-import Piece from "../Piece/Piece";
-import Queen from "../Queen/Queen";
+import { cloneDeep, isEqual, map } from 'lodash';
+import EatenPlay from '../EatenPlay/EatenPlay';
+import EmptyBox from '../EmptyBox/EmptyBox';
+import { Utils } from '../genericInterface';
+import Piece from '../Piece/Piece';
 import PieceSituation, {
   PieceSituationType,
-} from "../PieceSituation/PieceSituation";
-
-import TravelPlay from "../TravelPlay/TravelPlay";
-import { INDEX_MAX, INDEX_MIN } from "../utils/board";
-import {
-  ERROR_COORDINATE_OUT,
-  ERROR_NOT_PIECE,
-  ERROR_OUT_OF_BOUND,
-} from "../utils/error";
+} from '../PieceSituation/PieceSituation';
+import Coordinates from '../Position/Coordinate/Coordinate';
+import Queen from '../Queen/Queen';
+import TravelPlay from '../TravelPlay/TravelPlay';
+import { INDEX_MAX, INDEX_MIN } from '../utils/board';
+import { ERROR_NOT_PIECE } from '../utils/error';
 import {
   BoardArray,
   BoardJSON,
@@ -23,10 +19,35 @@ import {
   LineArray,
   PieceJSON,
   PieceMoves,
-} from "../utils/type";
-import { BoardState } from "./BoardState";
-import Coordinates from "../Position/Coordinate/Coordinate";
+} from '../utils/type';
+import { BoardState } from './BoardState';
+
 export type PlayerPieces = { [key in CoordinatesStr]?: Piece };
+
+const emptyLine = (): LineArray => [
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+];
+const emptyArray = (): BoardArray => [
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+  emptyLine(),
+];
 
 class Board implements Utils {
   private board: BoardState;
@@ -62,7 +83,6 @@ class Board implements Utils {
       const json = this.getPositionJson(position);
       if (json) {
         array[position.getY()][position.getX()] = json;
-      } else {
       }
     });
 
@@ -70,8 +90,8 @@ class Board implements Utils {
   }
 
   private static forBoardState(fn: (p: Coordinates) => void) {
-    for (let y = INDEX_MIN; y <= INDEX_MAX; y++) {
-      for (let x = INDEX_MIN; x <= INDEX_MAX; x++) {
+    for (let y = INDEX_MIN; y <= INDEX_MAX; y += 1) {
+      for (let x = INDEX_MIN; x <= INDEX_MAX; x += 1) {
         fn(new Coordinates(x, y));
       }
     }
@@ -96,7 +116,7 @@ class Board implements Utils {
   getAroundSituation(position: Coordinates, moves: PieceMoves): PieceSituation {
     const situation = moves.reduce((prev, curr): PieceSituationType => {
       try {
-        const arrivalPosition = position.getArrivalCoordinates(curr);
+        const arrivalPosition = position.getArrivalCoordinate(curr);
         const box = this.getBox(arrivalPosition);
         return { ...prev, [curr]: box };
       } catch (e) {
@@ -109,12 +129,10 @@ class Board implements Utils {
   getPlayerPieces(color: Color): PlayerPieces {
     const result: PlayerPieces = {};
     Board.forBoardState((position) => {
-      try {
-        const piece = this.getPiece(position);
-        if (!piece.isOpponent(color)) {
-          result[position.get()] = piece;
-        }
-      } catch {}
+      const piece = this.getBox(position);
+      if (piece instanceof Piece && !piece.isOpponent(color)) {
+        result[position.get()] = piece;
+      }
     });
     return result;
   }
@@ -132,12 +150,14 @@ class Board implements Utils {
     const pieces = this.getPlayerPieces(color);
     const eatenPlays: EatenPlay[] = [];
     map(pieces, (piece, coordinate) => {
-      eatenPlays.push(
-        ...this.getPieceEatenPlays(
-          piece!,
-          Coordinates.create(coordinate as CoordinatesStr)
-        )
-      );
+      if (piece) {
+        eatenPlays.push(
+          ...this.getPieceEatenPlays(
+            piece,
+            Coordinates.create(coordinate as CoordinatesStr),
+          ),
+        );
+      }
     });
     return eatenPlays;
   }
@@ -146,12 +166,14 @@ class Board implements Utils {
     const pieces = this.getPlayerPieces(color);
     const travelPlays: TravelPlay[] = [];
     map(pieces, (piece, coordinate) => {
-      travelPlays.push(
-        ...this.getPieceTravelPlays(
-          piece!,
-          Coordinates.create(coordinate as CoordinatesStr)
-        )
-      );
+      if (piece) {
+        travelPlays.push(
+          ...this.getPieceTravelPlays(
+            piece,
+            Coordinates.create(coordinate as CoordinatesStr),
+          ),
+        );
+      }
     });
     return travelPlays;
   }
@@ -159,21 +181,21 @@ class Board implements Utils {
   getPieceEatenPlays(piece: Piece, position: Coordinates) {
     return piece.getEatenPlays(
       this.getAroundSituation(position, piece.eatenMoves),
-      position
+      position,
     );
   }
 
   getPieceSecondEatenPlays(piece: Piece, position: Coordinates) {
     return piece.getEatenPlays(
       this.getAroundSituation(position, piece.secondEatenMoves),
-      position
+      position,
     );
   }
 
   getPieceTravelPlays(piece: Piece, position: Coordinates) {
     return piece.getTravelPlays(
       this.getAroundSituation(position, piece.travelMoves),
-      position
+      position,
     );
   }
 
@@ -199,32 +221,9 @@ class Board implements Utils {
   equals(board: Board) {
     return isEqual(board.getJSON(), this.getJSON());
   }
+
   toStr(): string {
     return JSON.stringify(this.getJSON());
   }
 }
 export default Board;
-const emptyLine = (): LineArray => [
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-];
-const emptyArray = (): BoardArray => [
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-];

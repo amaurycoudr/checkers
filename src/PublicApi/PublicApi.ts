@@ -1,7 +1,7 @@
-import { CLASSIC_BOARD } from "../Board/BoardState";
-import Party from "../Party/Party";
-import TravelPlay from "../TravelPlay/TravelPlay";
-import { BoardArray, Color, PlayJSON } from "../utils/type";
+import { CLASSIC_BOARD } from '../Board/BoardState';
+import Party from '../Party/Party';
+import TravelPlay from '../TravelPlay/TravelPlay';
+import { BoardArray, Color, PlayJSON } from '../utils/type';
 
 export type PartyState = {
   playerTurn: Color;

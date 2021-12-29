@@ -1,6 +1,7 @@
-import Coordinates from "../Position/Coordinate/Coordinate";
-import { methodTest } from "../test/utils";
-import TravelPlay from "./TravelPlay";
+import Coordinates from '../Position/Coordinate/Coordinate';
+import { methodTest } from '../test/utils';
+import TravelPlay from './TravelPlay';
+
 const from = new Coordinates(0, 1);
 const to = new Coordinates(1, 1);
 const play1 = new TravelPlay(from, to);
@@ -31,7 +32,7 @@ methodTest(play1.getJSON, () => {
 
 methodTest(TravelPlay.fromJson, () => {
   it(`should return ${play1.toStr()} from ${JSON.stringify(
-    play1JSON
+    play1JSON,
   )} `, () => {
     expect(TravelPlay.fromJson(play1JSON)).toStrictEqual(play1);
   });
