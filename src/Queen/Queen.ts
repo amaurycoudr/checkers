@@ -1,9 +1,18 @@
+import { flatten } from "lodash";
+import EatenPlay from "../EatenPlay/EatenPlay";
 import EmptyBox from "../EmptyBox/EmptyBox";
 import Pawn from "../Pawn/Pawn";
 import PieceSituation from "../PieceSituation/PieceSituation";
 import Position from "../Position/Position";
 import TravelPlay from "../TravelPlay/TravelPlay";
-import { Color, MoveStr } from "../utils/type";
+import {
+  Color,
+  MoveCoordinate,
+  moveCoordinate,
+  MoveDirection,
+  MoveNumber,
+  MoveStr,
+} from "../utils/type";
 
 class Queen extends Pawn {
   type: string = "Queen";
@@ -16,12 +25,7 @@ class Queen extends Pawn {
     const result: TravelPlay[] = [];
 
     TRAVEL_MOVES_COMBINATION.forEach((combination) => {
-      if (
-        combination.every(
-          (move) =>
-            situation.get()[move] && situation.get()[move] instanceof EmptyBox
-        )
-      ) {
+      if (combination.every((move) => situation.isEmptyBox(move))) {
         result.push(
           TravelPlay.fromMove(position, combination[combination.length - 1])
         );
@@ -29,122 +33,82 @@ class Queen extends Pawn {
     });
     return result;
   }
+
+  getEatenPlays(situation: PieceSituation, position: Position): EatenPlay[] {
+    const result: EatenPlay[] = [];
+    EATEN_MOVES_COMBINATION.forEach(({ eat, arrived, travel }) => {
+      if (
+        travel.every((move) => situation.isEmptyBox(move)) &&
+        situation.isOpponentPiece(eat, this.color) &&
+        situation.isEmptyBox(arrived)
+      ) {
+        result.push(EatenPlay.eatenPlayFromMove(position, arrived, eat));
+      }
+    });
+    return result;
+  }
 }
 
-const MOVES_SITUATION: MoveStr[] = [
-  "+1.+1",
-  "+2.+2",
-  "+3.+3",
-  "+4.+4",
-  "+5.+5",
-  "+6.+6",
-  "+7.+7",
-  "+8.+8",
-  "+9.+9",
-  "-1.+1",
-  "-2.+2",
-  "-3.+3",
-  "-4.+4",
-  "-5.+5",
-  "-6.+6",
-  "-7.+7",
-  "-8.+8",
-  "-9.+9",
-  "+1.-1",
-  "+2.-2",
-  "+3.-3",
-  "+4.-4",
-  "+5.-5",
-  "+6.-6",
-  "+7.-7",
-  "+8.-8",
-  "+9.-9",
-  "-1.-1",
-  "-2.-2",
-  "-3.-3",
-  "-4.-4",
-  "-5.-5",
-  "-6.-6",
-  "-7.-7",
-  "-8.-8",
-  "-9.-9",
+const moveDirections = ["+", "-"] as const;
+const MOVES_SITUATION = flatten(
+  flatten(
+    moveDirections.map((directionX) =>
+      moveDirections.map((directionY) =>
+        moveCoordinate.map(
+          (value): MoveStr => `${directionX}${value}.${directionY}${value}`
+        )
+      )
+    )
+  )
+);
+const TRAVEL_MOVES_COMBINATION: MoveStr[][] = flatten(
+  flatten(
+    moveDirections.map((directionX) =>
+      moveDirections.map((directionY) =>
+        moveCoordinate.map((value) =>
+          Array.from(
+            { length: value },
+            (_, index): MoveStr =>
+              `${directionX}${(index + 1) as MoveNumber}.${directionY}${
+                (index + 1) as MoveNumber
+              }`
+          )
+        )
+      )
+    )
+  )
+);
+type EatenCombination = {
+  travel: MoveStr[];
+  eat: MoveStr;
+  arrived: MoveStr;
+};
+const NO_TRAVEL_EATEN_COMBINATION: EatenCombination[] = [
+  { travel: [], eat: "+1.+1", arrived: "+2.+2" },
+  { travel: [], eat: "-1.-1", arrived: "-2.-2" },
+  { travel: [], eat: "+1.-1", arrived: "+2.-2" },
+  { travel: [], eat: "-1.+1", arrived: "-2.+2" },
 ];
-const TRAVEL_MOVES_COMBINATION: MoveStr[][] = [
-  ["+1.+1"],
-  ["+1.+1", "+2.+2"],
-  ["+1.+1", "+2.+2", "+3.+3"],
-  ["+1.+1", "+2.+2", "+3.+3", "+4.+4"],
-  ["+1.+1", "+2.+2", "+3.+3", "+4.+4", "+5.+5"],
-  ["+1.+1", "+2.+2", "+3.+3", "+4.+4", "+5.+5", "+6.+6"],
-  ["+1.+1", "+2.+2", "+3.+3", "+4.+4", "+5.+5", "+6.+6", "+7.+7"],
-  ["+1.+1", "+2.+2", "+3.+3", "+4.+4", "+5.+5", "+6.+6", "+7.+7", "+8.+8"],
-  [
-    "+1.+1",
-    "+2.+2",
-    "+3.+3",
-    "+4.+4",
-    "+5.+5",
-    "+6.+6",
-    "+7.+7",
-    "+8.+8",
-    "+9.+9",
-  ],
-  ["-1.+1"],
-  ["-1.+1", "-2.+2"],
-  ["-1.+1", "-2.+2", "-3.+3"],
-  ["-1.+1", "-2.+2", "-3.+3", "-4.+4"],
-  ["-1.+1", "-2.+2", "-3.+3", "-4.+4", "-5.+5"],
-  ["-1.+1", "-2.+2", "-3.+3", "-4.+4", "-5.+5", "-6.+6"],
-  ["-1.+1", "-2.+2", "-3.+3", "-4.+4", "-5.+5", "-6.+6", "-7.+7"],
-  ["-1.+1", "-2.+2", "-3.+3", "-4.+4", "-5.+5", "-6.+6", "-7.+7", "-8.+8"],
-  [
-    "-1.+1",
-    "-2.+2",
-    "-3.+3",
-    "-4.+4",
-    "-5.+5",
-    "-6.+6",
-    "-7.+7",
-    "-8.+8",
-    "-9.+9",
-  ],
-  ["-1.-1"],
-  ["-1.-1", "-2.-2"],
-  ["-1.-1", "-2.-2", "-3.-3"],
-  ["-1.-1", "-2.-2", "-3.-3", "-4.-4"],
-  ["-1.-1", "-2.-2", "-3.-3", "-4.-4", "-5.-5"],
-  ["-1.-1", "-2.-2", "-3.-3", "-4.-4", "-5.-5", "-6.-6"],
-  ["-1.-1", "-2.-2", "-3.-3", "-4.-4", "-5.-5", "-6.-6", "-7.-7"],
-  ["-1.-1", "-2.-2", "-3.-3", "-4.-4", "-5.-5", "-6.-6", "-7.-7", "-8.-8"],
-  [
-    "-1.-1",
-    "-2.-2",
-    "-3.-3",
-    "-4.-4",
-    "-5.-5",
-    "-6.-6",
-    "-7.-7",
-    "-8.-8",
-    "-9.-9",
-  ],
-  ["+1.-1"],
-  ["+1.-1", "+2.-2"],
-  ["+1.-1", "+2.-2", "+3.-3"],
-  ["+1.-1", "+2.-2", "+3.-3", "+4.-4"],
-  ["+1.-1", "+2.-2", "+3.-3", "+4.-4", "+5.-5"],
-  ["+1.-1", "+2.-2", "+3.-3", "+4.-4", "+5.-5", "+6.-6"],
-  ["+1.-1", "+2.-2", "+3.-3", "+4.-4", "+5.-5", "+6.-6", "+7.-7"],
-  ["+1.-1", "+2.-2", "+3.-3", "+4.-4", "+5.-5", "+6.-6", "+7.-7", "+8.-8"],
-  [
-    "+1.-1",
-    "+2.-2",
-    "+3.-3",
-    "+4.-4",
-    "+5.-5",
-    "+6.-6",
-    "+7.-7",
-    "+8.-8",
-    "+9.-9",
-  ],
+const TRAVEL_EATEN_MOVES_COMBINATION: EatenCombination[] =
+  TRAVEL_MOVES_COMBINATION.filter((travel) => travel.length < 8).map(
+    (travel): EatenCombination => ({
+      travel,
+      eat: (travel[travel.length - 1][0] +
+        (parseInt(travel[travel.length - 1][1]) + 1) +
+        "." +
+        travel[travel.length - 1][3] +
+        (parseInt(travel[travel.length - 1][4]) + 1)) as MoveStr,
+      arrived: (travel[travel.length - 1][0] +
+        (parseInt(travel[travel.length - 1][1]) + 2) +
+        "." +
+        travel[travel.length - 1][3] +
+        (parseInt(travel[travel.length - 1][4]) + 2)) as MoveStr,
+    })
+  );
+
+const EATEN_MOVES_COMBINATION: EatenCombination[] = [
+  ...TRAVEL_EATEN_MOVES_COMBINATION,
+  ...NO_TRAVEL_EATEN_COMBINATION,
 ];
+
 export default Queen;
