@@ -1,4 +1,4 @@
-import { map } from 'lodash';
+import { methodTest } from '../../test/utils';
 import EatenPlay from '../EatenPlay/EatenPlay';
 import EmptyBox from '../EmptyBox/EmptyBox';
 import { pawnBlack, pawnWhite } from '../Piece/Pawn/pawns';
@@ -28,7 +28,6 @@ import {
   G3,
 } from '../Position/Coordinate/coordinates';
 import Queen from '../Queen/Queen';
-import { methodTest } from '../test/utils';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import { ERROR_COORDINATE_OUT } from '../utils/error';
 import { forBoard } from '../utils/fn';
@@ -58,7 +57,9 @@ methodTest(emptyBoard.getBox, () => {
     });
   });
   it('should throw an error if out of bound', () => {
-    expect(() => emptyBoard.getBox(new Coordinates(-1, -1))).toThrowError(ERROR_COORDINATE_OUT);
+    expect(() => emptyBoard.getBox(new Coordinates(-1, -1))).toThrowError(
+      ERROR_COORDINATE_OUT,
+    );
   });
 });
 
@@ -92,7 +93,9 @@ methodTest(emptyBoard.getJSON, () => {
     expect(emptyBoard.getJSON()).toStrictEqual({});
   });
 
-  it(`should return { A1: ${JSON.stringify(pawnWhite.getJSON())} } for ONE_PAWN_BOARD`, () => {
+  it(`should return { A1: ${JSON.stringify(
+    pawnWhite.getJSON(),
+  )} } for ONE_PAWN_BOARD`, () => {
     expect(onePawnBoard.getJSON()).toStrictEqual({ A1: pawnWhite.getJSON() });
   });
 
@@ -113,14 +116,14 @@ methodTest(startBoard.getAroundSituation, () => {
       position: A1,
       moves: ['+1.+1'],
       expected: {
-        '+1.+1': CLASSIC_BOARD[1][1],
+        '+1.+1': { type: CLASSIC_BOARD[1][1].type, color: 'white' },
       },
     },
     {
       position: A1,
       moves: ['-1.+1', '+1.+1'],
       expected: {
-        '+1.+1': CLASSIC_BOARD[1][1],
+        '+1.+1': { type: CLASSIC_BOARD[1][1].type, color: 'white' },
       },
     },
     {
@@ -136,24 +139,31 @@ methodTest(startBoard.getAroundSituation, () => {
     {
       position: B2,
       moves: ['-1.-1'],
-      expected: { '-1.-1': CLASSIC_BOARD[0][0] },
+      expected: {
+        '-1.-1': { type: CLASSIC_BOARD[0][0].type, color: 'white' },
+      },
     },
     {
       position: B2,
       moves: ['+1.+1', '-1.+1', '+1.-1'],
       expected: {
-        '+1.+1': CLASSIC_BOARD[2][2],
-        '-1.+1': CLASSIC_BOARD[2][0],
-        '+1.-1': CLASSIC_BOARD[0][2],
+        '+1.+1': { type: CLASSIC_BOARD[2][2].type, color: 'white' },
+        '-1.+1': { type: CLASSIC_BOARD[2][0].type, color: 'white' },
+        '+1.-1': { type: CLASSIC_BOARD[0][2].type, color: 'white' },
       },
     },
   ];
-  const unitTestGetAroundSituation = ({ position, moves, expected }: DataGetAroundSituation) => {
-    it(`should return {${map(
+  const unitTestGetAroundSituation = ({
+    position,
+    moves,
+    expected,
+  }: DataGetAroundSituation) => {
+    it(`should return ${JSON.stringify(
       expected,
-      (situation, move) => `${move}:${situation?.toStr()}, `,
-    )}} for position: ${position.toStr()}, Moves : ${moves.toString()}`, () => {
-      expect(startBoard.getAroundSituation(position, moves).get()).toStrictEqual(expected);
+    )} for position: ${position.toStr()}, Moves : ${moves.toString()}`, () => {
+      expect(
+        startBoard.getAroundSituation(position, moves).get(),
+      ).toStrictEqual(expected);
     });
   };
   dataGetAroundSituation.forEach(unitTestGetAroundSituation);
@@ -174,7 +184,10 @@ methodTest(eatBoard.getPieceEatenPlays, () => {
     {
       position: C1,
       piece: pawnWhite,
-      eatenPlaysExpected: [new EatenPlay(C1, A3, B2), new EatenPlay(C1, E3, D2)],
+      eatenPlaysExpected: [
+        new EatenPlay(C1, A3, B2),
+        new EatenPlay(C1, E3, D2),
+      ],
     },
     {
       position: B2,
@@ -203,7 +216,9 @@ methodTest(eatBoard.getPieceEatenPlays, () => {
   }) => {
     const playsStr = eatenPlaysExpected.map((eatenPlay) => eatenPlay.toStr());
     it(`should return [${playsStr}] for ${piece.toStr()} in ${position.toStr()}`, () => {
-      expect(eatBoard.getPieceEatenPlays(piece, position)).toIncludeSameMembers(eatenPlaysExpected);
+      expect(eatBoard.getPieceEatenPlays(piece, position)).toIncludeSameMembers(
+        eatenPlaysExpected,
+      );
     });
   };
   testGetEatenPlay.map(unitTestEatenPlay);
@@ -253,19 +268,27 @@ methodTest(emptyBoard.getPieceTravelPlays, () => {
       travelPlaysExpected: [new TravelPlay(F2, G3), new TravelPlay(F2, E3)],
     },
   ];
-  const unitTestEatenPlay = ({ position, piece, travelPlaysExpected }: testTravelPlay) => {
-    const playsStr = travelPlaysExpected.map((travelPlay) => travelPlay.toStr());
+  const unitTestEatenPlay = ({
+    position,
+    piece,
+    travelPlaysExpected,
+  }: testTravelPlay) => {
+    const playsStr = travelPlaysExpected.map((travelPlay) =>
+      travelPlay.toStr(),
+    );
     it(`should return [${playsStr}] for ${piece.toStr()} in ${position.toStr()}`, () => {
-      expect(eatBoard.getPieceTravelPlays(piece, position)).toIncludeSameMembers(
-        travelPlaysExpected,
-      );
+      expect(
+        eatBoard.getPieceTravelPlays(piece, position),
+      ).toIncludeSameMembers(travelPlaysExpected);
     });
   };
   dataGetEatenPlay.map(unitTestEatenPlay);
 });
 methodTest(eatBoard.getPlayerPlays, () => {
   it('should return eatenPlays if eatenPlays possible ', () => {
-    eatBoard.getPlayerPlays(WHITE).forEach((play) => expect(play instanceof EatenPlay).toBe(true));
+    eatBoard
+      .getPlayerPlays(WHITE)
+      .forEach((play) => expect(play instanceof EatenPlay).toBe(true));
   });
   it('should return travelPlays if only travelPlays possible', () => {
     startBoard
@@ -299,9 +322,13 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
   });
 
   const previousWhiteQueenBoard = new Board(QUEEN_WHITE_TEST);
-  const queenWhiteBoard = previousWhiteQueenBoard.getNewBoardFromPlay(new TravelPlay(A9, B10));
+  const queenWhiteBoard = previousWhiteQueenBoard.getNewBoardFromPlay(
+    new TravelPlay(A9, B10),
+  );
   const previousBlackQueenBoard = new Board(QUEEN_BLACK_TEST);
-  const queenBlackBoard = previousBlackQueenBoard.getNewBoardFromPlay(new TravelPlay(A2, B1));
+  const queenBlackBoard = previousBlackQueenBoard.getNewBoardFromPlay(
+    new TravelPlay(A2, B1),
+  );
   it('should return a board white a queen', () => {
     expect(queenBlackBoard.getBox(B1) instanceof Queen).toBeTrue();
     expect(queenWhiteBoard.getBox(B10) instanceof Queen).toBeTrue();

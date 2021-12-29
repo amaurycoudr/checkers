@@ -15,6 +15,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint', 'eslint-plugin-prettier'],
+
   rules: {
     'object-curly-newline': 'off',
     'prefer-destructuring': [
@@ -25,6 +26,7 @@ module.exports = {
       },
     ],
     indent: 'off',
+    'no-console': 'error',
     'operator-linebreak': 'off',
     'implicit-arrow-linebreak': 'off',
     'function-paren-newline': 'off',

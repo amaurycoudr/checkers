@@ -4,6 +4,7 @@ import Pawn from '../Piece/Pawn/Pawn';
 import PieceSituation from '../PieceSituation/PieceSituation';
 import Coordinate from '../Position/Coordinate/Coordinate';
 import TravelPlay from '../TravelPlay/TravelPlay';
+import { ContentType, QUEEN_TYPE } from '../utils/board';
 import { moveCoordinate, MoveNumber, MoveStr } from '../utils/type';
 
 type EatenCombination = {
@@ -68,7 +69,7 @@ const EATEN_MOVES_COMBINATION: EatenCombination[] = [
 ];
 
 class Queen extends Pawn {
-  type = 'Queen';
+  type: ContentType = QUEEN_TYPE;
 
   eatenMoves: MoveStr[] = MOVES_SITUATION;
 

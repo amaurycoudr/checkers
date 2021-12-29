@@ -1,5 +1,5 @@
 import Coordinates from '../Position/Coordinate/Coordinate';
-import { methodTest } from '../test/utils';
+import { methodTest } from '../../test/utils';
 import TravelPlay from './TravelPlay';
 
 const from = new Coordinates(0, 1);

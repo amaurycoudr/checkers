@@ -1,9 +1,9 @@
-import type { Config } from "@jest/types";
+import type { Config } from '@jest/types';
 
 // Sync object
 const config: Config.InitialOptions = {
   verbose: true,
-  collectCoverageFrom: ["src/**/*.ts"],
+  collectCoverageFrom: ['src/**/*.ts'],
   coverageThreshold: {
     global: {
       branches: 80,
@@ -11,7 +11,7 @@ const config: Config.InitialOptions = {
       lines: 80,
     },
   },
-  coverageReporters: ["json-summary", "text"],
-  setupFilesAfterEnv: ["jest-extended/all"],
+  coverageReporters: ['json-summary', 'text'],
+  setupFilesAfterEnv: ['jest-extended/all'],
 };
 export default config;

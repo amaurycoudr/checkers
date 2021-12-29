@@ -1,11 +1,16 @@
-import { Position } from '..';
-import { forBoard, forMove } from '../utils/fn';
+import { Position } from '../src';
+import { forBoard, forMove } from '../src/utils/fn';
 
-export const methodTest = (method: (...arg: any) => void, tests: jest.EmptyFunction) => {
+export const methodTest = (
+  // eslint-disable-next-line
+  method: (...arg: any) => void,
+  tests: jest.EmptyFunction,
+) => {
   describe(`--- test ${method.toString().split('{')[0]}`, tests);
 };
 
 export function methodTestMap<T>(
+  // eslint-disable-next-line
   method: (...arg: any) => void,
   data: T[],
   description: (arg: T) => string,
@@ -20,6 +25,7 @@ export function methodTestMap<T>(
   });
 }
 export function methodTestFordBoard(
+  // eslint-disable-next-line
   method: (...arg: any) => void,
   it: (p: Position, x: number, y: number) => void,
 ) {
@@ -31,6 +37,7 @@ export function methodTestFordBoard(
 }
 
 export function methodTestForMove(
+  // eslint-disable-next-line
   method: (...arg: any) => void,
   it: (x: number, y: number) => void,
 ) {

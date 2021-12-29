@@ -20,7 +20,7 @@ import {
   PieceJSON,
   PieceMoves,
 } from '../utils/type';
-import { BoardState } from './BoardState';
+import { BoardContent, BoardState } from './BoardState';
 
 export type PlayerPieces = { [key in CoordinatesStr]?: Piece };
 
@@ -60,7 +60,7 @@ class Board implements Utils {
     return this.board[position.getY()][position.getX()];
   }
 
-  setBox(position: Coordinates, newValue: EmptyBox) {
+  setBox(position: Coordinates, newValue: BoardContent) {
     this.board[position.getY()][position.getX()] = newValue;
   }
 
@@ -118,7 +118,10 @@ class Board implements Utils {
       try {
         const arrivalPosition = position.getArrivalCoordinate(curr);
         const box = this.getBox(arrivalPosition);
-        return { ...prev, [curr]: box };
+        if (box instanceof Piece) {
+          return { ...prev, [curr]: { type: box.type, color: box.color } };
+        }
+        return { ...prev, [curr]: { type: box.type } };
       } catch (e) {
         return prev;
       }

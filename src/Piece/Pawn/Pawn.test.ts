@@ -1,9 +1,7 @@
+import { methodTest, methodTestMap } from '../../../test/utils';
 import EatenPlay from '../../EatenPlay/EatenPlay';
-import { box } from '../../EmptyBox/EmptyBox';
-
 import PieceSituation from '../../PieceSituation/PieceSituation';
 import { D4 } from '../../Position/Coordinate/coordinates';
-import { methodTest, methodTestMap } from '../../test/utils';
 import TravelPlay from '../../TravelPlay/TravelPlay';
 import { WHITE } from '../../utils/type';
 import Pawn from './Pawn';
@@ -28,58 +26,84 @@ const descriptionPlay = (data: DataPlay) => {
 };
 
 const expectEatenPlay = (data: DataPlay) => {
-  expect(data.pawn.getEatenPlays(data.situation, D4)).toIncludeSameMembers(data.plays);
+  expect(data.pawn.getEatenPlays(data.situation, D4)).toIncludeSameMembers(
+    data.plays,
+  );
 };
 
 methodTestMap<DataPlay>(
   pawnWhite.getEatenPlays,
   [
     {
-      situation: new PieceSituation({ '+1.+1': pawnBlack, '+2.+2': box }),
+      situation: new PieceSituation({
+        '+1.+1': { type: 'Pawn', color: 'black' },
+        '+2.+2': { type: 'Box' },
+      }),
       plays: [EatenPlay.eatenPlayFromMove(D4, '+2.+2', '+1.+1')],
       pawn: pawnWhite,
     },
     {
-      situation: new PieceSituation({ '+1.+1': pawnWhite, '+2.+2': box }),
+      situation: new PieceSituation({
+        '+1.+1': { type: 'Pawn', color: 'white' },
+        '+2.+2': { type: 'Box' },
+      }),
       plays: [EatenPlay.eatenPlayFromMove(D4, '+2.+2', '+1.+1')],
       pawn: pawnBlack,
     },
     {
-      situation: new PieceSituation({ '+1.+1': pawnWhite, '+2.+2': box }),
+      situation: new PieceSituation({
+        '+1.+1': { type: 'Pawn', color: 'white' },
+        '+2.+2': { type: 'Box' },
+      }),
       plays: [],
       pawn: pawnWhite,
     },
     {
-      situation: new PieceSituation({ '+1.+1': pawnBlack, '+2.+2': box }),
+      situation: new PieceSituation({
+        '+1.+1': { type: 'Pawn', color: 'black' },
+        '+2.+2': { type: 'Box' },
+      }),
       plays: [],
       pawn: pawnBlack,
     },
     {
-      situation: new PieceSituation({ '+1.-1': pawnBlack, '+2.-2': box }),
+      situation: new PieceSituation({
+        '+1.-1': { type: 'Pawn', color: 'black' },
+        '+2.-2': { type: 'Box' },
+      }),
       plays: [EatenPlay.eatenPlayFromMove(D4, '+2.-2', '+1.-1')],
       pawn: pawnWhite,
     },
     {
-      situation: new PieceSituation({ '-1.+1': pawnBlack, '-2.+2': box }),
+      situation: new PieceSituation({
+        '-1.+1': { type: 'Pawn', color: 'black' },
+        '-2.+2': { type: 'Box' },
+      }),
       plays: [EatenPlay.eatenPlayFromMove(D4, '-2.+2', '-1.+1')],
       pawn: pawnWhite,
     },
     {
-      situation: new PieceSituation({ '-1.-1': pawnBlack, '-2.-2': box }),
+      situation: new PieceSituation({
+        '-1.-1': { type: 'Pawn', color: 'black' },
+        '-2.-2': { type: 'Box' },
+      }),
       plays: [EatenPlay.eatenPlayFromMove(D4, '-2.-2', '-1.-1')],
       pawn: pawnWhite,
     },
     {
-      situation: new PieceSituation({ '-1.-1': box, '-2.-2': box }),
+      situation: new PieceSituation({
+        '-1.-1': { type: 'Box' },
+        '-2.-2': { type: 'Box' },
+      }),
       pawn: pawnWhite,
       plays: [],
     },
     {
       situation: new PieceSituation({
         '-1.-1': pawnBlack,
-        '-2.-2': box,
+        '-2.-2': { type: 'Box' },
         '+1.-1': pawnBlack,
-        '+2.-2': box,
+        '+2.-2': { type: 'Box' },
       }),
       pawn: pawnWhite,
       plays: [
@@ -93,7 +117,9 @@ methodTestMap<DataPlay>(
 );
 
 const expectTravelPlay = (data: DataPlay) => {
-  expect(data.pawn.getTravelPlays(data.situation, D4)).toIncludeSameMembers(data.plays);
+  expect(data.pawn.getTravelPlays(data.situation, D4)).toIncludeSameMembers(
+    data.plays,
+  );
 };
 
 methodTestMap(
@@ -101,12 +127,18 @@ methodTestMap(
   [
     {
       pawn: pawnBlack,
-      situation: new PieceSituation({ '+1.-1': pawnBlack, '-1.-1': box }),
+      situation: new PieceSituation({
+        '+1.-1': { type: 'Pawn', color: 'black' },
+        '-1.-1': { type: 'Box' },
+      }),
       plays: [TravelPlay.fromMove(D4, '-1.-1')],
     },
     {
       pawn: pawnBlack,
-      situation: new PieceSituation({ '+1.-1': pawnBlack, '-1.-1': pawnBlack }),
+      situation: new PieceSituation({
+        '+1.-1': { type: 'Pawn', color: 'black' },
+        '-1.-1': { type: 'Pawn', color: 'black' },
+      }),
       plays: [],
     },
     {
@@ -116,23 +148,41 @@ methodTestMap(
     },
     {
       pawn: pawnBlack,
-      situation: new PieceSituation({ '+1.-1': box, '-1.-1': box }),
-      plays: [TravelPlay.fromMove(D4, '-1.-1'), TravelPlay.fromMove(D4, '+1.-1')],
+      situation: new PieceSituation({
+        '+1.-1': { type: 'Box' },
+        '-1.-1': { type: 'Box' },
+      }),
+      plays: [
+        TravelPlay.fromMove(D4, '-1.-1'),
+        TravelPlay.fromMove(D4, '+1.-1'),
+      ],
     },
     {
       pawn: pawnWhite,
-      situation: new PieceSituation({ '+1.+1': pawnBlack, '-1.+1': box }),
+      situation: new PieceSituation({
+        '+1.+1': { type: 'Pawn', color: 'black' },
+        '-1.+1': { type: 'Box' },
+      }),
       plays: [TravelPlay.fromMove(D4, '-1.+1')],
     },
     {
       pawn: pawnWhite,
-      situation: new PieceSituation({ '+1.+1': pawnBlack, '-1.+1': pawnBlack }),
+      situation: new PieceSituation({
+        '+1.+1': { type: 'Pawn', color: 'black' },
+        '-1.+1': { type: 'Pawn', color: 'black' },
+      }),
       plays: [],
     },
     {
       pawn: pawnWhite,
-      situation: new PieceSituation({ '+1.+1': box, '-1.+1': box }),
-      plays: [TravelPlay.fromMove(D4, '-1.+1'), TravelPlay.fromMove(D4, '+1.+1')],
+      situation: new PieceSituation({
+        '+1.+1': { type: 'Box' },
+        '-1.+1': { type: 'Box' },
+      }),
+      plays: [
+        TravelPlay.fromMove(D4, '-1.+1'),
+        TravelPlay.fromMove(D4, '+1.+1'),
+      ],
     },
   ],
   descriptionPlay,

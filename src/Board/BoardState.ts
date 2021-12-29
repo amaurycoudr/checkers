@@ -1,11 +1,12 @@
 import EmptyBox from '../EmptyBox/EmptyBox';
 import Pawn from '../Piece/Pawn/Pawn';
+import Piece from '../Piece/Piece';
 import { BLACK, Color, LengthType, WHITE } from '../utils/type';
-import { BoardContent } from './BoardContent';
 
+export type BoardContent = EmptyBox | Piece;
 export type BoardState = LengthType<LengthType<BoardContent>>;
 
-export const emptyLine = (): LengthType<EmptyBox> => [
+export const emptyLine = (): LengthType<BoardContent> => [
   new EmptyBox(),
   new EmptyBox(),
   new EmptyBox(),
@@ -20,7 +21,7 @@ export const emptyLine = (): LengthType<EmptyBox> => [
 export const playerLine = (
   color: Color,
   isEven: boolean,
-): LengthType<EmptyBox> => [
+): LengthType<BoardContent> => [
   isEven ? new Pawn(color) : new EmptyBox(),
   isEven ? new EmptyBox() : new Pawn(color),
   isEven ? new Pawn(color) : new EmptyBox(),
@@ -32,7 +33,7 @@ export const playerLine = (
   isEven ? new Pawn(color) : new EmptyBox(),
   isEven ? new EmptyBox() : new Pawn(color),
 ];
-export const onePawnLine = (color: Color): LengthType<EmptyBox> => [
+export const onePawnLine = (color: Color): LengthType<BoardContent> => [
   new Pawn(color),
   new EmptyBox(),
   new EmptyBox(),

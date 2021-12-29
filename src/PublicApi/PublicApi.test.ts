@@ -11,7 +11,7 @@ import {
   I5,
   J4,
 } from '../Position/Coordinate/coordinates';
-import { methodTest } from '../test/utils';
+import { methodTest } from '../../test/utils';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import PublicApi from './PublicApi';
 

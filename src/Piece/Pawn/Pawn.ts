@@ -2,6 +2,7 @@ import EatenPlay from '../../EatenPlay/EatenPlay';
 import PieceSituation from '../../PieceSituation/PieceSituation';
 import Coordinate from '../../Position/Coordinate/Coordinate';
 import TravelPlay from '../../TravelPlay/TravelPlay';
+import { ContentType, PAWN_TYPE } from '../../utils/board';
 import { Color, MoveStr, WHITE } from '../../utils/type';
 import Piece from '../Piece';
 
@@ -27,7 +28,7 @@ const TOP_TRAVEL_MOVES: MoveStr[] = ['-1.-1', '+1.-1'];
 
 const BOTTOM_TRAVEL_MOVES: MoveStr[] = ['-1.+1', '+1.+1'];
 class Pawn extends Piece {
-  type = 'Pawn';
+  type: ContentType = PAWN_TYPE;
 
   travelMoves: MoveStr[];
 
