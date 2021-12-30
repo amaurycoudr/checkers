@@ -43,7 +43,7 @@ methodTest(party.getState, () => {
     expect(party.getState().playerTurn).toBe('white');
   });
   it('should return playerTurn === black if options.firstPlayer === black', () => {
-    expect(party.getState().playerTurn).toBe('white');
+    expect(blackParty.getState().playerTurn).toBe('black');
   });
   it("should return  board === ONE_PLAY_BOARD_JSON after play({ from: 'B4', to: 'A5' })", () => {
     party.play({ from: 'B4', to: 'A5' });
