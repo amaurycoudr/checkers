@@ -4,7 +4,7 @@
 **test coverage :**
 | Statements | Branches | Functions | Lines |
 | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| ![Statements](https://img.shields.io/badge/Coverage-99.45%25-brightgreen.svg "Make me better!") | ![Branches](https://img.shields.io/badge/Coverage-97.84%25-brightgreen.svg "Make me better!") | ![Functions](https://img.shields.io/badge/Coverage-98.16%25-brightgreen.svg "Make me better!") | ![Lines](https://img.shields.io/badge/Coverage-99.43%25-brightgreen.svg "Make me better!") |
+| ![Statements](https://img.shields.io/badge/Coverage-99.45%25-brightgreen.svg 'Make me better!') | ![Branches](https://img.shields.io/badge/Coverage-97.84%25-brightgreen.svg 'Make me better!') | ![Functions](https://img.shields.io/badge/Coverage-98.16%25-brightgreen.svg 'Make me better!') | ![Lines](https://img.shields.io/badge/Coverage-99.43%25-brightgreen.svg 'Make me better!') |
 
 the purpose of this package is to offer a simple api to be able to play to the checkers
 
@@ -15,8 +15,14 @@ the purpose of this package is to offer a simple api to be able to play to the c
 To start a party you only need to create a new instance of **CheckersParty**
 
 ```js
-const party = new CheckersParty();
+const party = new CheckersParty(options);
 ```
+
+To specify the rules of your party you can pass `options`.
+
+#### options
+
+- **`firstPlayer: "white"|"black"`** (default "white") the first player to play
 
 ## party.getState()
 
@@ -55,11 +61,10 @@ Take in argument the move you want to play like `{ "from": "B4", "to": "A5" }`.
 Return the state of the party (the new result for `party.getState()`).
 
 # Road map
+
 1. implements a notion of **options** to let user choses specific rules
 2. implements the first play option
 3. implements the maximum catch rule
-4. implements the fact that promote only when ending their move on the final rank  
+4. implements the fact that promote only when ending their move on the final rank
 5. implements the win notion
 6. implements the draw notion
-
-
