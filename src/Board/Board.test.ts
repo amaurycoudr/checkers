@@ -284,23 +284,6 @@ methodTest(emptyBoard.getPieceTravelPlays, () => {
   };
   dataGetEatenPlay.map(unitTestEatenPlay);
 });
-methodTest(eatBoard.getPlayerPlays, () => {
-  it('should return eatenPlays if eatenPlays possible ', () => {
-    eatBoard
-      .getPlayerPlays(WHITE)
-      .forEach((play) => expect(play instanceof EatenPlay).toBe(true));
-  });
-  it('should return travelPlays if only travelPlays possible', () => {
-    startBoard
-      .getPlayerPlays(WHITE)
-      .forEach((play) => expect(play instanceof EatenPlay).toBe(false));
-  });
-
-  const move = new TravelPlay(A1, B2);
-  it(`should return ${move.toStr()} for the onePawnBoard`, () => {
-    expect(onePawnBoard.getPlayerPlays(WHITE)[0]).toStrictEqual(move);
-  });
-});
 
 methodTest(eatBoard.getNewBoardFromPlay, () => {
   it('should return a board where FROM is a Box and TO is Equal to FROM previous value', () => {

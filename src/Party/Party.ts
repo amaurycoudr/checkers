@@ -2,6 +2,7 @@ import Board from '../Board/Board';
 import { BoardState } from '../Board/BoardState';
 import EatenPlay from '../EatenPlay/EatenPlay';
 import Piece from '../Piece/Piece';
+import PlaysPossible from '../PlaysPossible/PlaysPossible';
 import Coordinates from '../Position/Coordinate/Coordinate';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import { ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
@@ -14,12 +15,12 @@ class Party {
 
   private playerTurn: Color;
 
-  private playsPossible: TravelPlay[][];
+  private playsPossible: TravelPlay[][] = [];
 
   constructor(initBoard: BoardState, options: PartyOptions = defaultOptions) {
     this.turns = [new Board(initBoard)];
     this.playerTurn = options.firstPlayer;
-    this.playsPossible = [this.turns[0].getPlayerPlays(this.playerTurn)];
+    this.setPlaysPossible();
   }
 
   getCurrentBoard(): Board {
@@ -39,7 +40,10 @@ class Party {
       this.playsPossible.push(plays);
     } else {
       this.playsPossible.push(
-        this.getCurrentBoard().getPlayerPlays(this.playerTurn),
+        new PlaysPossible(
+          this.getCurrentBoard(),
+          this.playerTurn,
+        ).getPlayerPlays(),
       );
     }
   }

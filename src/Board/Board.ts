@@ -1,4 +1,4 @@
-import { cloneDeep, isEqual, map } from 'lodash';
+import { cloneDeep, forEach, isEqual } from 'lodash';
 import EatenPlay from '../EatenPlay/EatenPlay';
 import EmptyBox from '../EmptyBox/EmptyBox';
 import { Utils } from '../genericInterface';
@@ -100,19 +100,10 @@ class Board implements Utils {
     return result;
   }
 
-  getPlayerPlays(color: Color): TravelPlay[] {
-    const eatenPlays = this.getPlayerEatenPlays(color);
-    if (eatenPlays.length > 0) {
-      return eatenPlays;
-    }
-    const travelMoves: TravelPlay[] = this.getPlayerTravelPlays(color);
-    return travelMoves;
-  }
-
-  private getPlayerEatenPlays(color: Color) {
+  getPlayerEatenPlays(color: Color) {
     const pieces = this.getPlayerPieces(color);
     const eatenPlays: EatenPlay[] = [];
-    map(pieces, (piece, coordinate) => {
+    forEach(pieces, (piece, coordinate) => {
       if (piece) {
         eatenPlays.push(
           ...this.getPieceEatenPlays(
@@ -125,10 +116,10 @@ class Board implements Utils {
     return eatenPlays;
   }
 
-  private getPlayerTravelPlays(color: Color) {
+  getPlayerTravelPlays(color: Color) {
     const pieces = this.getPlayerPieces(color);
     const travelPlays: TravelPlay[] = [];
-    map(pieces, (piece, coordinate) => {
+    forEach(pieces, (piece, coordinate) => {
       if (piece) {
         travelPlays.push(
           ...this.getPieceTravelPlays(
