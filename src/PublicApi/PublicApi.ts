@@ -1,11 +1,11 @@
 import { CLASSIC_BOARD } from '../Board/BoardState';
 import Party from '../Party/Party';
 import TravelPlay from '../TravelPlay/TravelPlay';
-import { BoardArray, BoardJSON, Color, PlayJSON } from '../utils/type';
+import { BoardJSON, Color, PlayJSON } from '../utils/type';
 
 export type PartyState = {
   playerTurn: Color;
-  board: BoardJSON | BoardArray;
+  board: BoardJSON;
 
   plays: PlayJSON[];
 };

@@ -1,5 +1,5 @@
 import { methodTest } from '../../test/utils';
-import { ONE_PLAY_BOARD_ARRAY, START_BOARD_JSON } from '../Board/BoardState';
+import { ONE_PLAY_BOARD_JSON, START_BOARD_JSON } from '../Board/BoardState';
 import {
   A5,
   B4,
@@ -38,8 +38,8 @@ methodTest(party.getState, () => {
     expect(party.getState().plays).toIncludeSameMembers(whiteFirstTurnPlays);
   });
 
-  it("should return  board === ONE_PLAY_BOARD_ARRAY after play({ from: 'B4', to: 'A5' })", () => {
+  it("should return  board === ONE_PLAY_BOARD_JSON after play({ from: 'B4', to: 'A5' })", () => {
     party.play({ from: 'B4', to: 'A5' });
-    expect(party.getState().board).toStrictEqual(ONE_PLAY_BOARD_ARRAY);
+    expect(party.getState().board).toStrictEqual(ONE_PLAY_BOARD_JSON);
   });
 });

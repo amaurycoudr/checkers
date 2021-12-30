@@ -13,3 +13,8 @@ methodTest(emptyBox.equals, () => {
     expect(emptyBox.equals(emptyBox)).toBe(true);
   });
 });
+methodTest(emptyBox.toStr, () => {
+  it('should return Box', () => {
+    expect(emptyBox.toStr()).toBe('Box');
+  });
+});

@@ -12,42 +12,15 @@ import TravelPlay from '../TravelPlay/TravelPlay';
 import { INDEX_MAX, INDEX_MIN } from '../utils/board';
 import { ERROR_NOT_PIECE } from '../utils/error';
 import {
-  BoardArray,
   BoardJSON,
   Color,
   CoordinatesStr,
-  LineArray,
   PieceJSON,
   PieceMoves,
 } from '../utils/type';
 import { BoardContent, BoardState } from './BoardState';
 
 export type PlayerPieces = { [key in CoordinatesStr]?: Piece };
-
-const emptyLine = (): LineArray => [
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-];
-const emptyArray = (): BoardArray => [
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-  emptyLine(),
-];
 
 class Board implements Utils {
   private board: BoardState;
@@ -74,19 +47,6 @@ class Board implements Utils {
       }
     });
     return JSON;
-  }
-
-  getArray(): BoardArray {
-    const array = emptyArray();
-
-    Board.forBoardState((position: Coordinates) => {
-      const json = this.getPositionJson(position);
-      if (json) {
-        array[position.getY()][position.getX()] = json;
-      }
-    });
-
-    return array;
   }
 
   private static forBoardState(fn: (p: Coordinates) => void) {
