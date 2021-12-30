@@ -22,7 +22,7 @@ To specify the rules of your party you can pass `options`.
 
 #### options
 
-- **`firstPlayer: "white"|"black"`** (default "white") the first player to play
+- **`firstPlayer :`** `"white"|"black" (default "white")` the first player to play.
 
 ## party.getState()
 
