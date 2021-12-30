@@ -7,6 +7,8 @@ import TravelPlay from '../TravelPlay/TravelPlay';
 import { ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
 import { BLACK, Color, WHITE } from '../utils/type';
 
+type PartyOptions = { firstPlayer: Color };
+const defaultOptions: PartyOptions = { firstPlayer: WHITE };
 class Party {
   private turns: Board[];
 
@@ -14,10 +16,10 @@ class Party {
 
   private playsPossible: TravelPlay[][];
 
-  constructor(initBoard: BoardState) {
+  constructor(initBoard: BoardState, options: PartyOptions = defaultOptions) {
     this.turns = [new Board(initBoard)];
-    this.playerTurn = WHITE;
-    this.playsPossible = [this.turns[0].getPlayerPlays(WHITE)];
+    this.playerTurn = options.firstPlayer;
+    this.playsPossible = [this.turns[0].getPlayerPlays(this.playerTurn)];
   }
 
   getCurrentBoard(): Board {
@@ -36,7 +38,9 @@ class Party {
     if (plays) {
       this.playsPossible.push(plays);
     } else {
-      this.playsPossible.push(this.getCurrentBoard().getPlayerPlays(this.playerTurn));
+      this.playsPossible.push(
+        this.getCurrentBoard().getPlayerPlays(this.playerTurn),
+      );
     }
   }
 
@@ -58,7 +62,9 @@ class Party {
   }
 
   private findPlayInPossible(play: TravelPlay) {
-    return this.getCurrentPlays().find((playPossible) => playPossible.equals(play));
+    return this.getCurrentPlays().find((playPossible) =>
+      playPossible.equals(play),
+    );
   }
 
   private makePlay(play: TravelPlay) {

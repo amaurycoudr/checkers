@@ -1,6 +1,11 @@
 import { cloneDeep } from 'lodash';
 import Board from '../Board/Board';
-import { BoardState, CLASSIC_BOARD, EAT_BOARD, TWO_PLAY_BOARD } from '../Board/BoardState';
+import {
+  BoardState,
+  CLASSIC_BOARD,
+  EAT_BOARD,
+  TWO_PLAY_BOARD,
+} from '../Board/BoardState';
 import EatenPlay from '../EatenPlay/EatenPlay';
 import EmptyBox from '../EmptyBox/EmptyBox';
 import {
@@ -37,6 +42,8 @@ const startParty = new Party(CLASSIC_BOARD);
 
 const eatParty = new Party(EAT_BOARD);
 
+const startBlackParty = new Party(CLASSIC_BOARD, { firstPlayer: 'black' });
+
 const whiteFirstTurnPlays = [
   new TravelPlay(B4, A5),
   new TravelPlay(B4, C5),
@@ -63,14 +70,27 @@ const blackFirstTurnPlays = [
 
 methodTest(startParty.getCurrentBoard, () => {
   it('should return the start board at turn 0', () => {
-    expect(startParty.getCurrentBoard()).toStrictEqual(new Board(CLASSIC_BOARD));
+    expect(startParty.getCurrentBoard()).toStrictEqual(
+      new Board(CLASSIC_BOARD),
+    );
     expect(eatParty.getCurrentBoard()).toStrictEqual(new Board(EAT_BOARD));
+  });
+});
+
+methodTest(startParty.getCurrentPlayer, () => {
+  it('should return current player black at the first turn if {firstPLayer:black} ', () => {
+    expect(startBlackParty.getCurrentPlayer()).toBe(BLACK);
+  });
+  it('should return current player white at the first turn by default ', () => {
+    expect(startParty.getCurrentPlayer()).toBe(WHITE);
   });
 });
 
 methodTest(startParty.getCurrentPlays, () => {
   it('should return whiteFirstTurnPlays at turn 0 white CLASSIC_BOARD', () => {
-    expect(startParty.getCurrentPlays()).toIncludeSameMembers(whiteFirstTurnPlays);
+    expect(startParty.getCurrentPlays()).toIncludeSameMembers(
+      whiteFirstTurnPlays,
+    );
   });
 });
 
@@ -94,7 +114,9 @@ methodTest(startParty.playTurn, () => {
   it('should return BLACK onePlayBoard blackFirstTurnPlays at black first turn', () => {
     expect(onePlayParty.getCurrentBoard()).toStrictEqual(onePlayBoard);
     expect(onePlayParty.getCurrentPlayer()).toBe(BLACK);
-    expect(onePlayParty.getCurrentPlays()).toIncludeSameMembers(blackFirstTurnPlays);
+    expect(onePlayParty.getCurrentPlays()).toIncludeSameMembers(
+      blackFirstTurnPlays,
+    );
   });
 
   const playTwo = new TravelPlay(A7, B6);
@@ -113,6 +135,8 @@ methodTest(startParty.playTurn, () => {
     expect(twoEatenPlayParty.getCurrentPlayer()).toBe(WHITE);
   });
   it('should only return plays for one piece if it is a second play', () => {
-    expect(twoEatenPlayParty.getCurrentPlays()).toIncludeSameMembers(eatenPlays);
+    expect(twoEatenPlayParty.getCurrentPlays()).toIncludeSameMembers(
+      eatenPlays,
+    );
   });
 });
