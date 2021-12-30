@@ -1,20 +1,19 @@
 import { CLASSIC_BOARD } from '../Board/BoardState';
-import Party from '../Party/Party';
+import Party, { PartyOptions } from '../Party/Party';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import { BoardJSON, Color, PlayJSON } from '../utils/type';
 
 export type PartyState = {
   playerTurn: Color;
   board: BoardJSON;
-
   plays: PlayJSON[];
 };
 
 class PublicApi {
   private party: Party;
 
-  constructor() {
-    this.party = new Party(CLASSIC_BOARD);
+  constructor(options?: PartyOptions) {
+    this.party = new Party(CLASSIC_BOARD, options);
   }
 
   getState() {

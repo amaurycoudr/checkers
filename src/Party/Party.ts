@@ -7,8 +7,8 @@ import TravelPlay from '../TravelPlay/TravelPlay';
 import { ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
 import { BLACK, Color, WHITE } from '../utils/type';
 
-type PartyOptions = { firstPlayer: Color };
-const defaultOptions: PartyOptions = { firstPlayer: WHITE };
+export type PartyOptions = { firstPlayer: Color };
+export const defaultOptions: PartyOptions = { firstPlayer: WHITE };
 class Party {
   private turns: Board[];
 

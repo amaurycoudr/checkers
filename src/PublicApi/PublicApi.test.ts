@@ -13,9 +13,11 @@ import {
   J4,
 } from '../Position/Coordinate/coordinates';
 import TravelPlay from '../TravelPlay/TravelPlay';
+import { BLACK } from '../utils/type';
 import PublicApi from './PublicApi';
 
 const party = new PublicApi();
+const blackParty = new PublicApi({ firstPlayer: BLACK });
 
 const whiteFirstTurnPlays = [
   new TravelPlay(B4, A5),
@@ -37,7 +39,12 @@ methodTest(party.getState, () => {
   it('should return plays === startPlayPossible at the start', () => {
     expect(party.getState().plays).toIncludeSameMembers(whiteFirstTurnPlays);
   });
-
+  it('should return playerTurn === white by default', () => {
+    expect(party.getState().playerTurn).toBe('white');
+  });
+  it('should return playerTurn === black if options.firstPlayer === black', () => {
+    expect(party.getState().playerTurn).toBe('white');
+  });
   it("should return  board === ONE_PLAY_BOARD_JSON after play({ from: 'B4', to: 'A5' })", () => {
     party.play({ from: 'B4', to: 'A5' });
     expect(party.getState().board).toStrictEqual(ONE_PLAY_BOARD_JSON);
