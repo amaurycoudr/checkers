@@ -1,6 +1,6 @@
 import { methodTest } from '../../test/utils';
 import EatenPlay from '../EatenPlay/EatenPlay';
-import EmptyBox from '../EmptyBox/EmptyBox';
+import EmptyBox, { box } from '../EmptyBox/EmptyBox';
 import { pawnBlack, pawnWhite } from '../Piece/Pawn/pawns';
 import Piece from '../Piece/Piece';
 import { PieceSituationType } from '../PieceSituation/PieceSituation';
@@ -35,7 +35,6 @@ import { BLACK, MoveStr, WHITE } from '../utils/type';
 import Board from './Board';
 import {
   CLASSIC_BOARD,
-  CLASSIC_BOARD_ARRAY,
   EAT_BOARD,
   EMPTY_BOARD,
   ONE_WHITE_PAWN_BOARD,
@@ -52,9 +51,12 @@ const eatBoard = new Board(EAT_BOARD);
 
 methodTest(emptyBoard.getBox, () => {
   it('should be equal boardState[y][x] for Position(x,y)', () => {
-    forBoard((position, x, y) => {
+    forBoard((position) => {
+      const str = position.toStr();
       expect(startBoard.getBox(position)).toStrictEqual(
-        CLASSIC_BOARD_ARRAY[y][x],
+        str in CLASSIC_BOARD
+          ? CLASSIC_BOARD[str as keyof typeof CLASSIC_BOARD]
+          : box,
       );
     });
   });
@@ -118,14 +120,14 @@ methodTest(startBoard.getAroundSituation, () => {
       position: A1,
       moves: ['+1.+1'],
       expected: {
-        '+1.+1': { type: CLASSIC_BOARD_ARRAY[1][1].type, color: 'white' },
+        '+1.+1': { type: CLASSIC_BOARD.B2.type, color: 'white' },
       },
     },
     {
       position: A1,
       moves: ['-1.+1', '+1.+1'],
       expected: {
-        '+1.+1': { type: CLASSIC_BOARD_ARRAY[1][1].type, color: 'white' },
+        '+1.+1': { type: CLASSIC_BOARD.B2.type, color: 'white' },
       },
     },
     {
@@ -142,16 +144,16 @@ methodTest(startBoard.getAroundSituation, () => {
       position: B2,
       moves: ['-1.-1'],
       expected: {
-        '-1.-1': { type: CLASSIC_BOARD_ARRAY[0][0].type, color: 'white' },
+        '-1.-1': { type: CLASSIC_BOARD.A1.type, color: 'white' },
       },
     },
     {
       position: B2,
       moves: ['+1.+1', '-1.+1', '+1.-1'],
       expected: {
-        '+1.+1': { type: CLASSIC_BOARD_ARRAY[2][2].type, color: 'white' },
-        '-1.+1': { type: CLASSIC_BOARD_ARRAY[2][0].type, color: 'white' },
-        '+1.-1': { type: CLASSIC_BOARD_ARRAY[0][2].type, color: 'white' },
+        '+1.+1': { type: CLASSIC_BOARD.C3.type, color: 'white' },
+        '-1.+1': { type: CLASSIC_BOARD.A3.type, color: 'white' },
+        '+1.-1': { type: CLASSIC_BOARD.C1.type, color: 'white' },
       },
     },
   ];
@@ -292,7 +294,6 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
     const play = new TravelPlay(A1, B2);
 
     const newBoard = onePawnBoard.getNewBoardFromPlay(play);
-    const box = new EmptyBox();
 
     expect(newBoard.getBox(A1)).toStrictEqual(box);
     expect(newBoard.getBox(B2)).toStrictEqual(onePawnBoard.getBox(A1));
@@ -300,7 +301,6 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
   it('should return a board where FROM and EATEN is a Box and TO is Equal to FROM previous value', () => {
     const play = new EatenPlay(A1, C3, B2);
     const newBoard = eatBoard.getNewBoardFromPlay(play);
-    const box = new EmptyBox();
 
     expect(newBoard.getBox(A1)).toStrictEqual(box);
     expect(newBoard.getBox(B2)).toStrictEqual(box);

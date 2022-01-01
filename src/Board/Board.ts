@@ -1,4 +1,4 @@
-import { cloneDeep, forEach, isEqual } from 'lodash';
+import { cloneDeep, forEach, isEqual, mapValues } from 'lodash';
 import EatenPlay from '../EatenPlay/EatenPlay';
 import EmptyBox from '../EmptyBox/EmptyBox';
 import { Utils } from '../genericInterface';
@@ -56,7 +56,8 @@ class Board implements Utils {
         JSON[coordinateStr] = json;
       }
     });
-    return JSON;
+
+    return mapValues(this.board, (piece) => piece?.getJSON());
   }
 
   private forBoardState(fn: (p: Coordinates) => void) {

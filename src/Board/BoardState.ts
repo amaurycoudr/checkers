@@ -1,70 +1,16 @@
 import EmptyBox from '../EmptyBox/EmptyBox';
-import Pawn from '../Piece/Pawn/Pawn';
 import { pawnBlack, pawnWhite } from '../Piece/Pawn/pawns';
 import Piece from '../Piece/Piece';
-import { BLACK, Color, CoordinatesStr, LengthType, WHITE } from '../utils/type';
+import { CoordinatesStr } from '../utils/type';
 
 export type BoardContent = EmptyBox | Piece;
 
 export type BoardState = { [key in CoordinatesStr]?: Piece };
 
-export const emptyLine = (): LengthType<BoardContent> => [
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-];
-export const playerLine = (
-  color: Color,
-  isEven: boolean,
-): LengthType<BoardContent> => [
-  isEven ? new Pawn(color) : new EmptyBox(),
-  isEven ? new EmptyBox() : new Pawn(color),
-  isEven ? new Pawn(color) : new EmptyBox(),
-  isEven ? new EmptyBox() : new Pawn(color),
-  isEven ? new Pawn(color) : new EmptyBox(),
-  isEven ? new EmptyBox() : new Pawn(color),
-  isEven ? new Pawn(color) : new EmptyBox(),
-  isEven ? new EmptyBox() : new Pawn(color),
-  isEven ? new Pawn(color) : new EmptyBox(),
-  isEven ? new EmptyBox() : new Pawn(color),
-];
-export const onePawnLine = (color: Color): LengthType<BoardContent> => [
-  new Pawn(color),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-  new EmptyBox(),
-];
-
-export const CLASSIC_BOARD_ARRAY = [
-  playerLine(WHITE, true),
-  playerLine(WHITE, false),
-  playerLine(WHITE, true),
-  playerLine(WHITE, false),
-  emptyLine(),
-  emptyLine(),
-  playerLine(BLACK, true),
-  playerLine(BLACK, false),
-  playerLine(BLACK, true),
-  playerLine(BLACK, false),
-];
-
 export const EMPTY_BOARD: BoardState = {};
 
 export const ONE_WHITE_PAWN_BOARD: BoardState = { A1: pawnWhite };
-export const CLASSIC_BOARD: BoardState = {
+export const CLASSIC_BOARD = {
   A1: pawnWhite,
   C1: pawnWhite,
   E1: pawnWhite,
@@ -105,7 +51,7 @@ export const CLASSIC_BOARD: BoardState = {
   F10: pawnBlack,
   H10: pawnBlack,
   J10: pawnBlack,
-};
+} as const;
 
 export const EAT_BOARD: BoardState = {
   A1: pawnWhite,
