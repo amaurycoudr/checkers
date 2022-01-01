@@ -4,7 +4,7 @@
 **test coverage :**
 | Statements | Branches | Functions | Lines |
 | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| ![Statements](https://img.shields.io/badge/Coverage-98.92%25-brightgreen.svg "Make me better!") | ![Branches](https://img.shields.io/badge/Coverage-95.18%25-brightgreen.svg "Make me better!") | ![Functions](https://img.shields.io/badge/Coverage-98.13%25-brightgreen.svg "Make me better!") | ![Lines](https://img.shields.io/badge/Coverage-98.9%25-brightgreen.svg "Make me better!") |
+| ![Statements](https://img.shields.io/badge/Coverage-98.27%25-brightgreen.svg "Make me better!") | ![Branches](https://img.shields.io/badge/Coverage-95.89%25-brightgreen.svg "Make me better!") | ![Functions](https://img.shields.io/badge/Coverage-97.11%25-brightgreen.svg "Make me better!") | ![Lines](https://img.shields.io/badge/Coverage-98.24%25-brightgreen.svg "Make me better!") |
 
 the purpose of this package is to offer a simple api to be able to play to the checkers
 

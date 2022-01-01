@@ -15,7 +15,11 @@ class EatenPlay extends TravelPlay {
   }
 
   static eatenPlayFromMove(from: Coordinates, to: MoveStr, eaten: MoveStr) {
-    return new EatenPlay(from, from.getArrivalCoordinate(to), from.getArrivalCoordinate(eaten));
+    return new EatenPlay(
+      from,
+      from.getArrivalCoordinate(to),
+      from.getArrivalCoordinate(eaten),
+    );
   }
 }
 export default EatenPlay;

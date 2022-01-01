@@ -1,4 +1,4 @@
-import { cloneDeep, forEach, isEqual, mapValues } from 'lodash';
+import { cloneDeep, flatten, isEqual, map, mapValues, pickBy } from 'lodash';
 import EatenPlay from '../EatenPlay/EatenPlay';
 import EmptyBox from '../EmptyBox/EmptyBox';
 import { Utils } from '../genericInterface';
@@ -9,18 +9,12 @@ import PieceSituation, {
 import Coordinates from '../Position/Coordinate/Coordinate';
 import Queen from '../Queen/Queen';
 import TravelPlay from '../TravelPlay/TravelPlay';
-import { BOARD_SIZE_DEFAULT, EMPTY_BOX_TYPE, INDEX_MIN } from '../utils/board';
+import { BOARD_SIZE_DEFAULT, EMPTY_BOX_TYPE } from '../utils/board';
 import { ERROR_NOT_PIECE, ERROR_OUT_OF_BOUND } from '../utils/error';
-import {
-  BoardJSON,
-  Color,
-  CoordinatesStr,
-  PieceJSON,
-  PieceMoves,
-} from '../utils/type';
+import { BoardJSON, Color, CoordinatesStr, PieceMoves } from '../utils/type';
 import { BoardContent, BoardState } from './BoardState';
 
-export type PlayerPieces = { [key in CoordinatesStr]?: Piece };
+export type PlayerPieces = Partial<{ [key in CoordinatesStr]: Piece }>;
 
 class Board implements Utils {
   private board: BoardState;
@@ -48,32 +42,7 @@ class Board implements Utils {
   }
 
   getJSON(): BoardJSON {
-    const JSON: BoardJSON = {};
-    this.forBoardState((coordinate: Coordinates) => {
-      const coordinateStr = coordinate.toStr();
-      const json = this.getPositionJson(coordinate);
-      if (json) {
-        JSON[coordinateStr] = json;
-      }
-    });
-
     return mapValues(this.board, (piece) => piece?.getJSON());
-  }
-
-  private forBoardState(fn: (p: Coordinates) => void) {
-    for (let y = INDEX_MIN; y < this.size; y += 1) {
-      for (let x = INDEX_MIN; x < this.size; x += 1) {
-        fn(new Coordinates(x, y));
-      }
-    }
-  }
-
-  private getPositionJson(coordinate: Coordinates): PieceJSON | undefined {
-    try {
-      return this.getPiece(coordinate).getJSON();
-    } catch (error) {
-      return undefined;
-    }
   }
 
   private getPiece(coordinate: Coordinates): Piece {
@@ -93,9 +62,11 @@ class Board implements Utils {
         try {
           const arrivalPosition = coordinate.getArrivalCoordinate(curr);
           const box = this.getBox(arrivalPosition);
+
           if (box instanceof Piece) {
             return { ...prev, [curr]: { type: box.type, color: box.color } };
           }
+
           return { ...prev, [curr]: { type: EMPTY_BOX_TYPE } };
         } catch (e) {
           return prev;
@@ -106,47 +77,32 @@ class Board implements Utils {
     return new PieceSituation(situation);
   }
 
-  getPlayerPieces(color: Color): PlayerPieces {
-    const result: PlayerPieces = {};
-    this.forBoardState((position) => {
-      const piece = this.getBox(position);
-      if (piece instanceof Piece && !piece.isOpponent(color)) {
-        result[position.get()] = piece;
-      }
-    });
-    return result;
+  getPlayerPieces(color: Color) {
+    return pickBy(this.board, (value) => !value?.isOpponent(color));
   }
 
   getPlayerEatenPlays(color: Color) {
     const pieces = this.getPlayerPieces(color);
-    const eatenPlays: EatenPlay[] = [];
-    forEach(pieces, (piece, coordinate) => {
-      if (piece) {
-        eatenPlays.push(
-          ...this.getPieceEatenPlays(
-            piece,
-            Coordinates.create(coordinate as CoordinatesStr),
-          ),
-        );
-      }
-    });
-    return eatenPlays;
+    return flatten(
+      map(pieces, (piece, coordinate) =>
+        this.getPieceEatenPlays(
+          piece,
+          Coordinates.create(coordinate as CoordinatesStr),
+        ),
+      ),
+    );
   }
 
   getPlayerTravelPlays(color: Color) {
     const pieces = this.getPlayerPieces(color);
-    const travelPlays: TravelPlay[] = [];
-    forEach(pieces, (piece, coordinate) => {
-      if (piece) {
-        travelPlays.push(
-          ...this.getPieceTravelPlays(
-            piece,
-            Coordinates.create(coordinate as CoordinatesStr),
-          ),
-        );
-      }
-    });
-    return travelPlays;
+    return flatten(
+      map(pieces, (piece, coordinate) =>
+        this.getPieceTravelPlays(
+          piece,
+          Coordinates.create(coordinate as CoordinatesStr),
+        ),
+      ),
+    );
   }
 
   getPieceEatenPlays(piece: Piece, position: Coordinates) {
@@ -175,7 +131,7 @@ class Board implements Utils {
     const newBoard = new Board(newBoardState);
 
     const piece = newBoard.getPiece(play.from);
-    if (play.shouldTransformInQueen()) {
+    if (play.canTransformInQueen()) {
       newBoard.setBox(play.to, new Queen(piece.color));
     } else {
       newBoard.setBox(play.to, piece);

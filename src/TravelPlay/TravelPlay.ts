@@ -25,7 +25,7 @@ class TravelPlay implements Utils {
     return { from: this.from.toStr(), to: this.to.toStr() };
   }
 
-  shouldTransformInQueen(): boolean {
+  canTransformInQueen(): boolean {
     return this.to.getY() === INDEX_MAX || this.to.getY() === INDEX_MIN;
   }
 
