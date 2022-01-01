@@ -1,4 +1,5 @@
 import { cloneDeep } from 'lodash';
+import { methodTest } from '../../test/utils';
 import Board from '../Board/Board';
 import {
   BoardState,
@@ -7,7 +8,6 @@ import {
   TWO_PLAY_BOARD,
 } from '../Board/BoardState';
 import EatenPlay from '../EatenPlay/EatenPlay';
-import EmptyBox from '../EmptyBox/EmptyBox';
 import {
   A1,
   A5,
@@ -32,7 +32,6 @@ import {
   J4,
   J6,
 } from '../Position/Coordinate/coordinates';
-import { methodTest } from '../../test/utils';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import { ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
 import { BLACK, WHITE } from '../utils/type';
@@ -106,8 +105,8 @@ methodTest(startParty.playTurn, () => {
   const onePlayParty = new Party(CLASSIC_BOARD);
 
   const onePlayBoardState: BoardState = cloneDeep(CLASSIC_BOARD);
-  onePlayBoardState[4][0] = onePlayBoardState[3][1];
-  onePlayBoardState[3][1] = new EmptyBox();
+  onePlayBoardState.A5 = onePlayBoardState.B4;
+  delete onePlayBoardState.B4;
   const onePlayBoard = new Board(onePlayBoardState);
 
   onePlayParty.playTurn(playOne);

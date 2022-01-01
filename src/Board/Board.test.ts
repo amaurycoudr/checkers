@@ -34,8 +34,8 @@ import { forBoard } from '../utils/fn';
 import { BLACK, MoveStr, WHITE } from '../utils/type';
 import Board from './Board';
 import {
-  a1PawnBoard,
   CLASSIC_BOARD,
+  CLASSIC_BOARD_ARRAY,
   EAT_BOARD,
   EMPTY_BOARD,
   ONE_WHITE_PAWN_BOARD,
@@ -53,7 +53,9 @@ const eatBoard = new Board(EAT_BOARD);
 methodTest(emptyBoard.getBox, () => {
   it('should be equal boardState[y][x] for Position(x,y)', () => {
     forBoard((position, x, y) => {
-      expect(startBoard.getBox(position)).toStrictEqual(CLASSIC_BOARD[y][x]);
+      expect(startBoard.getBox(position)).toStrictEqual(
+        CLASSIC_BOARD_ARRAY[y][x],
+      );
     });
   });
   it('should throw an error if out of bound', () => {
@@ -116,14 +118,14 @@ methodTest(startBoard.getAroundSituation, () => {
       position: A1,
       moves: ['+1.+1'],
       expected: {
-        '+1.+1': { type: CLASSIC_BOARD[1][1].type, color: 'white' },
+        '+1.+1': { type: CLASSIC_BOARD_ARRAY[1][1].type, color: 'white' },
       },
     },
     {
       position: A1,
       moves: ['-1.+1', '+1.+1'],
       expected: {
-        '+1.+1': { type: CLASSIC_BOARD[1][1].type, color: 'white' },
+        '+1.+1': { type: CLASSIC_BOARD_ARRAY[1][1].type, color: 'white' },
       },
     },
     {
@@ -140,16 +142,16 @@ methodTest(startBoard.getAroundSituation, () => {
       position: B2,
       moves: ['-1.-1'],
       expected: {
-        '-1.-1': { type: CLASSIC_BOARD[0][0].type, color: 'white' },
+        '-1.-1': { type: CLASSIC_BOARD_ARRAY[0][0].type, color: 'white' },
       },
     },
     {
       position: B2,
       moves: ['+1.+1', '-1.+1', '+1.-1'],
       expected: {
-        '+1.+1': { type: CLASSIC_BOARD[2][2].type, color: 'white' },
-        '-1.+1': { type: CLASSIC_BOARD[2][0].type, color: 'white' },
-        '+1.-1': { type: CLASSIC_BOARD[0][2].type, color: 'white' },
+        '+1.+1': { type: CLASSIC_BOARD_ARRAY[2][2].type, color: 'white' },
+        '-1.+1': { type: CLASSIC_BOARD_ARRAY[2][0].type, color: 'white' },
+        '+1.-1': { type: CLASSIC_BOARD_ARRAY[0][2].type, color: 'white' },
       },
     },
   ];
@@ -225,7 +227,7 @@ methodTest(eatBoard.getPieceEatenPlays, () => {
 });
 
 methodTest(emptyBoard.getPlayerPieces, () => {
-  const a1WhitePawnBoard = new Board(a1PawnBoard(WHITE));
+  const a1WhitePawnBoard = new Board(ONE_WHITE_PAWN_BOARD);
   it('should return {} for emptyBoard', () => {
     expect(emptyBoard.getPlayerPieces(WHITE)).toStrictEqual({});
   });
@@ -288,6 +290,7 @@ methodTest(emptyBoard.getPieceTravelPlays, () => {
 methodTest(eatBoard.getNewBoardFromPlay, () => {
   it('should return a board where FROM is a Box and TO is Equal to FROM previous value', () => {
     const play = new TravelPlay(A1, B2);
+
     const newBoard = onePawnBoard.getNewBoardFromPlay(play);
     const box = new EmptyBox();
 

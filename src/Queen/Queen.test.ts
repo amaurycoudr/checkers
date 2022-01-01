@@ -1,10 +1,9 @@
+import { methodTestMap } from '../../test/utils';
 import EatenPlay from '../EatenPlay/EatenPlay';
-import { box } from '../EmptyBox/EmptyBox';
 import { pawnBlack } from '../Piece/Pawn/pawns';
 import PieceSituation from '../PieceSituation/PieceSituation';
 import Coordinate from '../Position/Coordinate/Coordinate';
 import { A1, A10, J1, J10 } from '../Position/Coordinate/coordinates';
-import { methodTestMap } from '../../test/utils';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import { WHITE } from '../utils/type';
 import Queen from './Queen';
@@ -33,11 +32,11 @@ methodTestMap<DataTravelPlay>(
       position: A1,
       queen: new Queen(WHITE),
       situation: new PieceSituation({
-        '+1.+1': box,
-        '+2.+2': box,
-        '+3.+3': box,
-        '+4.+4': box,
-        '+5.+5': box,
+        '+1.+1': { type: 'Box' },
+        '+2.+2': { type: 'Box' },
+        '+3.+3': { type: 'Box' },
+        '+4.+4': { type: 'Box' },
+        '+5.+5': { type: 'Box' },
       }),
       plays: [
         TravelPlay.fromMove(A1, '+1.+1'),
@@ -51,11 +50,11 @@ methodTestMap<DataTravelPlay>(
       position: A10,
       queen: new Queen(WHITE),
       situation: new PieceSituation({
-        '+1.-1': box,
-        '+2.-2': box,
-        '+3.-3': box,
-        '+4.-4': box,
-        '+5.-5': box,
+        '+1.-1': { type: 'Box' },
+        '+2.-2': { type: 'Box' },
+        '+3.-3': { type: 'Box' },
+        '+4.-4': { type: 'Box' },
+        '+5.-5': { type: 'Box' },
       }),
       plays: [
         TravelPlay.fromMove(A10, '+1.-1'),
@@ -69,11 +68,11 @@ methodTestMap<DataTravelPlay>(
       position: J10,
       queen: new Queen(WHITE),
       situation: new PieceSituation({
-        '-1.-1': box,
-        '-2.-2': box,
-        '-3.-3': box,
-        '-4.-4': box,
-        '-5.-5': box,
+        '-1.-1': { type: 'Box' },
+        '-2.-2': { type: 'Box' },
+        '-3.-3': { type: 'Box' },
+        '-4.-4': { type: 'Box' },
+        '-5.-5': { type: 'Box' },
       }),
       plays: [
         TravelPlay.fromMove(J10, '-1.-1'),
@@ -87,11 +86,11 @@ methodTestMap<DataTravelPlay>(
       position: J1,
       queen: new Queen(WHITE),
       situation: new PieceSituation({
-        '-1.+1': box,
-        '-2.+2': box,
-        '-3.+3': box,
-        '-4.+4': box,
-        '-5.+5': box,
+        '-1.+1': { type: 'Box' },
+        '-2.+2': { type: 'Box' },
+        '-3.+3': { type: 'Box' },
+        '-4.+4': { type: 'Box' },
+        '-5.+5': { type: 'Box' },
       }),
       plays: [
         TravelPlay.fromMove(J1, '-1.+1'),
@@ -118,11 +117,11 @@ methodTestMap<DataTravelPlay>(
       position: A1,
       queen: new Queen(WHITE),
       situation: new PieceSituation({
-        '+1.+1': box,
-        '+2.+2': box,
-        '+3.+3': box,
+        '+1.+1': { type: 'Box' },
+        '+2.+2': { type: 'Box' },
+        '+3.+3': { type: 'Box' },
         '+4.+4': pawnBlack,
-        '+5.+5': box,
+        '+5.+5': { type: 'Box' },
       }),
       plays: [EatenPlay.eatenPlayFromMove(A1, '+5.+5', '+4.+4')],
     },
@@ -131,10 +130,10 @@ methodTestMap<DataTravelPlay>(
       queen: new Queen(WHITE),
       situation: new PieceSituation({
         '+1.-1': pawnBlack,
-        '+2.-2': box,
-        '+3.-3': box,
-        '+4.-4': box,
-        '+5.-5': box,
+        '+2.-2': { type: 'Box' },
+        '+3.-3': { type: 'Box' },
+        '+4.-4': { type: 'Box' },
+        '+5.-5': { type: 'Box' },
       }),
       plays: [EatenPlay.eatenPlayFromMove(A10, '+2.-2', '+1.-1')],
     },
@@ -142,10 +141,10 @@ methodTestMap<DataTravelPlay>(
       position: J10,
       queen: new Queen(WHITE),
       situation: new PieceSituation({
-        '-1.-1': box,
-        '-2.-2': box,
-        '-3.-3': box,
-        '-4.-4': box,
+        '-1.-1': { type: 'Box' },
+        '-2.-2': { type: 'Box' },
+        '-3.-3': { type: 'Box' },
+        '-4.-4': { type: 'Box' },
         '-5.-5': pawnBlack,
       }),
       plays: [],
@@ -154,11 +153,11 @@ methodTestMap<DataTravelPlay>(
       position: J1,
       queen: new Queen(WHITE),
       situation: new PieceSituation({
-        '-1.+1': box,
-        '-2.+2': box,
+        '-1.+1': { type: 'Box' },
+        '-2.+2': { type: 'Box' },
         '-3.+3': pawnBlack,
-        '-4.+4': box,
-        '-5.+5': box,
+        '-4.+4': { type: 'Box' },
+        '-5.+5': { type: 'Box' },
       }),
       plays: [EatenPlay.eatenPlayFromMove(J1, '-4.+4', '-3.+3')],
     },

@@ -1,5 +1,4 @@
 import { Utils } from '../genericInterface';
-import { INDEX_MAX, INDEX_MIN } from '../utils/board';
 import { MoveCoordinate, MoveStr } from '../utils/type';
 
 class Position implements Utils {
@@ -12,12 +11,15 @@ class Position implements Utils {
     this.y = y;
   }
 
-  isInBoard() {
-    return Position.isCoordinateInBoard(this.x) && Position.isCoordinateInBoard(this.y);
+  isInBoard(sizeBoard: number) {
+    return (
+      Position.isCoordinateInBoard(this.x, sizeBoard) &&
+      Position.isCoordinateInBoard(this.y, sizeBoard)
+    );
   }
 
-  static isCoordinateInBoard(n: number) {
-    return n <= INDEX_MAX && n >= INDEX_MIN;
+  static isCoordinateInBoard(n: number, sizeBoard: number) {
+    return n <= sizeBoard && n >= 0;
   }
 
   toStr() {
@@ -37,8 +39,12 @@ class Position implements Utils {
   }
 
   static fromMove(moveDescription: MoveStr): Position {
-    const x = this.getXorYFromMoveCoordinate(moveDescription.slice(0, 2) as MoveCoordinate);
-    const y = this.getXorYFromMoveCoordinate(moveDescription.slice(3, 5) as MoveCoordinate);
+    const x = this.getXorYFromMoveCoordinate(
+      moveDescription.slice(0, 2) as MoveCoordinate,
+    );
+    const y = this.getXorYFromMoveCoordinate(
+      moveDescription.slice(3, 5) as MoveCoordinate,
+    );
 
     return new Position(x, y);
   }

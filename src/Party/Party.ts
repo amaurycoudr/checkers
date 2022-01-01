@@ -10,10 +10,13 @@ import { BLACK, Color, WHITE } from '../utils/type';
 
 export type PartyOptions = {
   firstPlayer: Color;
+  boardSize: number;
   shouldCatchMaximumPieces: boolean;
 };
+
 export const defaultOptions: PartyOptions = {
   firstPlayer: WHITE,
+  boardSize: 10,
   shouldCatchMaximumPieces: true,
 };
 class Party {
@@ -29,7 +32,7 @@ class Party {
   ) {
     const completeOptions = { ...defaultOptions, ...options };
 
-    this.currentBoard = new Board(initBoard);
+    this.currentBoard = new Board(initBoard, completeOptions.boardSize);
     this.playerTurn = completeOptions.firstPlayer;
     this.setPlaysPossible();
   }

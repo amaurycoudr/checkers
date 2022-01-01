@@ -1,4 +1,5 @@
 import { methodTest, methodTestForMove, methodTestMap } from '../../test/utils';
+import { BOARD_SIZE_DEFAULT } from '../utils/board';
 import { MoveNumber, MoveStr } from '../utils/type';
 import { A1, A10, B3, J1, J10 } from './Coordinate/coordinates';
 import Position from './Position';
@@ -22,9 +23,12 @@ methodTestMap<InBoardData>(
     { position: new Position(1, -10), isInBoardShouldReturn: false },
     { position: new Position(-10, 1), isInBoardShouldReturn: false },
   ],
-  (data) => `should return ${data.isInBoardShouldReturn} for ${data.position.toStr()}`,
+  (data) =>
+    `should return ${data.isInBoardShouldReturn} for ${data.position.toStr()}`,
   (data) => {
-    expect(data.position.isInBoard()).toBe(data.isInBoardShouldReturn);
+    expect(data.position.isInBoard(BOARD_SIZE_DEFAULT)).toBe(
+      data.isInBoardShouldReturn,
+    );
   },
 );
 

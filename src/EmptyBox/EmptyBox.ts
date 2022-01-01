@@ -1,9 +1,9 @@
 import { isEqual } from 'lodash';
 import { Utils } from '../genericInterface';
-import { BOX_TYPE, ContentType } from '../utils/board';
+import { EMPTY_BOX_TYPE, ContentType } from '../utils/board';
 
 class EmptyBox implements Utils {
-  type: ContentType = BOX_TYPE;
+  type: ContentType = EMPTY_BOX_TYPE;
 
   toStr() {
     return this.type;

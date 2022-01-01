@@ -1,9 +1,12 @@
 import { map } from 'lodash';
-import { ContentType } from '../utils/board';
+import { EMPTY_BOX_TYPE, PieceType } from '../utils/board';
 import { Color, MoveStr } from '../utils/type';
 
+type PieceSituationContent =
+  | { type: typeof EMPTY_BOX_TYPE }
+  | { type: PieceType; color: Color };
 export type PieceSituationType = {
-  [key in MoveStr]?: { type: ContentType; color?: Color };
+  [key in MoveStr]?: PieceSituationContent;
 };
 class PieceSituation {
   private situation: PieceSituationType;
@@ -17,13 +20,20 @@ class PieceSituation {
   }
 
   toStr(): string {
-    return `{${map(
-      this.situation,
-      (BoxContent, move) =>
-        ` (${move}) : ${BoxContent?.type}${
-          BoxContent?.color ? ` ${BoxContent?.color}` : ''
-        } `,
-    )}}`;
+    const boxStr = (
+      boxContent: PieceSituationContent | undefined,
+      move: MoveStr,
+    ) => {
+      if (!boxContent) {
+        return '';
+      }
+      if (boxContent.type === 'Box') {
+        return ` (${move}) : ${boxContent?.type} `;
+      }
+      return ` (${move}) : ${boxContent.type} ${boxContent.color} `;
+    };
+
+    return `{${map(this.situation, boxStr)}}`;
   }
 
   isEmptyBox(move: MoveStr) {
@@ -33,7 +43,7 @@ class PieceSituation {
   isOpponentPiece(move: MoveStr, color: Color) {
     const piece = this.get()[move];
 
-    if (piece && piece.color && piece.color !== color) {
+    if (piece && piece.type !== EMPTY_BOX_TYPE && piece.color !== color) {
       return true;
     }
     return false;

@@ -9,8 +9,8 @@ import PieceSituation, {
 import Coordinates from '../Position/Coordinate/Coordinate';
 import Queen from '../Queen/Queen';
 import TravelPlay from '../TravelPlay/TravelPlay';
-import { INDEX_MAX, INDEX_MIN } from '../utils/board';
-import { ERROR_NOT_PIECE } from '../utils/error';
+import { BOARD_SIZE_DEFAULT, EMPTY_BOX_TYPE, INDEX_MIN } from '../utils/board';
+import { ERROR_NOT_PIECE, ERROR_OUT_OF_BOUND } from '../utils/error';
 import {
   BoardJSON,
   Color,
@@ -25,21 +25,31 @@ export type PlayerPieces = { [key in CoordinatesStr]?: Piece };
 class Board implements Utils {
   private board: BoardState;
 
-  constructor(initBoard: BoardState) {
+  private size: number;
+
+  constructor(initBoard: BoardState, size?: number) {
     this.board = cloneDeep(initBoard);
+    this.size = size ?? BOARD_SIZE_DEFAULT;
   }
 
   getBox(position: Coordinates) {
-    return this.board[position.getY()][position.getX()];
+    if (position.isInBoard(this.size)) {
+      return this.board[position.toStr()] ?? new EmptyBox();
+    }
+    throw new Error(ERROR_OUT_OF_BOUND);
   }
 
   setBox(position: Coordinates, newValue: BoardContent) {
-    this.board[position.getY()][position.getX()] = newValue;
+    if (newValue instanceof Piece) {
+      this.board[position.toStr()] = newValue;
+    } else {
+      delete this.board[position.toStr()];
+    }
   }
 
   getJSON(): BoardJSON {
     const JSON: BoardJSON = {};
-    Board.forBoardState((coordinate: Coordinates) => {
+    this.forBoardState((coordinate: Coordinates) => {
       const coordinateStr = coordinate.toStr();
       const json = this.getPositionJson(coordinate);
       if (json) {
@@ -49,9 +59,9 @@ class Board implements Utils {
     return JSON;
   }
 
-  private static forBoardState(fn: (p: Coordinates) => void) {
-    for (let y = INDEX_MIN; y <= INDEX_MAX; y += 1) {
-      for (let x = INDEX_MIN; x <= INDEX_MAX; x += 1) {
+  private forBoardState(fn: (p: Coordinates) => void) {
+    for (let y = INDEX_MIN; y < this.size; y += 1) {
+      for (let x = INDEX_MIN; x < this.size; x += 1) {
         fn(new Coordinates(x, y));
       }
     }
@@ -77,24 +87,27 @@ class Board implements Utils {
     coordinate: Coordinates,
     moves: PieceMoves,
   ): PieceSituation {
-    const situation = moves.reduce((prev, curr): PieceSituationType => {
-      try {
-        const arrivalPosition = coordinate.getArrivalCoordinate(curr);
-        const box = this.getBox(arrivalPosition);
-        if (box instanceof Piece) {
-          return { ...prev, [curr]: { type: box.type, color: box.color } };
+    const situation: PieceSituationType = moves.reduce(
+      (prev, curr): PieceSituationType => {
+        try {
+          const arrivalPosition = coordinate.getArrivalCoordinate(curr);
+          const box = this.getBox(arrivalPosition);
+          if (box instanceof Piece) {
+            return { ...prev, [curr]: { type: box.type, color: box.color } };
+          }
+          return { ...prev, [curr]: { type: EMPTY_BOX_TYPE } };
+        } catch (e) {
+          return prev;
         }
-        return { ...prev, [curr]: { type: box.type } };
-      } catch (e) {
-        return prev;
-      }
-    }, {});
+      },
+      {},
+    );
     return new PieceSituation(situation);
   }
 
   getPlayerPieces(color: Color): PlayerPieces {
     const result: PlayerPieces = {};
-    Board.forBoardState((position) => {
+    this.forBoardState((position) => {
       const piece = this.getBox(position);
       if (piece instanceof Piece && !piece.isOpponent(color)) {
         result[position.get()] = piece;
@@ -159,6 +172,7 @@ class Board implements Utils {
   getNewBoardFromPlay(play: TravelPlay | EatenPlay) {
     const newBoardState = cloneDeep(this.board);
     const newBoard = new Board(newBoardState);
+
     const piece = newBoard.getPiece(play.from);
     if (play.shouldTransformInQueen()) {
       newBoard.setBox(play.to, new Queen(piece.color));
