@@ -5,6 +5,8 @@ import { Color } from '../utils/type';
 class PlaysPossible {
   board: Board;
 
+  playsLength = 1;
+
   playerTurn: Color;
 
   constructor(board: Board, playerTurn: Color) {

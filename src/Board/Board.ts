@@ -39,11 +39,11 @@ class Board implements Utils {
 
   getJSON(): BoardJSON {
     const JSON: BoardJSON = {};
-    Board.forBoardState((position: Coordinates) => {
-      const coordinate = position.get();
-      const json = this.getPositionJson(position);
+    Board.forBoardState((coordinate: Coordinates) => {
+      const coordinateStr = coordinate.toStr();
+      const json = this.getPositionJson(coordinate);
       if (json) {
-        JSON[coordinate] = json;
+        JSON[coordinateStr] = json;
       }
     });
     return JSON;
@@ -57,26 +57,29 @@ class Board implements Utils {
     }
   }
 
-  private getPositionJson(position: Coordinates): PieceJSON | undefined {
+  private getPositionJson(coordinate: Coordinates): PieceJSON | undefined {
     try {
-      return this.getPiece(position).getJSON();
+      return this.getPiece(coordinate).getJSON();
     } catch (error) {
       return undefined;
     }
   }
 
-  private getPiece(position: Coordinates): Piece {
-    const box = this.getBox(position);
+  private getPiece(coordinate: Coordinates): Piece {
+    const box = this.getBox(coordinate);
     if (box instanceof Piece) {
       return box;
     }
     throw new Error(ERROR_NOT_PIECE);
   }
 
-  getAroundSituation(position: Coordinates, moves: PieceMoves): PieceSituation {
+  getAroundSituation(
+    coordinate: Coordinates,
+    moves: PieceMoves,
+  ): PieceSituation {
     const situation = moves.reduce((prev, curr): PieceSituationType => {
       try {
-        const arrivalPosition = position.getArrivalCoordinate(curr);
+        const arrivalPosition = coordinate.getArrivalCoordinate(curr);
         const box = this.getBox(arrivalPosition);
         if (box instanceof Piece) {
           return { ...prev, [curr]: { type: box.type, color: box.color } };

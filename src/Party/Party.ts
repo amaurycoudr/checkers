@@ -8,23 +8,34 @@ import TravelPlay from '../TravelPlay/TravelPlay';
 import { ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
 import { BLACK, Color, WHITE } from '../utils/type';
 
-export type PartyOptions = { firstPlayer: Color };
-export const defaultOptions: PartyOptions = { firstPlayer: WHITE };
+export type PartyOptions = {
+  firstPlayer: Color;
+  shouldCatchMaximumPieces: boolean;
+};
+export const defaultOptions: PartyOptions = {
+  firstPlayer: WHITE,
+  shouldCatchMaximumPieces: true,
+};
 class Party {
-  private turns: Board[];
+  private currentBoard: Board;
 
   private playerTurn: Color;
 
-  private playsPossible: TravelPlay[][] = [];
+  private playsPossible: TravelPlay[] = [];
 
-  constructor(initBoard: BoardState, options: PartyOptions = defaultOptions) {
-    this.turns = [new Board(initBoard)];
-    this.playerTurn = options.firstPlayer;
+  constructor(
+    initBoard: BoardState,
+    options: Partial<PartyOptions> = defaultOptions,
+  ) {
+    const completeOptions = { ...defaultOptions, ...options };
+
+    this.currentBoard = new Board(initBoard);
+    this.playerTurn = completeOptions.firstPlayer;
     this.setPlaysPossible();
   }
 
   getCurrentBoard(): Board {
-    return this.turns[this.turns.length - 1];
+    return this.currentBoard;
   }
 
   getCurrentPlayer(): Color {
@@ -32,19 +43,17 @@ class Party {
   }
 
   getCurrentPlays(): TravelPlay[] {
-    return this.playsPossible[this.playsPossible.length - 1];
+    return this.playsPossible;
   }
 
   private setPlaysPossible(plays?: TravelPlay[]) {
     if (plays) {
-      this.playsPossible.push(plays);
+      this.playsPossible = plays;
     } else {
-      this.playsPossible.push(
-        new PlaysPossible(
-          this.getCurrentBoard(),
-          this.playerTurn,
-        ).getPlayerPlays(),
-      );
+      this.playsPossible = new PlaysPossible(
+        this.getCurrentBoard(),
+        this.playerTurn,
+      ).getPlayerPlays();
     }
   }
 
@@ -72,7 +81,7 @@ class Party {
   }
 
   private makePlay(play: TravelPlay) {
-    this.turns.push(this.getCurrentBoard().getNewBoardFromPlay(play));
+    this.currentBoard = this.getCurrentBoard().getNewBoardFromPlay(play);
   }
 
   private canCurrentPlayerPlayAgain(play: TravelPlay) {

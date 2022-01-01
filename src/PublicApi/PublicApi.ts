@@ -12,7 +12,7 @@ export type PartyState = {
 class PublicApi {
   private party: Party;
 
-  constructor(options?: PartyOptions) {
+  constructor(options?: Partial<PartyOptions>) {
     this.party = new Party(CLASSIC_BOARD, options);
   }
 
