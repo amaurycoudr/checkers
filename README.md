@@ -20,13 +20,19 @@ const party = new CheckersParty(options);
 
 To specify the rules of your party you can pass `options`.
 
-#### options
+# party options
 
-- **`firstPlayer :`** `"white"|"black" (default "white")` the first player to play.
-- **`boardSize :`** `10 | 8 (default 10)` board size.
-- **`shouldCatchPiecesMaximum :`** `boolean (default true)` must capture the maximum possible number of pieces.
+- **`firstPlayer : "white"|"black"`** ` ()`
+  - The first player to play.
+  - `default = "white"`
+- **`boardSize : 10 | 8 `**
+  - The Board size.
+  - `default = 10`
+- **`shouldCatchPiecesMaximum : boolean`**
+  - decides if player must capture the maximum possible number of pieces
+  - `default = true`
 
-## party.getState()
+# party.getState()
 
 To access the state of the party you can use the method `getState()`
 this returns an object of this format :
@@ -55,7 +61,7 @@ this returns an object of this format :
 
 > :information_source: This is the result of `party.getState()` at the first turn
 
-## party.play(move: Movement)
+# party.play(move: Movement)
 
 Take in argument the move you want to play like `{ "from": "B4", "to": "A5" }`.
 Return the state of the party (the new result for `party.getState()`).
