@@ -11,7 +11,7 @@ import { BLACK, Color, WHITE } from '../utils/type';
 
 export type PartyOptions = {
   firstPlayer: Color;
-  boardSize: number;
+  boardSize: 10 | 8;
   shouldCatchPiecesMaximum: boolean;
 };
 
