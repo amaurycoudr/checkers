@@ -9,8 +9,6 @@ import { Color } from '../utils/type';
 class PlaysPossible {
   private board: Board;
 
-  private playsLength = 1;
-
   private playerTurn: Color;
 
   shouldCatchPiecesMaximum: boolean;

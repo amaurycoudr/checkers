@@ -24,9 +24,9 @@ export const defaultOptions: PartyOptions = {
   shouldPromoteWhenMoveEnding: true,
 };
 class Party {
-  private currentBoard: Board;
-
   private playsPossible: PlaysPossible;
+
+  private winner: Color | undefined = undefined;
 
   constructor(
     initBoard: BoardState,
@@ -34,16 +34,15 @@ class Party {
   ) {
     const completeOptions = { ...defaultOptions, ...options };
 
-    this.currentBoard = new Board(initBoard, completeOptions.boardSize);
     this.playsPossible = new PlaysPossible(
-      this.getCurrentBoard(),
+      new Board(initBoard, completeOptions.boardSize),
       completeOptions.firstPlayer,
       completeOptions.shouldCatchPiecesMaximum,
     );
   }
 
   getCurrentBoard(): Board {
-    return this.currentBoard;
+    return this.playsPossible.getBoard();
   }
 
   getCurrentPlayer(): Color {
@@ -54,7 +53,11 @@ class Party {
     return this.playsPossible.getPlayerPlays();
   }
 
-  private setPlaysPossible(to?: Coordinate) {
+  getWinner() {
+    return this.winner;
+  }
+
+  private setPlaysPossible(board: Board, to?: Coordinate) {
     const shouldUpdatePlayer = !to;
 
     const player = shouldUpdatePlayer
@@ -62,7 +65,7 @@ class Party {
       : this.playsPossible.getPlayerTurn();
 
     this.playsPossible = new PlaysPossible(
-      this.currentBoard,
+      board,
       player,
       this.playsPossible.shouldCatchPiecesMaximum,
       to,
@@ -73,21 +76,29 @@ class Party {
     return this.playsPossible.getPlayerTurn() === BLACK ? WHITE : BLACK;
   }
 
+  private hasCurrentPlayerLost() {
+    return this.getCurrentBoard().getPlayerPieces(this.getOtherPlayer());
+  }
+
   playTurn(play: TravelPlay) {
     const { realPlay, playFinish } =
       this.playsPossible.findPlayInPossible(play);
 
-    this.updateCurrentBoard(realPlay);
+    const newBoard = this.getNewBoard(realPlay);
 
     if (playFinish) {
-      this.setPlaysPossible();
+      this.setPlaysPossible(newBoard);
     } else {
-      this.setPlaysPossible(realPlay.to);
+      this.setPlaysPossible(newBoard, realPlay.to);
+    }
+
+    if (this.hasCurrentPlayerLost()) {
+      this.winner = this.getOtherPlayer();
     }
   }
 
-  private updateCurrentBoard(play: TravelPlay) {
-    this.currentBoard = this.getCurrentBoard().getNewBoardFromPlay(play);
+  private getNewBoard(play: TravelPlay) {
+    return this.getCurrentBoard().getNewBoardFromPlay(play);
   }
 }
 export default Party;

@@ -8,12 +8,15 @@ import {
   TWO_PLAY_BOARD,
 } from '../Board/BoardState';
 import EatenPlay from '../EatenPlay/EatenPlay';
+import { pawnBlack, pawnWhite } from '../Piece/Pawn/pawns';
 import {
   A1,
   A5,
   A7,
+  A8,
   B4,
   B6,
+  C10,
   C3,
   C5,
   C7,
@@ -118,9 +121,9 @@ methodTest(startParty.playTurn, () => {
     );
   });
 
-  const playTwo = new TravelPlay(A7, B6);
-  const twoPlayParty = new Party(CLASSIC_BOARD);
   it('should return white after two plays', () => {
+    const playTwo = new TravelPlay(A7, B6);
+    const twoPlayParty = new Party(CLASSIC_BOARD);
     twoPlayParty.playTurn(playOne);
     twoPlayParty.playTurn(playTwo);
     expect(twoPlayParty.getCurrentPlayer()).toBe(WHITE);
@@ -137,5 +140,16 @@ methodTest(startParty.playTurn, () => {
     expect(twoEatenPlayParty.getCurrentPlays()).toIncludeSameMembers(
       eatenPlays,
     );
+  });
+});
+
+methodTest(startParty.getWinner, () => {
+  const partyWin = new Party({ A8: pawnWhite, B9: pawnBlack });
+  it('should return undefined before the play', () => {
+    expect(partyWin.getWinner()).toBeUndefined();
+  });
+  it('should return white after the play', () => {
+    partyWin.playTurn(new TravelPlay(A8, C10));
+    expect(partyWin.getWinner()).toBe(WHITE);
   });
 });
