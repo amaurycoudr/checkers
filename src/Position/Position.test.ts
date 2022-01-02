@@ -65,14 +65,6 @@ const testForMove =
     test(positionMM, moveMM);
   };
 
-/* methodTestForMove(position.getArrivalCoordinates, (xMove, yMove) => {
-  testForMove((positionArrived: Position, move: MoveStr) => {
-    it(`should return ${positionArrived.toStr()} for MOVE: ${move} (from A1) `, () => {
-      expect(position.getArrivalCoordinates(move)).toStrictEqual(positionArrived);
-    });
-  })(xMove as MoveNumber, yMove as MoveNumber);
-}); */
-
 methodTestForMove(Position.fromMove, (xMove, yMove) => {
   testForMove((positionArrived: Position, move: MoveStr) => {
     it(`should return ${positionArrived.toStr()} for ${move} `, () => {
@@ -80,27 +72,3 @@ methodTestForMove(Position.fromMove, (xMove, yMove) => {
     });
   })(xMove as MoveNumber, yMove as MoveNumber);
 });
-
-/*
-methodTestFordBoard(Position.fromCoordinate, (position, x, y) => {
-  const coordinates: CoordinatesStr = `${coordinatesX[x]}${coordinatesY[y]}`;
-  it(`should return ${position.toStr()} for ${coordinates} `, () => {
-    expect(Position.fromCoordinate(coordinates).equals(position)).toBe(true);
-  });
-}); */
-
-/* methodTestFordBoard(position.getCoordinate, (position, x, y) => {
-  const coordinates: CoordinatesStr = `${coordinatesX[x]}${coordinatesY[y]}`;
-  it(`should return ${coordinates} for ${position.toStr()} `, () => {
-    expect(position.getCoordinate()).toBe(coordinates);
-  });
-});
-
-methodTest(position.getCoordinate, () => {
-  it(`should throw en error if the position is out of bond`, () => {
-    expect(() => new Position(-1, 0).getCoordinate()).toThrow(
-      ERROR_COORDINATE_OUT
-    );
-  });
-});
- */

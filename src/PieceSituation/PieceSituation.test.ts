@@ -11,6 +11,9 @@ methodTest(pieceSituation.toStr, () => {
       '{ (+1.+1) : Box , (+2.+1) : Pawn white }',
     );
   });
+  it('should return "{}" for {"+1:+1":undefined} ', () => {
+    expect(new PieceSituation({ '+1.+1': undefined }).toStr()).toBe('{}');
+  });
 });
 
 methodTest(pieceSituation.isEmptyBox, () => {

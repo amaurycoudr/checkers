@@ -29,7 +29,11 @@ import {
 } from '../Position/Coordinate/coordinates';
 import Queen from '../Queen/Queen';
 import TravelPlay from '../TravelPlay/TravelPlay';
-import { ERROR_COORDINATE_OUT } from '../utils/error';
+import {
+  ERROR_COORDINATE_OUT,
+  ERROR_NOT_PIECE,
+  ERROR_OUT_OF_BOUND,
+} from '../utils/error';
 import { forBoard } from '../utils/fn';
 import { BLACK, MoveStr, WHITE } from '../utils/type';
 import Board from './Board';
@@ -61,9 +65,12 @@ methodTest(emptyBoard.getBox, () => {
     });
   });
   it('should throw an error if out of bound', () => {
-    expect(() => emptyBoard.getBox(new Coordinates(-1, -1))).toThrowError(
-      ERROR_COORDINATE_OUT,
-    );
+    expect(() => {
+      emptyBoard.getBox(new Coordinates(-1, -1));
+    }).toThrowError(ERROR_COORDINATE_OUT);
+    expect(() => {
+      new Board({}, 3).getBox(new Coordinates(8, 0));
+    }).toThrowError(ERROR_OUT_OF_BOUND);
   });
 });
 
@@ -315,8 +322,15 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
   const queenBlackBoard = previousBlackQueenBoard.getNewBoardFromPlay(
     new TravelPlay(A2, B1),
   );
-  it('should return a board white a queen', () => {
+  it('should return a board with a queen', () => {
     expect(queenBlackBoard.getBox(B1) instanceof Queen).toBeTrue();
     expect(queenWhiteBoard.getBox(B10) instanceof Queen).toBeTrue();
+  });
+
+  it('should throw an error if play invalid', () => {
+    expect(() => {
+      const wrongPlay = new TravelPlay(B2, B2);
+      onePawnBoard.getNewBoardFromPlay(wrongPlay);
+    }).toThrowError(ERROR_NOT_PIECE);
   });
 });
