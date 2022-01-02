@@ -8,7 +8,7 @@
       "esnext"
     ],
     "declaration": true,
-    "declarationDir": "./type",
+    "declarationDir": ".",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
