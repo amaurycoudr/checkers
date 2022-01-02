@@ -70,7 +70,7 @@ class Party {
       throw new Error(ERROR_PLAY_NOT_POSSIBLE);
     }
 
-    this.makePlay(realPlay);
+    this.updateCurrentBoard(realPlay);
 
     if (!this.canCurrentPlayerPlayAgain(realPlay)) {
       this.updateCurrentPlayer();
@@ -86,7 +86,7 @@ class Party {
     );
   }
 
-  private makePlay(play: TravelPlay) {
+  private updateCurrentBoard(play: TravelPlay) {
     this.currentBoard = this.getCurrentBoard().getNewBoardFromPlay(play);
   }
 

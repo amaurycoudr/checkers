@@ -16,7 +16,7 @@ import { A1, B2, B3, C3 } from './coordinates';
 methodTestFordBoard(Coordinate.create, (coordinate, x, y) => {
   const coordinates: CoordinatesStr = `${coordinatesX[x]}${coordinatesY[y]}`;
   it(`should return ${coordinate.toStr()} for ${coordinates} `, () => {
-    expect(Coordinate.create(coordinates).equals(coordinate)).toBe(true);
+    expect(Coordinate.create(coordinates)).toStrictEqual(coordinate);
   });
 });
 const coordinateExample = new Coordinate(5, 5);

@@ -19,7 +19,7 @@ class PlaysPossible {
   constructor(
     board: Board,
     playerTurn: Color,
-    shouldCatchPiecesMaximum = true,
+    shouldCatchPiecesMaximum: boolean,
     secondPlayTo: Coordinate | undefined = undefined,
   ) {
     this.board = board;

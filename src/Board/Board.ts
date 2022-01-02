@@ -131,7 +131,7 @@ class Board implements Utils {
     const newBoard = new Board(newBoardState);
 
     const piece = newBoard.getPiece(play.from);
-    if (play.canTransformInQueen()) {
+    if (play.canTransformInQueen(this.size)) {
       newBoard.setBox(play.to, new Queen(piece.color));
     } else {
       newBoard.setBox(play.to, piece);

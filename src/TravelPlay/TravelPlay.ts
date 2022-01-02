@@ -1,6 +1,5 @@
 import { Utils } from '../genericInterface';
 import Coordinate from '../Position/Coordinate/Coordinate';
-import { INDEX_MAX, INDEX_MIN } from '../utils/board';
 import { MoveStr, PlayJSON } from '../utils/type';
 
 class TravelPlay implements Utils {
@@ -25,8 +24,8 @@ class TravelPlay implements Utils {
     return { from: this.from.toStr(), to: this.to.toStr() };
   }
 
-  canTransformInQueen(): boolean {
-    return this.to.getY() === INDEX_MAX || this.to.getY() === INDEX_MIN;
+  canTransformInQueen(size: number): boolean {
+    return this.to.getY() === 0 || this.to.getY() === size - 1;
   }
 
   static fromJson(json: PlayJSON): TravelPlay {

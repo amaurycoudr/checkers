@@ -314,15 +314,15 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
     expect(newBoard.getBox(C3)).toStrictEqual(eatBoard.getBox(A1));
   });
 
-  const previousWhiteQueenBoard = new Board(QUEEN_WHITE_TEST);
-  const queenWhiteBoard = previousWhiteQueenBoard.getNewBoardFromPlay(
-    new TravelPlay(A9, B10),
-  );
-  const previousBlackQueenBoard = new Board(QUEEN_BLACK_TEST);
-  const queenBlackBoard = previousBlackQueenBoard.getNewBoardFromPlay(
-    new TravelPlay(A2, B1),
-  );
   it('should return a board with a queen', () => {
+    const previousWhiteQueenBoard = new Board(QUEEN_WHITE_TEST);
+    const queenWhiteBoard = previousWhiteQueenBoard.getNewBoardFromPlay(
+      new TravelPlay(A9, B10),
+    );
+    const previousBlackQueenBoard = new Board(QUEEN_BLACK_TEST);
+    const queenBlackBoard = previousBlackQueenBoard.getNewBoardFromPlay(
+      new TravelPlay(A2, B1),
+    );
     expect(queenBlackBoard.getBox(B1) instanceof Queen).toBeTrue();
     expect(queenWhiteBoard.getBox(B10) instanceof Queen).toBeTrue();
   });
