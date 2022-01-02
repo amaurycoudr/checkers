@@ -76,6 +76,6 @@ Return the state of the party (the new result for `party.getState()`).
 1. ~~implements a notion of **options** to let user choses specific rules~~
 2. ~~implements the first play option~~
 3. ~~implements the maximum catch rule~~
-4. implements the fact that promote only when ending their move on the final rank
+4. ~~implements the fact that promote only when ending their move on the final rank~~
 5. implements the win notion
 6. implements the draw notion
