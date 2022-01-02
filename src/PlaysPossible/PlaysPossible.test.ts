@@ -90,6 +90,37 @@ methodTestMap(
         new EatenPlay(C1, E3, D2),
       ],
     },
+    {
+      playsPossible: new PlaysPossible(
+        new Board({
+          C1: pawnWhite,
+          B2: pawnBlack,
+          D2: pawnBlack,
+          B4: pawnBlack,
+        }),
+        WHITE,
+        true,
+        C1,
+      ),
+      playerPlaysExpected: [new EatenPlay(C1, A3, B2)],
+    },
+    {
+      playsPossible: new PlaysPossible(
+        new Board({
+          C1: pawnWhite,
+          B2: pawnBlack,
+          D2: pawnBlack,
+          B4: pawnBlack,
+        }),
+        WHITE,
+        false,
+        C1,
+      ),
+      playerPlaysExpected: [
+        new EatenPlay(C1, A3, B2),
+        new EatenPlay(C1, E3, D2),
+      ],
+    },
   ],
   getPlayerPlaysDescription,
   getPlayerPlaysExpect,

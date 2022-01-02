@@ -46,14 +46,14 @@ class PlaysPossible {
   }
 
   private getSecondPlays() {
-    const unfilteredPlays = this.secondPlayTo
-      ? this.board.getPieceSecondEatenPlays(
-          this.board.getBox(this.secondPlayTo) as Piece,
-          this.secondPlayTo,
-        )
-      : [];
+    const unfilteredPlays =
+      this.secondPlayTo &&
+      this.board.getPieceSecondEatenPlays(
+        this.board.getBox(this.secondPlayTo) as Piece,
+        this.secondPlayTo,
+      );
 
-    return this.handleMustEatMaximumOfPieces(unfilteredPlays);
+    return this.handleMustEatMaximumOfPieces(unfilteredPlays || []);
   }
 
   private getEatenPlays() {
