@@ -22,7 +22,7 @@ To specify the rules of your party you can pass `options`.
 
 ## party options
 
-- **`firstPlayer : "white"|"black"`**
+- **`firstPlayer : "white" | "black"`**
   - The first player to play.
   - `default = "white"`
 - **`boardSize : 10 | 8 `**

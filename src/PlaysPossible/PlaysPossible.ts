@@ -3,18 +3,19 @@ import EatenPlay from '../EatenPlay/EatenPlay';
 import Piece from '../Piece/Piece';
 import Coordinate from '../Position/Coordinate/Coordinate';
 import TravelPlay from '../TravelPlay/TravelPlay';
+import { ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
 import { Color } from '../utils/type';
 
 class PlaysPossible {
-  board: Board;
+  private board: Board;
 
-  playsLength = 1;
+  private playsLength = 1;
 
-  playerTurn: Color;
+  private playerTurn: Color;
 
   shouldCatchPiecesMaximum: boolean;
 
-  secondPlayTo?: Coordinate;
+  private secondPlayTo?: Coordinate;
 
   constructor(
     board: Board,
@@ -43,6 +44,14 @@ class PlaysPossible {
       this.playerTurn,
     );
     return travelMoves;
+  }
+
+  getPlayerTurn() {
+    return this.playerTurn;
+  }
+
+  getBoard() {
+    return this.board;
   }
 
   private getSecondPlays() {
@@ -102,6 +111,16 @@ class PlaysPossible {
             ),
           )
       : 1;
+  }
+
+  findPlayInPossible(play: TravelPlay) {
+    const realPlay = this.getPlayerPlays().find((playPossible) =>
+      playPossible.equals(play),
+    );
+    if (!realPlay) {
+      throw new Error(ERROR_PLAY_NOT_POSSIBLE);
+    }
+    return { realPlay, playFinish: this.getNumberOfEatenPiece(realPlay) === 1 };
   }
 }
 export default PlaysPossible;

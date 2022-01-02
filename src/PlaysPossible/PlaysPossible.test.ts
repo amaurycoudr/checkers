@@ -53,7 +53,9 @@ const getPlayerPlaysExpect = (data: GetPlayerPlaysData) => {
 };
 const getPlayerPlaysDescription = (data: GetPlayerPlaysData) => {
   const playsStr = `[${data.playerPlaysExpected.map((play) => play.toStr())}]`;
-  return `should return ${playsStr} for BOARD: ${data.playsPossible.board.toStr()} and shouldCatchPiecesMaximum: ${
+  return `should return ${playsStr} for BOARD: ${data.playsPossible
+    .getBoard()
+    .toStr()} and shouldCatchPiecesMaximum: ${
     data.playsPossible.shouldCatchPiecesMaximum
   }`;
 };
@@ -139,7 +141,7 @@ const getNumberOfEatenExpect = (data: GetNumberOfEatenPieceData) => {
 const getNumberOfEatenDescription = (data: GetNumberOfEatenPieceData) =>
   `should return ${
     data.numberOfPieceEaten
-  } for the play of this board ${data.playsPossible.board.toStr()}`;
+  } for the play of this board ${data.playsPossible.getBoard().toStr()}`;
 
 methodTestMap(
   eatPlays.getNumberOfEatenPiece,
