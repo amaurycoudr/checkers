@@ -1,4 +1,4 @@
-import { methodTest } from '../../test/utils';
+import { methodTest } from '../test/utils';
 import PieceSituation from './PieceSituation';
 
 const pieceSituation = new PieceSituation({

@@ -1,4 +1,4 @@
-import { methodTest, methodTestMap } from '../../test/utils';
+import { methodTest, methodTestMap } from '../test/utils';
 import Board from '../Board/Board';
 import {
   CLASSIC_BOARD,

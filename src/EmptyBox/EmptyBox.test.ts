@@ -1,5 +1,5 @@
 import { pawnBlack } from '../Piece/Pawn/pawns';
-import { methodTest } from '../../test/utils';
+import { methodTest } from '../test/utils';
 import EmptyBox from './EmptyBox';
 
 const emptyBox = new EmptyBox();

@@ -1,4 +1,4 @@
-import { methodTest, methodTestForMove, methodTestMap } from '../../test/utils';
+import { methodTest, methodTestForMove, methodTestMap } from '../test/utils';
 import { BOARD_SIZE_DEFAULT } from '../utils/board';
 import { MoveNumber, MoveStr } from '../utils/type';
 import { A1, A10, B3, J1, J10 } from './Coordinate/coordinates';

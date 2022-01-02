@@ -1,4 +1,4 @@
-import { methodTest } from '../../test/utils';
+import { methodTest } from '../test/utils';
 import { ONE_PLAY_BOARD_JSON, START_BOARD_JSON } from '../Board/BoardState';
 import {
   A5,

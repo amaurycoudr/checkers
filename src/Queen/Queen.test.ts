@@ -1,4 +1,4 @@
-import { methodTestMap } from '../../test/utils';
+import { methodTestMap } from '../test/utils';
 import EatenPlay from '../EatenPlay/EatenPlay';
 import { pawnBlack } from '../Piece/Pawn/pawns';
 import PieceSituation from '../PieceSituation/PieceSituation';
