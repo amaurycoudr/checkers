@@ -21,9 +21,16 @@ class Board implements Utils {
 
   private size: number;
 
-  constructor(initBoard: BoardState, size?: number) {
+  private shouldPromoteWhenMoveEnding: boolean;
+
+  constructor(
+    initBoard: BoardState,
+    size?: number,
+    shouldPromoteWhenMoveEnding?: boolean,
+  ) {
     this.board = cloneDeep(initBoard);
     this.size = size ?? BOARD_SIZE_DEFAULT;
+    this.shouldPromoteWhenMoveEnding = shouldPromoteWhenMoveEnding ?? true;
   }
 
   getBox(position: Coordinates) {
@@ -131,7 +138,7 @@ class Board implements Utils {
     const newBoard = new Board(newBoardState);
 
     const piece = newBoard.getPiece(play.from);
-    if (play.canTransformInQueen(this.size)) {
+    if (this.canTransformInQueen(piece, play)) {
       newBoard.setBox(play.to, new Queen(piece.color));
     } else {
       newBoard.setBox(play.to, piece);
@@ -144,6 +151,23 @@ class Board implements Utils {
     }
 
     return newBoard;
+  }
+
+  private canTransformInQueen(piece: Piece, play: TravelPlay) {
+    return (
+      play.canTransformInQueen(this.size) &&
+      (!this.canPlayAgain(piece, play) || !this.shouldPromoteWhenMoveEnding)
+    );
+  }
+
+  private canPlayAgain(piece: Piece, play: TravelPlay) {
+    const isEatPlay = play instanceof EatenPlay;
+    const canPlayAgainFromPosition = this.getPieceSecondEatenPlays(
+      piece,
+      play.to,
+    );
+
+    return isEatPlay && canPlayAgainFromPosition;
   }
 
   equals(board: Board) {

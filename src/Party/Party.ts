@@ -1,7 +1,5 @@
 import Board from '../Board/Board';
 import { BoardState } from '../Board/BoardState';
-import EatenPlay from '../EatenPlay/EatenPlay';
-import Piece from '../Piece/Piece';
 import PlaysPossible from '../PlaysPossible/PlaysPossible';
 import Coordinate from '../Position/Coordinate/Coordinate';
 import TravelPlay from '../TravelPlay/TravelPlay';
@@ -11,12 +9,14 @@ export type PartyOptions = {
   firstPlayer: Color;
   boardSize: 10 | 8;
   shouldCatchPiecesMaximum: boolean;
+  shouldPromoteWhenMoveEnding: boolean;
 };
 
 export const defaultOptions: PartyOptions = {
   firstPlayer: WHITE,
   boardSize: 10,
   shouldCatchPiecesMaximum: true,
+  shouldPromoteWhenMoveEnding: true,
 };
 class Party {
   private currentBoard: Board;
