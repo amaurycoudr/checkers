@@ -1,4 +1,4 @@
-import { methodTest, methodTestMap } from '../../../test/utils';
+import { methodTest, methodTestMap } from '../../test/utils';
 import EatenPlay from '../../EatenPlay/EatenPlay';
 import PieceSituation from '../../PieceSituation/PieceSituation';
 import { D4 } from '../../Position/Coordinate/coordinates';
