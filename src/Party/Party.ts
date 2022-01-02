@@ -6,9 +6,14 @@ import TravelPlay from '../TravelPlay/TravelPlay';
 import { BLACK, Color, WHITE } from '../utils/type';
 
 export type PartyOptions = {
+  /** **default: white**  */
   firstPlayer: Color;
+  /** **default: 10**  */
   boardSize: 10 | 8;
+  /** decides if player must capture the maximum possible number of pieces \
+   *  **default: true**  */
   shouldCatchPiecesMaximum: boolean;
+  /** **default: true**  */
   shouldPromoteWhenMoveEnding: boolean;
 };
 

@@ -4,7 +4,7 @@
 **test coverage :**
 | Statements | Branches | Functions | Lines |
 | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| ![Statements](https://img.shields.io/badge/Coverage-99.72%25-brightgreen.svg "Make me better!") | ![Branches](https://img.shields.io/badge/Coverage-98.9%25-brightgreen.svg "Make me better!") | ![Functions](https://img.shields.io/badge/Coverage-99.12%25-brightgreen.svg "Make me better!") | ![Lines](https://img.shields.io/badge/Coverage-99.72%25-brightgreen.svg "Make me better!") |
+| ![Statements](https://img.shields.io/badge/Coverage-99.72%25-brightgreen.svg 'Make me better!') | ![Branches](https://img.shields.io/badge/Coverage-98.9%25-brightgreen.svg 'Make me better!') | ![Functions](https://img.shields.io/badge/Coverage-99.12%25-brightgreen.svg 'Make me better!') | ![Lines](https://img.shields.io/badge/Coverage-99.72%25-brightgreen.svg 'Make me better!') |
 
 the purpose of this package is to offer a simple api to be able to play to the checkers
 
@@ -30,6 +30,9 @@ To specify the rules of your party you can pass `options`.
   - `default = 10`
 - **`shouldCatchPiecesMaximum : boolean`**
   - decides if player must capture the maximum possible number of pieces
+  - `default = true`
+- **`shouldPromoteWhenMoveEnding: boolean`**
+  - decides if pieces promote only when ending their move on the final rank
   - `default = true`
 
 ## party.getState()
