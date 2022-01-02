@@ -1,5 +1,5 @@
-import Position from '../src/Position/Position';
-import { forBoard, forMove } from '../src/utils/fn';
+import Position from '../Position/Position';
+import { forBoard, forMove } from '../utils/fn';
 
 export const methodTest = (
   // eslint-disable-next-line
