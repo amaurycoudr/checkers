@@ -2,7 +2,7 @@ import {
   methodTest,
   methodTestFordBoard,
   methodTestMap,
-} from '../../../test/utils';
+} from '../../test/utils';
 import { ERROR_COORDINATE_OUT } from '../../utils/error';
 import {
   CoordinatesStr,
