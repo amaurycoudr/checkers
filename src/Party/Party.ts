@@ -51,10 +51,9 @@ class Party {
 
   private setPlaysPossible(to?: Coordinate) {
     const shouldUpdatePlayer = !to;
-    const otherPLayer =
-      this.playsPossible.getPlayerTurn() === BLACK ? WHITE : BLACK;
+
     const player = shouldUpdatePlayer
-      ? otherPLayer
+      ? this.getOtherPlayer()
       : this.playsPossible.getPlayerTurn();
 
     this.playsPossible = new PlaysPossible(
@@ -63,6 +62,10 @@ class Party {
       this.playsPossible.shouldCatchPiecesMaximum,
       to,
     );
+  }
+
+  private getOtherPlayer() {
+    return this.playsPossible.getPlayerTurn() === BLACK ? WHITE : BLACK;
   }
 
   playTurn(play: TravelPlay) {
