@@ -8,7 +8,7 @@
       "esnext"
     ],
     "declaration": true,
-    "declarationDir": ".",
+    "declarationDir": "./type",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,6 +21,7 @@
     "isolatedModules": true,
     "noEmit": true,
   },
+  
  "files": ["global.d.ts"],
   "include": [
     "src"

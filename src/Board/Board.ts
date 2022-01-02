@@ -1,4 +1,9 @@
-import { cloneDeep, flatten, isEqual, map, mapValues, pickBy } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
+import flatten from 'lodash/flatten';
+import isEqual from 'lodash/isEqual';
+import map from 'lodash/map';
+import mapValues from 'lodash/mapValues';
+import pickBy from 'lodash/pickBy';
 import EatenPlay from '../EatenPlay/EatenPlay';
 import EmptyBox from '../EmptyBox/EmptyBox';
 import { Utils } from '../genericInterface';

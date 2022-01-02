@@ -1,4 +1,4 @@
-import { flatten } from 'lodash';
+import flatten from 'lodash/flatten';
 import EatenPlay from '../EatenPlay/EatenPlay';
 import Pawn from '../Piece/Pawn/Pawn';
 import PieceSituation from '../PieceSituation/PieceSituation';
