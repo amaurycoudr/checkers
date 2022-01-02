@@ -4,7 +4,7 @@
 **test coverage :**
 | Statements | Branches | Functions | Lines |
 | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| ![Statements](https://img.shields.io/badge/Coverage-99.73%25-brightgreen.svg 'Make me better!') | ![Branches](https://img.shields.io/badge/Coverage-97.84%25-brightgreen.svg 'Make me better!') | ![Functions](https://img.shields.io/badge/Coverage-99.13%25-brightgreen.svg 'Make me better!') | ![Lines](https://img.shields.io/badge/Coverage-99.72%25-brightgreen.svg 'Make me better!') |
+| ![Statements](https://img.shields.io/badge/Coverage-99.73%25-brightgreen.svg "Make me better!") | ![Branches](https://img.shields.io/badge/Coverage-97.84%25-brightgreen.svg "Make me better!") | ![Functions](https://img.shields.io/badge/Coverage-99.13%25-brightgreen.svg "Make me better!") | ![Lines](https://img.shields.io/badge/Coverage-99.72%25-brightgreen.svg "Make me better!") |
 
 the purpose of this package is to offer a simple api to be able to play to the checkers
 
@@ -71,11 +71,12 @@ this returns an object of this format :
 Take in argument the move you want to play like `{ "from": "B4", "to": "A5" }`.
 Return the state of the party (the new result for `party.getState()`).
 
-## Road map
+## Road map to 
 
 1. ~~implements a notion of **options** to let user choses specific rules~~
-2. ~~implements the first play option~~
-3. ~~implements the maximum catch rule~~
-4. ~~implements the fact that promote only when ending their move on the final rank~~
-5. ~~implements the win notion~~
-6. implements the draw notion
+1. ~~implements the first play option~~
+1. ~~implements the maximum catch rule~~
+1. ~~implements the fact that promote only when ending their move on the final rank~~
+1. ~~implements the win notion~~
+1. implements the draw notion
+1. correct queen movement
