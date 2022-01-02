@@ -1,4 +1,4 @@
-import map from 'lodash/map';
+import { map } from 'lodash';
 import { EMPTY_BOX_TYPE, PieceType } from '../utils/board';
 import { Color, MoveStr } from '../utils/type';
 

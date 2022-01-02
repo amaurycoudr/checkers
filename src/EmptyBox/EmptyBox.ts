@@ -1,4 +1,4 @@
-import isEqual from 'lodash/isEqual';
+import { isEqual } from 'lodash';
 import { Utils } from '../genericInterface';
 import { EMPTY_BOX_TYPE, ContentType } from '../utils/board';
 

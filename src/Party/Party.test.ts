@@ -1,4 +1,4 @@
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep } from 'lodash';
 import { methodTest } from '../../test/utils';
 import Board from '../Board/Board';
 import {
