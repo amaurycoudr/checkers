@@ -3,7 +3,8 @@ import { BoardState } from '../Board/BoardState';
 import EatenPlay from '../EatenPlay/EatenPlay';
 import Piece from '../Piece/Piece';
 import PlaysPossible from '../PlaysPossible/PlaysPossible';
-import Coordinates from '../Position/Coordinate/Coordinate';
+import Coordinate from '../Position/Coordinate/Coordinate';
+
 import TravelPlay from '../TravelPlay/TravelPlay';
 import { ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
 import { BLACK, Color, WHITE } from '../utils/type';
@@ -11,20 +12,20 @@ import { BLACK, Color, WHITE } from '../utils/type';
 export type PartyOptions = {
   firstPlayer: Color;
   boardSize: number;
-  shouldCatchMaximumPieces: boolean;
+  shouldCatchPiecesMaximum: boolean;
 };
 
 export const defaultOptions: PartyOptions = {
   firstPlayer: WHITE,
   boardSize: 10,
-  shouldCatchMaximumPieces: true,
+  shouldCatchPiecesMaximum: true,
 };
 class Party {
   private currentBoard: Board;
 
   private playerTurn: Color;
 
-  private playsPossible: TravelPlay[] = [];
+  private playsPossible: PlaysPossible;
 
   constructor(
     initBoard: BoardState,
@@ -34,7 +35,11 @@ class Party {
 
     this.currentBoard = new Board(initBoard, completeOptions.boardSize);
     this.playerTurn = completeOptions.firstPlayer;
-    this.setPlaysPossible();
+    this.playsPossible = new PlaysPossible(
+      this.getCurrentBoard(),
+      this.playerTurn,
+      completeOptions.shouldCatchPiecesMaximum,
+    );
   }
 
   getCurrentBoard(): Board {
@@ -46,18 +51,16 @@ class Party {
   }
 
   getCurrentPlays(): TravelPlay[] {
-    return this.playsPossible;
+    return this.playsPossible.getPlayerPlays();
   }
 
-  private setPlaysPossible(plays?: TravelPlay[]) {
-    if (plays) {
-      this.playsPossible = plays;
-    } else {
-      this.playsPossible = new PlaysPossible(
-        this.getCurrentBoard(),
-        this.playerTurn,
-      ).getPlayerPlays();
-    }
+  private setPlaysPossible(to?: Coordinate) {
+    this.playsPossible = new PlaysPossible(
+      this.currentBoard,
+      this.playerTurn,
+      this.playsPossible.shouldCatchPiecesMaximum,
+      to,
+    );
   }
 
   playTurn(play: TravelPlay) {
@@ -73,7 +76,7 @@ class Party {
       this.updateCurrentPlayer();
       this.setPlaysPossible();
     } else {
-      this.setPlaysPossible(this.getPieceSecondPlays(realPlay.to));
+      this.setPlaysPossible(realPlay.to);
     }
   }
 
@@ -94,7 +97,7 @@ class Party {
     return isEatenPlay && canEatFromNewPosition;
   }
 
-  private getPieceSecondPlays(position: Coordinates) {
+  private getPieceSecondPlays(position: Coordinate) {
     return this.getCurrentBoard().getPieceSecondEatenPlays(
       this.getCurrentBoard().getBox(position) as Piece,
       position,

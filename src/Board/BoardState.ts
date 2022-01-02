@@ -83,20 +83,9 @@ export const EAT_BOARD: BoardState = {
 
 export const TWO_PLAY_BOARD: BoardState = {
   A1: pawnWhite,
-  C1: pawnWhite,
-  E1: pawnWhite,
-  G1: pawnWhite,
-  I1: pawnWhite,
   B2: pawnBlack,
-  D2: pawnBlack,
-  F2: pawnBlack,
-  H2: pawnBlack,
-  J2: pawnBlack,
   B4: pawnBlack,
   D4: pawnBlack,
-  F4: pawnBlack,
-  H4: pawnBlack,
-  J4: pawnBlack,
 };
 
 export const QUEEN_WHITE_TEST: BoardState = {

@@ -109,8 +109,8 @@ methodTest(startParty.playTurn, () => {
   delete onePlayBoardState.B4;
   const onePlayBoard = new Board(onePlayBoardState);
 
-  onePlayParty.playTurn(playOne);
   it('should return BLACK onePlayBoard blackFirstTurnPlays at black first turn', () => {
+    onePlayParty.playTurn(playOne);
     expect(onePlayParty.getCurrentBoard()).toStrictEqual(onePlayBoard);
     expect(onePlayParty.getCurrentPlayer()).toBe(BLACK);
     expect(onePlayParty.getCurrentPlays()).toIncludeSameMembers(
@@ -120,17 +120,17 @@ methodTest(startParty.playTurn, () => {
 
   const playTwo = new TravelPlay(A7, B6);
   const twoPlayParty = new Party(CLASSIC_BOARD);
-  twoPlayParty.playTurn(playOne);
-  twoPlayParty.playTurn(playTwo);
   it('should return white after two plays', () => {
+    twoPlayParty.playTurn(playOne);
+    twoPlayParty.playTurn(playTwo);
     expect(twoPlayParty.getCurrentPlayer()).toBe(WHITE);
   });
 
   const twoEatenPlayParty = new Party(TWO_PLAY_BOARD);
   const playTwoEaten = new TravelPlay(A1, C3);
-  twoEatenPlayParty.playTurn(playTwoEaten);
   const eatenPlays = [new EatenPlay(C3, E5, D4), new EatenPlay(C3, A5, B4)];
   it('should return the same color if the player can play again', () => {
+    twoEatenPlayParty.playTurn(playTwoEaten);
     expect(twoEatenPlayParty.getCurrentPlayer()).toBe(WHITE);
   });
   it('should only return plays for one piece if it is a second play', () => {
