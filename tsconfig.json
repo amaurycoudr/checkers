@@ -22,10 +22,9 @@
     "noEmit": true,
   },
   
- "files": ["global.d.ts"],
+ 
   "include": [
-    "src"
-, "test"  ],
+    "src", ],
   "exclude": [
       "node_modules",
       "lib"
