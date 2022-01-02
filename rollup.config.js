@@ -15,6 +15,9 @@ export default {
   plugins: [
     resolve(),
     commonjs(),
-    typescript({ useTsconfigDeclarationDir: true }),
+    typescript({
+      useTsconfigDeclarationDir: true,
+      exclude: ['**/__tests__', '**/*.test.ts'],
+    }),
   ],
 };
