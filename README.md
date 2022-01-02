@@ -20,7 +20,7 @@ const party = new CheckersParty(options);
 
 To specify the rules of your party you can pass `options`.
 
-# party options
+## party options
 
 - **`firstPlayer : "white"|"black"`** ` ()`
   - The first player to play.
@@ -32,7 +32,7 @@ To specify the rules of your party you can pass `options`.
   - decides if player must capture the maximum possible number of pieces
   - `default = true`
 
-# party.getState()
+## party.getState()
 
 To access the state of the party you can use the method `getState()`
 this returns an object of this format :
@@ -46,6 +46,8 @@ this returns an object of this format :
     "G1": { "type": "Pawn", "player": "white" },
     "I1": { "type": "Pawn", "player": "white" }
   } /* here only the first line is shown */,
+  "playerTurn:": "white",
+  "plays": [
     { "from": "B4", "to": "A5" },
     { "from": "B4", "to": "C5" },
     { "from": "D4", "to": "C5" },
@@ -61,12 +63,12 @@ this returns an object of this format :
 
 > :information_source: This is the result of `party.getState()` at the first turn
 
-# party.play(move: Movement)
+## party.play(move: Movement)
 
 Take in argument the move you want to play like `{ "from": "B4", "to": "A5" }`.
 Return the state of the party (the new result for `party.getState()`).
 
-# Road map
+## Road map
 
 1. ~~implements a notion of **options** to let user choses specific rules~~
 2. ~~implements the first play option~~
