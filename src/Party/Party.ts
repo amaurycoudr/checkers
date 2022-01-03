@@ -3,7 +3,7 @@ import { BoardState } from '../Board/BoardState';
 import Turn from '../Turn/Turn';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import { Color, WHITE } from '../utils/type';
-import { ERROR_TURN_OU_OF_INDEX } from '../utils/error';
+import { ERROR_PARTY_FINISH, ERROR_TURN_OU_OF_INDEX } from '../utils/error';
 
 export type PartyOptions = {
   /**  The first player to play \
@@ -61,7 +61,9 @@ class Party {
   }
 
   getCurrentPlays(): TravelPlay[] {
-    return this.getCurrentTurn().getPlayerPlays();
+    return this.winner || this.isDraw
+      ? []
+      : this.getCurrentTurn().getPlayerPlays();
   }
 
   getWinner() {
@@ -73,14 +75,18 @@ class Party {
   }
 
   playTurn(play: TravelPlay) {
+    if (this.winner || this.isDraw) {
+      throw new Error(ERROR_PARTY_FINISH);
+    }
+
     const { newSituation, hasOtherPlayerLost } =
       this.getCurrentTurn().makePlay(play);
 
     if (hasOtherPlayerLost) {
       this.winner = this.getCurrentPlayer();
     }
-    this.turns.push(newSituation);
 
+    this.turns.push(newSituation);
     this.isDraw = this.isLastThreeTurnIdentical();
   }
 

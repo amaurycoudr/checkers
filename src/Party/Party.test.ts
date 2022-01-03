@@ -18,6 +18,7 @@ import {
   B1,
   B4,
   B6,
+  B9,
   C10,
   C3,
   C5,
@@ -41,7 +42,7 @@ import {
   J6,
 } from '../Position/Coordinate/coordinates';
 import TravelPlay from '../TravelPlay/TravelPlay';
-import { ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
+import { ERROR_PARTY_FINISH, ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
 import { BLACK, WHITE } from '../utils/type';
 import Party from './Party';
 import Queen from '../Queen/Queen';
@@ -100,6 +101,11 @@ methodTest(startParty.getCurrentPlays, () => {
       whiteFirstTurnPlays,
     );
   });
+  const partyWin = new Party({ A8: pawnWhite, B9: pawnBlack });
+  it('should return an empty array if game finish', () => {
+    partyWin.playTurn(new TravelPlay(A8, C10));
+    expect(partyWin.getCurrentPlays()).toStrictEqual([]);
+  });
 });
 
 methodTest(startParty.playTurn, () => {
@@ -146,6 +152,13 @@ methodTest(startParty.playTurn, () => {
     expect(twoEatenPlayParty.getCurrentPlays()).toIncludeSameMembers(
       eatenPlays,
     );
+  });
+  const partyWin = new Party({ A8: pawnWhite, B9: pawnBlack });
+  it('should throw an error if the game is finish', () => {
+    partyWin.playTurn(new TravelPlay(A8, C10));
+    expect(() => {
+      partyWin.playTurn(new TravelPlay(C10, B9));
+    }).toThrowError(ERROR_PARTY_FINISH);
   });
 });
 

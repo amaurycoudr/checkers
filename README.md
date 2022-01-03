@@ -4,7 +4,7 @@
 **test coverage :**
 | Statements | Branches | Functions | Lines |
 | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| ![Statements](https://img.shields.io/badge/Coverage-99.48%25-brightgreen.svg 'Make me better!') | ![Branches](https://img.shields.io/badge/Coverage-98%25-brightgreen.svg 'Make me better!') | ![Functions](https://img.shields.io/badge/Coverage-99.23%25-brightgreen.svg 'Make me better!') | ![Lines](https://img.shields.io/badge/Coverage-99.47%25-brightgreen.svg 'Make me better!') |
+| ![Statements](https://img.shields.io/badge/Coverage-99.27%25-brightgreen.svg 'Make me better!') | ![Branches](https://img.shields.io/badge/Coverage-97.45%25-brightgreen.svg 'Make me better!') | ![Functions](https://img.shields.io/badge/Coverage-99.26%25-brightgreen.svg 'Make me better!') | ![Lines](https://img.shields.io/badge/Coverage-99.25%25-brightgreen.svg 'Make me better!') |
 
 the purpose of this package is to offer a simple api to be able to play to the checkers
 
@@ -91,5 +91,5 @@ const coordinate = getCoordinate(3, 2);
 1. ~~correct bug winner~~
 1. ~~correct bug queen transformation~~
 1. ~~correct queen movement~~
-1. implements the draw notion
+1. ~~implements the draw notion~~
 1. handle case player can't make any play
