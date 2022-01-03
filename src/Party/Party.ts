@@ -26,7 +26,7 @@ export const defaultOptions: PartyOptions = {
   shouldPromoteWhenMoveEnding: true,
 };
 class Party {
-  private playsPossible: PartySituation;
+  private turns: PartySituation[] = [];
 
   private winner: Color | undefined = undefined;
 
@@ -36,23 +36,29 @@ class Party {
   ) {
     const completeOptions = { ...defaultOptions, ...options };
 
-    this.playsPossible = new PartySituation(
-      new Board(initBoard, completeOptions.boardSize),
-      completeOptions.firstPlayer,
-      completeOptions.shouldCatchPiecesMaximum,
+    this.turns.push(
+      new PartySituation(
+        new Board(initBoard, completeOptions.boardSize),
+        completeOptions.firstPlayer,
+        completeOptions.shouldCatchPiecesMaximum,
+      ),
     );
   }
 
+  private getCurrentTurn(): PartySituation {
+    return this.turns[this.turns.length - 1];
+  }
+
   getCurrentBoard(): Board {
-    return this.playsPossible.getBoard();
+    return this.getCurrentTurn().getBoard();
   }
 
   getCurrentPlayer(): Color {
-    return this.playsPossible.getPlayerTurn();
+    return this.getCurrentTurn().getPlayerTurn();
   }
 
   getCurrentPlays(): TravelPlay[] {
-    return this.playsPossible.getPlayerPlays();
+    return this.getCurrentTurn().getPlayerPlays();
   }
 
   getWinner() {
@@ -61,12 +67,12 @@ class Party {
 
   playTurn(play: TravelPlay) {
     const { newSituation, hasOtherPlayerLost } =
-      this.playsPossible.makePlay(play);
+      this.getCurrentTurn().makePlay(play);
 
     if (hasOtherPlayerLost) {
       this.winner = this.getCurrentPlayer();
     }
-    this.playsPossible = newSituation;
+    this.turns.push(newSituation);
   }
 }
 export default Party;
