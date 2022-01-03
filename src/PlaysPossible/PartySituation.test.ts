@@ -10,13 +10,13 @@ import { pawnBlack, pawnWhite } from '../Piece/Pawn/pawns';
 import { A1, A3, B2, C1, D2, E3 } from '../Position/Coordinate/coordinates';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import { WHITE } from '../utils/type';
-import PlaysPossible from './PlaysPossible';
+import PartySituation from './PartySituation';
 
-const eatPlays = new PlaysPossible(new Board(EAT_BOARD), WHITE, true);
+const eatPlays = new PartySituation(new Board(EAT_BOARD), WHITE, true);
 
-const travelPlays = new PlaysPossible(new Board(CLASSIC_BOARD), WHITE, true);
+const travelPlays = new PartySituation(new Board(CLASSIC_BOARD), WHITE, true);
 
-const tonePawnPlays = new PlaysPossible(
+const tonePawnPlays = new PartySituation(
   new Board(ONE_WHITE_PAWN_BOARD),
   WHITE,
   true,
@@ -42,7 +42,7 @@ methodTest(eatPlays.getPlayerPlays, () => {
 });
 
 type GetPlayerPlaysData = {
-  playsPossible: PlaysPossible;
+  playsPossible: PartySituation;
   playerPlaysExpected: TravelPlay[];
 };
 
@@ -64,7 +64,7 @@ methodTestMap(
   eatPlays.getPlayerPlays,
   [
     {
-      playsPossible: new PlaysPossible(
+      playsPossible: new PartySituation(
         new Board({
           C1: pawnWhite,
           B2: pawnBlack,
@@ -77,7 +77,7 @@ methodTestMap(
       playerPlaysExpected: [new EatenPlay(C1, A3, B2)],
     },
     {
-      playsPossible: new PlaysPossible(
+      playsPossible: new PartySituation(
         new Board({
           C1: pawnWhite,
           B2: pawnBlack,
@@ -93,7 +93,7 @@ methodTestMap(
       ],
     },
     {
-      playsPossible: new PlaysPossible(
+      playsPossible: new PartySituation(
         new Board({
           C1: pawnWhite,
           B2: pawnBlack,
@@ -107,7 +107,7 @@ methodTestMap(
       playerPlaysExpected: [new EatenPlay(C1, A3, B2)],
     },
     {
-      playsPossible: new PlaysPossible(
+      playsPossible: new PartySituation(
         new Board({
           C1: pawnWhite,
           B2: pawnBlack,
@@ -128,7 +128,7 @@ methodTestMap(
   getPlayerPlaysExpect,
 );
 type GetNumberOfEatenPieceData = {
-  playsPossible: PlaysPossible;
+  playsPossible: PartySituation;
   numberOfPieceEaten: number;
 };
 const getNumberOfEatenExpect = (data: GetNumberOfEatenPieceData) => {
@@ -147,7 +147,7 @@ methodTestMap(
   eatPlays.getNumberOfEatenPiece,
   [
     {
-      playsPossible: new PlaysPossible(
+      playsPossible: new PartySituation(
         new Board({ A1: pawnWhite, B2: pawnBlack }),
         WHITE,
         true,
@@ -155,7 +155,7 @@ methodTestMap(
       numberOfPieceEaten: 1,
     },
     {
-      playsPossible: new PlaysPossible(
+      playsPossible: new PartySituation(
         new Board({ A1: pawnWhite, B2: pawnBlack, B4: pawnBlack }),
         WHITE,
         true,
@@ -163,7 +163,7 @@ methodTestMap(
       numberOfPieceEaten: 2,
     },
     {
-      playsPossible: new PlaysPossible(
+      playsPossible: new PartySituation(
         new Board({
           A1: pawnWhite,
           B2: pawnBlack,

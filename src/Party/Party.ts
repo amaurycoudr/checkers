@@ -1,10 +1,8 @@
-import { isEmpty } from 'lodash';
 import Board from '../Board/Board';
 import { BoardState } from '../Board/BoardState';
-import PlaysPossible from '../PlaysPossible/PlaysPossible';
-import Coordinate from '../Position/Coordinate/Coordinate';
+import PartySituation from '../PlaysPossible/PartySituation';
 import TravelPlay from '../TravelPlay/TravelPlay';
-import { BLACK, Color, WHITE } from '../utils/type';
+import { Color, WHITE } from '../utils/type';
 
 export type PartyOptions = {
   /** **default: white**  */
@@ -25,7 +23,7 @@ export const defaultOptions: PartyOptions = {
   shouldPromoteWhenMoveEnding: true,
 };
 class Party {
-  private playsPossible: PlaysPossible;
+  private playsPossible: PartySituation;
 
   private winner: Color | undefined = undefined;
 
@@ -35,7 +33,7 @@ class Party {
   ) {
     const completeOptions = { ...defaultOptions, ...options };
 
-    this.playsPossible = new PlaysPossible(
+    this.playsPossible = new PartySituation(
       new Board(initBoard, completeOptions.boardSize),
       completeOptions.firstPlayer,
       completeOptions.shouldCatchPiecesMaximum,
@@ -58,50 +56,14 @@ class Party {
     return this.winner;
   }
 
-  private setPlaysPossible(board: Board, to?: Coordinate) {
-    const shouldUpdatePlayer = !to;
-
-    const player = shouldUpdatePlayer
-      ? this.getOtherPlayer()
-      : this.playsPossible.getPlayerTurn();
-
-    this.playsPossible = new PlaysPossible(
-      board,
-      player,
-      this.playsPossible.shouldCatchPiecesMaximum,
-      to,
-    );
-  }
-
-  private getOtherPlayer() {
-    return this.playsPossible.getPlayerTurn() === BLACK ? WHITE : BLACK;
-  }
-
-  private hasCurrentPlayerLost() {
-    return isEmpty(
-      this.getCurrentBoard().getPlayerPieces(this.getCurrentPlayer()),
-    );
-  }
-
   playTurn(play: TravelPlay) {
-    const { realPlay, playFinish } =
-      this.playsPossible.findPlayInPossible(play);
+    const { newSituation, hasOtherPlayerLost } =
+      this.playsPossible.makePlay(play);
 
-    const newBoard = this.getNewBoard(realPlay);
-
-    if (playFinish) {
-      this.setPlaysPossible(newBoard);
-    } else {
-      this.setPlaysPossible(newBoard, realPlay.to);
+    if (hasOtherPlayerLost) {
+      this.winner = this.getCurrentPlayer();
     }
-
-    if (this.hasCurrentPlayerLost()) {
-      this.winner = this.getOtherPlayer();
-    }
-  }
-
-  private getNewBoard(play: TravelPlay) {
-    return this.getCurrentBoard().getNewBoardFromPlay(play);
+    this.playsPossible = newSituation;
   }
 }
 export default Party;

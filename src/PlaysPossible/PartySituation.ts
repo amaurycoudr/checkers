@@ -1,12 +1,14 @@
+import { isEmpty } from 'lodash';
 import Board from '../Board/Board';
 import EatenPlay from '../EatenPlay/EatenPlay';
+import Pawn from '../Piece/Pawn/Pawn';
 import Piece from '../Piece/Piece';
 import Coordinate from '../Position/Coordinate/Coordinate';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import { ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
-import { Color } from '../utils/type';
+import { BLACK, Color, WHITE } from '../utils/type';
 
-class PlaysPossible {
+class PartySituation {
   private board: Board;
 
   private playerTurn: Color;
@@ -96,7 +98,7 @@ class PlaysPossible {
     if (!(play instanceof EatenPlay)) {
       return 1;
     }
-    const newPlaysPossible = new PlaysPossible(
+    const newPlaysPossible = new PartySituation(
       newBoard,
       this.playerTurn,
       this.shouldCatchPiecesMaximum,
@@ -123,5 +125,40 @@ class PlaysPossible {
     }
     return { realPlay, playFinish: this.getNumberOfEatenPiece(realPlay) === 1 };
   }
+
+  makePlay(play: TravelPlay): {
+    newSituation: PartySituation;
+    hasPawnMove: boolean;
+    hasEaten: boolean;
+    hasOtherPlayerLost: boolean;
+  } {
+    const { realPlay, playFinish } = this.findPlayInPossible(play);
+
+    const newBoard = this.board.getNewBoardFromPlay(realPlay);
+
+    const hasOtherPlayerLost = isEmpty(
+      newBoard.getPlayerPieces(this.getOtherPlayer()),
+    );
+
+    const newSituation = new PartySituation(
+      newBoard,
+      playFinish && !hasOtherPlayerLost
+        ? this.getOtherPlayer()
+        : this.playerTurn,
+      this.shouldCatchPiecesMaximum,
+      playFinish ? undefined : play.to,
+    );
+
+    return {
+      hasEaten: realPlay instanceof EatenPlay,
+      hasPawnMove: this.board.getBox(realPlay.from) instanceof Pawn,
+      hasOtherPlayerLost,
+      newSituation,
+    };
+  }
+
+  private getOtherPlayer() {
+    return this.getPlayerTurn() === BLACK ? WHITE : BLACK;
+  }
 }
-export default PlaysPossible;
+export default PartySituation;
