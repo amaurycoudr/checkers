@@ -80,17 +80,7 @@ class Party {
     }
     this.turns.push(newSituation);
 
-    if (this.getCurrentTurn().getTurnNumber() >= 8) {
-      const currentBoard = this.getCurrentBoard();
-      const previousBoard = this.getTurnN(
-        this.getCurrentTurn().getTurnNumber() - 4,
-      ).getBoard();
-      const firstBoard = this.getTurnN(
-        this.getCurrentTurn().getTurnNumber() - 8,
-      ).getBoard();
-      this.isDraw =
-        currentBoard.equals(previousBoard) && currentBoard.equals(firstBoard);
-    }
+    this.isDraw = this.isLastThreeTurnIdentical();
   }
 
   private getTurnN(n: number) {
@@ -99,6 +89,23 @@ class Party {
       throw new Error('');
     }
     return turnN;
+  }
+
+  private isLastThreeTurnIdentical() {
+    if (this.getCurrentTurn().getTurnNumber() >= 8) {
+      const currentBoard = this.getCurrentBoard();
+      const previousBoard = this.getTurnN(
+        this.getCurrentTurn().getTurnNumber() - 4,
+      ).getBoard();
+      const previousPreviousBoard = this.getTurnN(
+        this.getCurrentTurn().getTurnNumber() - 8,
+      ).getBoard();
+      return (
+        currentBoard.equals(previousBoard) &&
+        currentBoard.equals(previousPreviousBoard)
+      );
+    }
+    return false;
   }
 }
 export default Party;
