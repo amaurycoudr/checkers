@@ -135,7 +135,12 @@ methodTestMap<DataTravelPlay>(
         '+4.-4': { type: 'Box' },
         '+5.-5': { type: 'Box' },
       }),
-      plays: [EatenPlay.eatenPlayFromMove(A10, '+2.-2', '+1.-1')],
+      plays: [
+        EatenPlay.eatenPlayFromMove(A10, '+2.-2', '+1.-1'),
+        EatenPlay.eatenPlayFromMove(A10, '+3.-3', '+1.-1'),
+        EatenPlay.eatenPlayFromMove(A10, '+4.-4', '+1.-1'),
+        EatenPlay.eatenPlayFromMove(A10, '+5.-5', '+1.-1'),
+      ],
     },
     {
       position: J10,
@@ -159,7 +164,10 @@ methodTestMap<DataTravelPlay>(
         '-4.+4': { type: 'Box' },
         '-5.+5': { type: 'Box' },
       }),
-      plays: [EatenPlay.eatenPlayFromMove(J1, '-4.+4', '-3.+3')],
+      plays: [
+        EatenPlay.eatenPlayFromMove(J1, '-4.+4', '-3.+3'),
+        EatenPlay.eatenPlayFromMove(J1, '-5.+5', '-3.+3'),
+      ],
     },
   ],
   descriptionPlay,

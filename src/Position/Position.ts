@@ -51,6 +51,9 @@ class Position implements Utils {
 
   private static getXorYFromMoveCoordinate(moveCoordinate: MoveCoordinate) {
     const value = parseInt(moveCoordinate[1], 10);
+    if (!value) {
+      throw new Error(moveCoordinate);
+    }
     return moveCoordinate[0] === '+' ? value : -value;
   }
 }

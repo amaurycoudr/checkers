@@ -55,7 +55,7 @@ class PlaysPossible {
   private getSecondPlays() {
     const unfilteredPlays =
       this.secondPlayTo &&
-      this.board.getPieceSecondEatenPlays(
+      this.board.getPieceEatenPlays(
         this.board.getBox(this.secondPlayTo) as Piece,
         this.secondPlayTo,
       );

@@ -10,15 +10,28 @@ import { moveCoordinate, MoveNumber, MoveStr } from '../utils/type';
 type EatenCombination = {
   travel: MoveStr[];
   eat: MoveStr;
-  arrived: MoveStr;
+  arrived: MoveStr[];
 };
+const getNewMove = (travel: MoveStr, n: number) =>
+  `${travel[0]}${parseInt(travel[1], 10) + n}.${travel[3]}${
+    parseInt(travel[4], 10) + n
+  }` as MoveStr;
 
-const NO_TRAVEL_EATEN_COMBINATION: EatenCombination[] = [
-  { travel: [], eat: '+1.+1', arrived: '+2.+2' },
-  { travel: [], eat: '-1.-1', arrived: '-2.-2' },
-  { travel: [], eat: '+1.-1', arrived: '+2.-2' },
-  { travel: [], eat: '-1.+1', arrived: '-2.+2' },
-];
+const NO_TRAVEL_EATEN_COMBINATION: EatenCombination[] = flatten(
+  Array(9)
+    .fill(0)
+    .map((_, index) =>
+      (['+1.+1', '-1.-1', '+1.-1', '-1.+1'] as MoveStr[]).map(
+        (eat): EatenCombination => ({
+          travel: [],
+          eat,
+          arrived: Array(index + 1)
+            .fill(0)
+            .map((_value, indexArrived) => getNewMove(eat, 1 + indexArrived)),
+        }),
+      ),
+    ),
+);
 
 const moveDirections = ['+', '-'] as const;
 const MOVES_SITUATION = flatten(
@@ -50,18 +63,25 @@ const TRAVEL_MOVES_COMBINATION: MoveStr[][] = flatten(
   ),
 );
 
-const getNewMove = (travel: MoveStr, n: number) =>
-  `${travel[0]}${parseInt(travel[1], 10) + n}.${travel[3]}${
-    parseInt(travel[4], 10) + n
-  }` as MoveStr;
-const TRAVEL_EATEN_MOVES_COMBINATION: EatenCombination[] =
-  TRAVEL_MOVES_COMBINATION.filter((travel) => travel.length < 8).map(
-    (travel): EatenCombination => ({
-      travel,
-      eat: getNewMove(travel[travel.length - 1], 1),
-      arrived: getNewMove(travel[travel.length - 1], 2),
-    }),
-  );
+const TRAVEL_EATEN_MOVES_COMBINATION: EatenCombination[] = flatten(
+  Array(7)
+    .fill(0)
+    .map((_, index) =>
+      TRAVEL_MOVES_COMBINATION.filter(
+        (travel) => travel.length <= 7 - index,
+      ).map(
+        (travel): EatenCombination => ({
+          travel,
+          eat: getNewMove(travel[travel.length - 1], 1),
+          arrived: Array(index + 1)
+            .fill(0)
+            .map((_value, indexArrived) =>
+              getNewMove(travel[travel.length - 1], 2 + indexArrived),
+            ),
+        }),
+      ),
+    ),
+);
 
 const EATEN_MOVES_COMBINATION: EatenCombination[] = [
   ...TRAVEL_EATEN_MOVES_COMBINATION,
@@ -101,9 +121,16 @@ class Queen extends Pawn {
       if (
         travel.every((move) => situation.isEmptyBox(move)) &&
         situation.isOpponentPiece(eat, this.color) &&
-        situation.isEmptyBox(arrived)
+        arrived.length > 0 &&
+        arrived.every((move) => situation.isEmptyBox(move))
       ) {
-        result.push(EatenPlay.eatenPlayFromMove(position, arrived, eat));
+        result.push(
+          EatenPlay.eatenPlayFromMove(
+            position,
+            arrived[arrived.length - 1],
+            eat,
+          ),
+        );
       }
     });
     return result;

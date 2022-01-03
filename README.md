@@ -4,7 +4,7 @@
 **test coverage :**
 | Statements | Branches | Functions | Lines |
 | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| ![Statements](https://img.shields.io/badge/Coverage-99.74%25-brightgreen.svg "Make me better!") | ![Branches](https://img.shields.io/badge/Coverage-98.94%25-brightgreen.svg "Make me better!") | ![Functions](https://img.shields.io/badge/Coverage-99.21%25-brightgreen.svg "Make me better!") | ![Lines](https://img.shields.io/badge/Coverage-99.73%25-brightgreen.svg "Make me better!") |
+| ![Statements](https://img.shields.io/badge/Coverage-99.48%25-brightgreen.svg "Make me better!") | ![Branches](https://img.shields.io/badge/Coverage-97.95%25-brightgreen.svg "Make me better!") | ![Functions](https://img.shields.io/badge/Coverage-99.24%25-brightgreen.svg "Make me better!") | ![Lines](https://img.shields.io/badge/Coverage-99.48%25-brightgreen.svg "Make me better!") |
 
 the purpose of this package is to offer a simple api to be able to play to the checkers
 
@@ -80,6 +80,6 @@ Return the state of the party (the new result for `party.getState()`).
 1. ~~implements the win notion~~
 1. ~~correct bug can eat after travel~~
 1. ~~correct bug winner~~
-1. correct bug queen transformation
+1. ~~correct bug queen transformation~~
+1. ~~correct queen movement~~
 1. implements the draw notion
-1. correct queen movement

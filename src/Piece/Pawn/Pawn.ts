@@ -34,8 +34,6 @@ class Pawn extends Piece {
 
   eatenMoves = EATEN_MOVES_SITUATION;
 
-  secondEatenMoves = EATEN_MOVES_SITUATION;
-
   constructor(color: Color) {
     super(color);
     if (color !== WHITE) {

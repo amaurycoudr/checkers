@@ -119,13 +119,6 @@ class Board implements Utils {
     );
   }
 
-  getPieceSecondEatenPlays(piece: Piece, position: Coordinates) {
-    return piece.getEatenPlays(
-      this.getAroundSituation(position, piece.secondEatenMoves),
-      position,
-    );
-  }
-
   getPieceTravelPlays(piece: Piece, position: Coordinates) {
     return piece.getTravelPlays(
       this.getAroundSituation(position, piece.travelMoves),
@@ -163,7 +156,7 @@ class Board implements Utils {
   private canPlayAgain(piece: Piece, play: TravelPlay) {
     const isEatPlay = play instanceof EatenPlay;
     const canPlayAgainFromPosition =
-      this.getPieceSecondEatenPlays(piece, play.to).length > 0;
+      this.getPieceEatenPlays(piece, play.to).length > 0;
 
     return isEatPlay && canPlayAgainFromPosition;
   }

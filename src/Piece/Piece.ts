@@ -15,8 +15,6 @@ export default abstract class Piece implements Utils {
 
   abstract type: ContentType;
 
-  abstract secondEatenMoves: MoveStr[];
-
   hasBeenEaten: boolean;
 
   constructor(color: Color) {
