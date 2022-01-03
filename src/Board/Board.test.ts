@@ -330,6 +330,12 @@ methodTest(eatBoard.getNewBoardFromPlay, () => {
     expect(queenWhiteBoard.getBox(B10) instanceof Queen).toBeTrue();
   });
 
+  it('should return a board with queen if can not play again', () => {
+    const board = new Board({ A8: pawnWhite, B9: pawnBlack });
+    const pawnBoard = board.getNewBoardFromPlay(new EatenPlay(A8, C10, B9));
+
+    expect(pawnBoard.getBox(C10)).toStrictEqual(new Queen(WHITE));
+  });
   it('should return a board without queen if shouldPromoteWhenMoveEnding=true && can play again', () => {
     const board = new Board({ A8: pawnWhite, B9: pawnBlack, D9: pawnBlack });
     const pawnBoard = board.getNewBoardFromPlay(new EatenPlay(A8, C10, B9));

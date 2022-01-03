@@ -116,16 +116,6 @@ class PartySituation {
       : 1;
   }
 
-  findPlayInPossible(play: TravelPlay) {
-    const realPlay = this.getPlayerPlays().find((playPossible) =>
-      playPossible.equals(play),
-    );
-    if (!realPlay) {
-      throw new Error(ERROR_PLAY_NOT_POSSIBLE);
-    }
-    return { realPlay, playFinish: this.getNumberOfEatenPiece(realPlay) === 1 };
-  }
-
   makePlay(play: TravelPlay): {
     newSituation: PartySituation;
     hasPawnMove: boolean;
@@ -155,6 +145,16 @@ class PartySituation {
       hasOtherPlayerLost,
       newSituation,
     };
+  }
+
+  private findPlayInPossible(play: TravelPlay) {
+    const realPlay = this.getPlayerPlays().find((playPossible) =>
+      playPossible.equals(play),
+    );
+    if (!realPlay) {
+      throw new Error(ERROR_PLAY_NOT_POSSIBLE);
+    }
+    return { realPlay, playFinish: this.getNumberOfEatenPiece(realPlay) === 1 };
   }
 
   private getOtherPlayer() {

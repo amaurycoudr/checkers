@@ -9,7 +9,7 @@ import EatenPlay from '../EatenPlay/EatenPlay';
 import { pawnBlack, pawnWhite } from '../Piece/Pawn/pawns';
 import { A1, A3, B2, C1, D2, E3 } from '../Position/Coordinate/coordinates';
 import TravelPlay from '../TravelPlay/TravelPlay';
-import { WHITE } from '../utils/type';
+import { BLACK, WHITE } from '../utils/type';
 import PartySituation from './PartySituation';
 
 const eatPlays = new PartySituation(new Board(EAT_BOARD), WHITE, true);
@@ -25,7 +25,7 @@ const tonePawnPlays = new PartySituation(
 const move = new TravelPlay(A1, B2);
 
 methodTest(eatPlays.getPlayerPlays, () => {
-  it('should return eatenPlays if eatenPlays possible ', () => {
+  it('should return eatenPlays if eatenPlays possible', () => {
     eatPlays
       .getPlayerPlays()
       .forEach((play) => expect(play instanceof EatenPlay).toBe(true));
@@ -179,3 +179,18 @@ methodTestMap(
   getNumberOfEatenDescription,
   getNumberOfEatenExpect,
 );
+
+methodTest(eatPlays.makePlay, () => {
+  it('should return newSituation.getPlayerTurn=BLACK if white player make a travel play ', () => {
+    const initialPlaySituation = new PartySituation(
+      new Board({ A1: pawnWhite, C3: pawnBlack }),
+      WHITE,
+      true,
+    );
+    const { newSituation } = initialPlaySituation.makePlay(
+      new TravelPlay(A1, B2),
+    );
+
+    expect(newSituation.getPlayerTurn()).toBe(BLACK);
+  });
+});
