@@ -156,6 +156,15 @@ class Turn {
     };
   }
 
+  getNewTurnWhenNoPlay() {
+    return new Turn(
+      this.board,
+      this.getOtherPlayer(),
+      this.shouldCatchPiecesMaximum,
+      this.turnNumber + 1,
+    );
+  }
+
   private findPlayInPossible(play: TravelPlay) {
     const realPlay = this.getPlayerPlays().find((playPossible) =>
       playPossible.equals(play),

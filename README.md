@@ -92,4 +92,4 @@ const coordinate = getCoordinate(3, 2);
 1. ~~correct bug queen transformation~~
 1. ~~correct queen movement~~
 1. ~~implements the draw notion~~
-1. handle case player can't make any play
+1. ~~handle case player can't make any play~~

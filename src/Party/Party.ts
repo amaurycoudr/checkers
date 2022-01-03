@@ -87,6 +87,11 @@ class Party {
     }
 
     this.turns.push(newSituation);
+
+    if (this.getCurrentPlays().length === 0) {
+      this.turns.push(this.getCurrentTurn().getNewTurnWhenNoPlay());
+    }
+
     this.isDraw = this.isLastThreeTurnIdentical();
   }
 
