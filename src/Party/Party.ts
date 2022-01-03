@@ -1,6 +1,6 @@
 import Board from '../Board/Board';
 import { BoardState } from '../Board/BoardState';
-import PartySituation from '../PlaysPossible/PartySituation';
+import PartySituation from '../Turn/Turn';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import { Color, WHITE } from '../utils/type';
 

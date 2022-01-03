@@ -10,7 +10,7 @@ import { pawnBlack, pawnWhite } from '../Piece/Pawn/pawns';
 import { A1, A3, B2, C1, D2, E3 } from '../Position/Coordinate/coordinates';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import { BLACK, WHITE } from '../utils/type';
-import PartySituation from './PartySituation';
+import PartySituation from './Turn';
 
 const eatPlays = new PartySituation(new Board(EAT_BOARD), WHITE, true);
 
