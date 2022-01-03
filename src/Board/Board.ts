@@ -162,10 +162,8 @@ class Board implements Utils {
 
   private canPlayAgain(piece: Piece, play: TravelPlay) {
     const isEatPlay = play instanceof EatenPlay;
-    const canPlayAgainFromPosition = this.getPieceSecondEatenPlays(
-      piece,
-      play.to,
-    );
+    const canPlayAgainFromPosition =
+      this.getPieceSecondEatenPlays(piece, play.to).length > 0;
 
     return isEatPlay && canPlayAgainFromPosition;
   }
