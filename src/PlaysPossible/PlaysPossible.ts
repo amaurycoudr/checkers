@@ -93,6 +93,9 @@ class PlaysPossible {
   getNumberOfEatenPiece(play: TravelPlay): number {
     const newBoard = this.board.getNewBoardFromPlay(play);
 
+    if (!(play instanceof EatenPlay)) {
+      return 1;
+    }
     const newPlaysPossible = new PlaysPossible(
       newBoard,
       this.playerTurn,

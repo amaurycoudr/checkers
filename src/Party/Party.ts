@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import Board from '../Board/Board';
 import { BoardState } from '../Board/BoardState';
 import PlaysPossible from '../PlaysPossible/PlaysPossible';
@@ -77,7 +78,9 @@ class Party {
   }
 
   private hasCurrentPlayerLost() {
-    return this.getCurrentBoard().getPlayerPieces(this.getOtherPlayer());
+    return isEmpty(
+      this.getCurrentBoard().getPlayerPieces(this.getOtherPlayer()),
+    );
   }
 
   playTurn(play: TravelPlay) {
