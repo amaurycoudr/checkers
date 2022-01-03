@@ -12,6 +12,8 @@ export type PartyState = {
   plays: PlayJSON[];
   /** color of the winner */
   winner?: Color;
+  /** is game draw */
+  isDraw?: boolean;
 };
 
 class PublicApi {
@@ -27,6 +29,7 @@ class PublicApi {
       playerTurn: this.party.getCurrentPlayer(),
       plays: this.party.getCurrentPlays().map((play) => play.getJSON()),
       winner: this.party.getWinner(),
+      isDraw: this.party.getIsDraw(),
     };
   }
 

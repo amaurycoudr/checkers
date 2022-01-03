@@ -3,6 +3,7 @@ import { BoardState } from '../Board/BoardState';
 import Turn from '../Turn/Turn';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import { Color, WHITE } from '../utils/type';
+import { ERROR_TURN_OU_OF_INDEX } from '../utils/error';
 
 export type PartyOptions = {
   /**  The first player to play \
@@ -86,20 +87,18 @@ class Party {
   private getTurnN(n: number) {
     const turnN = this.turns.find((turn) => turn.getTurnNumber() === n);
     if (!turnN) {
-      throw new Error('');
+      throw new Error(ERROR_TURN_OU_OF_INDEX);
     }
     return turnN;
   }
 
   private isLastThreeTurnIdentical() {
-    if (this.getCurrentTurn().getTurnNumber() >= 8) {
+    const turnNumber = this.getCurrentTurn().getTurnNumber();
+    if (turnNumber >= 8) {
       const currentBoard = this.getCurrentBoard();
-      const previousBoard = this.getTurnN(
-        this.getCurrentTurn().getTurnNumber() - 4,
-      ).getBoard();
-      const previousPreviousBoard = this.getTurnN(
-        this.getCurrentTurn().getTurnNumber() - 8,
-      ).getBoard();
+      const previousBoard = this.getTurnN(turnNumber - 4).getBoard();
+      const previousPreviousBoard = this.getTurnN(turnNumber - 8).getBoard();
+
       return (
         currentBoard.equals(previousBoard) &&
         currentBoard.equals(previousPreviousBoard)

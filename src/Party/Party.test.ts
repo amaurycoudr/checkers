@@ -29,6 +29,7 @@ import {
   F10,
   F4,
   F6,
+  F8,
   G5,
   G7,
   G9,
@@ -176,5 +177,21 @@ methodTest(startParty.getIsDraw, () => {
     identicalLast3Turns.playTurn(new TravelPlay(G9, F10));
 
     expect(identicalLast3Turns.getIsDraw()).toBeTrue();
+  });
+  it('should return false not 3 consecutive identical pieces position', () => {
+    const identicalLast3Turns = new Party({
+      B1: new Queen(WHITE),
+      F10: new Queen(BLACK),
+    });
+    identicalLast3Turns.playTurn(new TravelPlay(B1, A2));
+    identicalLast3Turns.playTurn(new TravelPlay(F10, G9));
+    identicalLast3Turns.playTurn(new TravelPlay(A2, B1));
+    identicalLast3Turns.playTurn(new TravelPlay(G9, F10));
+    identicalLast3Turns.playTurn(new TravelPlay(B1, A2));
+    identicalLast3Turns.playTurn(new TravelPlay(F10, G9));
+    identicalLast3Turns.playTurn(new TravelPlay(A2, B1));
+    identicalLast3Turns.playTurn(new TravelPlay(G9, F8));
+
+    expect(identicalLast3Turns.getIsDraw()).toBeFalse();
   });
 });
