@@ -8,10 +8,12 @@ import TravelPlay from '../TravelPlay/TravelPlay';
 import { ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
 import { BLACK, Color, WHITE } from '../utils/type';
 
-class PartySituation {
+class Turn {
   private board: Board;
 
   private playerTurn: Color;
+
+  private turnNumber: number;
 
   shouldCatchPiecesMaximum: boolean;
 
@@ -21,11 +23,13 @@ class PartySituation {
     board: Board,
     playerTurn: Color,
     shouldCatchPiecesMaximum: boolean,
+    turnNumber?: number,
     secondPlayTo: Coordinate | undefined = undefined,
   ) {
     this.board = board;
     this.playerTurn = playerTurn;
     this.shouldCatchPiecesMaximum = shouldCatchPiecesMaximum;
+    this.turnNumber = turnNumber ?? 0;
     this.secondPlayTo = secondPlayTo;
   }
 
@@ -52,6 +56,10 @@ class PartySituation {
 
   getBoard() {
     return this.board;
+  }
+
+  getTurnNumber() {
+    return this.turnNumber;
   }
 
   private getSecondPlays() {
@@ -98,10 +106,11 @@ class PartySituation {
     if (!(play instanceof EatenPlay)) {
       return 1;
     }
-    const newPlaysPossible = new PartySituation(
+    const newPlaysPossible = new Turn(
       newBoard,
       this.playerTurn,
       this.shouldCatchPiecesMaximum,
+      0,
       play.to,
     );
     const plays = newPlaysPossible.getPlayerPlays();
@@ -117,7 +126,7 @@ class PartySituation {
   }
 
   makePlay(play: TravelPlay): {
-    newSituation: PartySituation;
+    newSituation: Turn;
     hasPawnMove: boolean;
     hasEaten: boolean;
     hasOtherPlayerLost: boolean;
@@ -129,13 +138,13 @@ class PartySituation {
     const hasOtherPlayerLost = isEmpty(
       newBoard.getPlayerPieces(this.getOtherPlayer()),
     );
+    const playerChange = playFinish && !hasOtherPlayerLost;
 
-    const newSituation = new PartySituation(
+    const newSituation = new Turn(
       newBoard,
-      playFinish && !hasOtherPlayerLost
-        ? this.getOtherPlayer()
-        : this.playerTurn,
+      playerChange ? this.getOtherPlayer() : this.playerTurn,
       this.shouldCatchPiecesMaximum,
+      playerChange ? this.turnNumber + 1 : this.turnNumber,
       playFinish ? undefined : play.to,
     );
 
@@ -161,4 +170,4 @@ class PartySituation {
     return this.getPlayerTurn() === BLACK ? WHITE : BLACK;
   }
 }
-export default PartySituation;
+export default Turn;

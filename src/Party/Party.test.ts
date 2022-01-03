@@ -11,9 +11,11 @@ import EatenPlay from '../EatenPlay/EatenPlay';
 import { pawnBlack, pawnWhite } from '../Piece/Pawn/pawns';
 import {
   A1,
+  A2,
   A5,
   A7,
   A8,
+  B1,
   B4,
   B6,
   C10,
@@ -24,10 +26,12 @@ import {
   D6,
   E5,
   E7,
+  F10,
   F4,
   F6,
   G5,
   G7,
+  G9,
   H4,
   H6,
   I5,
@@ -39,6 +43,7 @@ import TravelPlay from '../TravelPlay/TravelPlay';
 import { ERROR_PLAY_NOT_POSSIBLE } from '../utils/error';
 import { BLACK, WHITE } from '../utils/type';
 import Party from './Party';
+import Queen from '../Queen/Queen';
 
 const startParty = new Party(CLASSIC_BOARD);
 
@@ -152,5 +157,24 @@ methodTest(startParty.getWinner, () => {
     partyWin.playTurn(new TravelPlay(A8, C10));
 
     expect(partyWin.getWinner()).toBe(WHITE);
+  });
+});
+
+methodTest(startParty.getIsDraw, () => {
+  it('should return true if 3 consecutive identical pieces position', () => {
+    const identicalLast3Turns = new Party({
+      B1: new Queen(WHITE),
+      F10: new Queen(BLACK),
+    });
+    identicalLast3Turns.playTurn(new TravelPlay(B1, A2));
+    identicalLast3Turns.playTurn(new TravelPlay(F10, G9));
+    identicalLast3Turns.playTurn(new TravelPlay(A2, B1));
+    identicalLast3Turns.playTurn(new TravelPlay(G9, F10));
+    identicalLast3Turns.playTurn(new TravelPlay(B1, A2));
+    identicalLast3Turns.playTurn(new TravelPlay(F10, G9));
+    identicalLast3Turns.playTurn(new TravelPlay(A2, B1));
+    identicalLast3Turns.playTurn(new TravelPlay(G9, F10));
+
+    expect(identicalLast3Turns.getIsDraw()).toBeTrue();
   });
 });

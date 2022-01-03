@@ -1,6 +1,6 @@
 import Board from '../Board/Board';
 import { BoardState } from '../Board/BoardState';
-import PartySituation from '../Turn/Turn';
+import Turn from '../Turn/Turn';
 import TravelPlay from '../TravelPlay/TravelPlay';
 import { Color, WHITE } from '../utils/type';
 
@@ -26,9 +26,11 @@ export const defaultOptions: PartyOptions = {
   shouldPromoteWhenMoveEnding: true,
 };
 class Party {
-  private turns: PartySituation[] = [];
+  private turns: Turn[] = [];
 
   private winner: Color | undefined = undefined;
+
+  private isDraw = false;
 
   constructor(
     initBoard: BoardState,
@@ -37,7 +39,7 @@ class Party {
     const completeOptions = { ...defaultOptions, ...options };
 
     this.turns.push(
-      new PartySituation(
+      new Turn(
         new Board(initBoard, completeOptions.boardSize),
         completeOptions.firstPlayer,
         completeOptions.shouldCatchPiecesMaximum,
@@ -45,7 +47,7 @@ class Party {
     );
   }
 
-  private getCurrentTurn(): PartySituation {
+  private getCurrentTurn(): Turn {
     return this.turns[this.turns.length - 1];
   }
 
@@ -65,6 +67,10 @@ class Party {
     return this.winner;
   }
 
+  getIsDraw() {
+    return this.isDraw;
+  }
+
   playTurn(play: TravelPlay) {
     const { newSituation, hasOtherPlayerLost } =
       this.getCurrentTurn().makePlay(play);
@@ -73,6 +79,26 @@ class Party {
       this.winner = this.getCurrentPlayer();
     }
     this.turns.push(newSituation);
+
+    if (this.getCurrentTurn().getTurnNumber() >= 8) {
+      const currentBoard = this.getCurrentBoard();
+      const previousBoard = this.getTurnN(
+        this.getCurrentTurn().getTurnNumber() - 4,
+      ).getBoard();
+      const firstBoard = this.getTurnN(
+        this.getCurrentTurn().getTurnNumber() - 8,
+      ).getBoard();
+      this.isDraw =
+        currentBoard.equals(previousBoard) && currentBoard.equals(firstBoard);
+    }
+  }
+
+  private getTurnN(n: number) {
+    const turnN = this.turns.find((turn) => turn.getTurnNumber() === n);
+    if (!turnN) {
+      throw new Error('');
+    }
+    return turnN;
   }
 }
 export default Party;
