@@ -5,14 +5,17 @@ import TravelPlay from '../TravelPlay/TravelPlay';
 import { Color, WHITE } from '../utils/type';
 
 export type PartyOptions = {
-  /** **default: white**  */
+  /**  The first player to play \
+   *  **default: white**  */
   firstPlayer: Color;
-  /** **default: 10**  */
+  /** The Board size \
+   * **default: 10**  */
   boardSize: 10 | 8;
-  /** decides if player must capture the maximum possible number of pieces \
+  /** Decides if player must capture the maximum possible number of pieces \
    *  **default: true**  */
   shouldCatchPiecesMaximum: boolean;
-  /** **default: true**  */
+  /** Decides if pieces promote only when ending their move on the final ran \
+   * **default: true**  */
   shouldPromoteWhenMoveEnding: boolean;
 };
 

@@ -4,7 +4,7 @@
 **test coverage :**
 | Statements | Branches | Functions | Lines |
 | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| ![Statements](https://img.shields.io/badge/Coverage-98.97%25-brightgreen.svg "Make me better!") | ![Branches](https://img.shields.io/badge/Coverage-97.05%25-brightgreen.svg "Make me better!") | ![Functions](https://img.shields.io/badge/Coverage-98.48%25-brightgreen.svg "Make me better!") | ![Lines](https://img.shields.io/badge/Coverage-98.96%25-brightgreen.svg "Make me better!") |
+| ![Statements](https://img.shields.io/badge/Coverage-99.48%25-brightgreen.svg 'Make me better!') | ![Branches](https://img.shields.io/badge/Coverage-98%25-brightgreen.svg 'Make me better!') | ![Functions](https://img.shields.io/badge/Coverage-99.23%25-brightgreen.svg 'Make me better!') | ![Lines](https://img.shields.io/badge/Coverage-99.47%25-brightgreen.svg 'Make me better!') |
 
 the purpose of this package is to offer a simple api to be able to play to the checkers
 
@@ -18,7 +18,7 @@ To start a party you only need to create a new instance of **CheckersParty**
 const party = new CheckersParty(options);
 ```
 
-To specify the rules of your party you can pass `options`.
+To specify the rules of your party you can pass an object `options`.
 
 ## party options
 
@@ -70,6 +70,15 @@ this returns an object of this format :
 
 Take in argument the move you want to play like `{ "from": "B4", "to": "A5" }`.
 Return the state of the party (the new result for `party.getState()`).
+
+## getCoordinate()
+
+An helper is provide to handle the conversion from (x,y) to te format `"A1", "C3"...`
+
+```js
+const coordinate = getCoordinate(3, 2);
+// coordinate === D3
+```
 
 ## Road map to functional version
 
