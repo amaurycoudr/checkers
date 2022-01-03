@@ -150,6 +150,7 @@ methodTest(startParty.getWinner, () => {
   });
   it('should return white after the play', () => {
     partyWin.playTurn(new TravelPlay(A8, C10));
+
     expect(partyWin.getWinner()).toBe(WHITE);
   });
 });

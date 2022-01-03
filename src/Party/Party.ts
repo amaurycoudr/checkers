@@ -79,7 +79,7 @@ class Party {
 
   private hasCurrentPlayerLost() {
     return isEmpty(
-      this.getCurrentBoard().getPlayerPieces(this.getOtherPlayer()),
+      this.getCurrentBoard().getPlayerPieces(this.getCurrentPlayer()),
     );
   }
 
